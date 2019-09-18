@@ -41,9 +41,12 @@ module URBANopt
       ##
       # Create all SimulationDirs for Scenario
       ##
-      #  @param [ScenarioBase] scenario Scenario to create simulation input files for scenario
-      #  @param [Bool] force_clear Clear Scenario before creating simulation input files
-      #  @return [Array] Returns array of all SimulationDirs, even those created previously, for Scenario
+      # scenario::
+      #   [ScenarioBase] Scenario to create simulation input files for scenario
+      # force_clear::
+      #   [Bool] Clear Scenario before creating simulation input files
+      # @return::
+      #   [Array] Returns array of all SimulationDirs, even those created previously, for Scenario
       def create_simulation_files(scenario, force_clear = false)
         raise "create_input_files is not implemented for ScenarioRunnerBase, override in your class"
       end
@@ -51,9 +54,12 @@ module URBANopt
       ##
       # Create and run all SimulationFiles for Scenario
       ##
-      #  @param [ScenarioBase] scenario Scenario to create and run simulation input files for
-      #  @param [Bool] force_clear Clear Scenario before creating simulation input files
-      #  @return [Array] Returns array of all SimulationDirs, even those created previously, for Scenario
+      # scenario::
+      #   [ScenarioBase] Scenario to create and run simulation input files for
+      # force_clear::
+      #   [Bool] force_clear Clear Scenario before creating simulation input files
+      #  @return::
+      #   [Array] Returns array of all SimulationDirs, even those created previously, for Scenario
       def run(scenario, force_clear = false)
         raise "run is not implemented for ScenarioRunnerBase, override in your class"
       end
