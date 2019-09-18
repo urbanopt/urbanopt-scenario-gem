@@ -37,10 +37,14 @@ module URBANopt
       ##
       # SimulationDirOSW creates a OSW file to simulate features, a SimulationMapperBase is invoked to translate features to OSW
       ##
-      #  @param [ScenarioBase] scenario Scenario containing this SimulationFileBase
-      #  @param [Array] features Array of Features this SimulationFile represents
-      #  @param [Array] feature_names Array of scenario specific names for these Features
-      #  @param [String] mapper_class Name of class derived frmo SimulationMapperBase used to translate feature to simulation OSW
+      # scenario::
+      #   [ScenarioBase] Scenario containing this SimulationFileBase
+      # features::
+      #   [Array] Array of Features this SimulationFile represents
+      # feature_names::
+      #   [Array] Array of scenario specific names for these Features
+      # mapper_class::
+      #   [String] Name of class derived frmo SimulationMapperBase used to translate feature to simulation OSW
       def initialize(scenario, features, feature_names, mapper_class)
         super(scenario, features, feature_names)
         
@@ -178,7 +182,7 @@ module URBANopt
         dependencies << File.join(scenario.root_dir, 'Gemfile')
         dependencies << File.join(scenario.root_dir, 'Gemfile.lock')
         
-        # todo, read in the in.osw and depend on all the measures
+        # TODO: read in the in.osw and depend on all the measures
         
         # check if out of date
         dependencies.each do |f|
