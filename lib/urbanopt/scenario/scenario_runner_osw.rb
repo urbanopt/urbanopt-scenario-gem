@@ -45,9 +45,12 @@ module URBANopt
       ##
       # Create all OSWs for Scenario
       ##
-      #  @param [ScenarioBase] scenario Scenario to create simulation input files for
-      #  @param [Bool] force_clear Clear Scenario before creating simulation input files
-      #  @return [Array] Returns array of all SimulationDirs, even those created previously, for Scenario
+      # scenario::
+      #   [ScenarioBase] Scenario to create simulation input files for
+      # force_clear::
+      #   [Bool] Clear Scenario before creating simulation input files
+      # @return::
+      #   [Array] Returns array of all SimulationDirs, even those created previously, for Scenario
       def create_simulation_files(scenario, force_clear = false)
         
         if force_clear
@@ -71,9 +74,12 @@ module URBANopt
       ##
       # Create and run all SimulationFileOSW for Scenario
       ##
-      #  @param [ScenarioBase] scenario Scenario to create and run SimulationFiles for
-      #  @param [Bool] force_clear Clear Scenario before creating SimulationFiles
-      #  @return [Array] Returns array of all SimulationFiles, even those created previously, for Scenario
+      # scenario::
+      #   [ScenarioBase] Scenario to create and run SimulationFiles for
+      # force_clear::
+      #   [Bool] Clear Scenario before creating SimulationFiles
+      # @return::
+      #   [Array] Returns array of all SimulationFiles, even those created previously, for Scenario
       def run(scenario, force_clear = false)
         runner = OpenStudio::Extension::Runner.new(scenario.root_dir)
 
