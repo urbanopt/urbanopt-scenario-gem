@@ -41,14 +41,21 @@ module URBANopt
       ##
       # ScenarioCSV is a ScenarioBase which assigns a Simulation Mapper to each Feature in a FeatureFile using a simple CSV format
       # The CSV file has three columns 1) feature_id, 2) feature_name, and 3) mapper_class_name.  There is one row for each Feature.
-      ##
-      #  @param [String] name Human readable scenario name
-      #  @param [String] root_dir Root directory for the scenario, contains Gemfile describing dependencies
-      #  @param [String] run_dir Directory for simulation of this scenario, deleting run directory clears the scenario
-      #  @param [URBANopt::Core::FeatureFile] feature_file FeatureFile containing features to simulate  
-      #  @param [String] mapper_files_dir Directory containing all mapper class files containing MapperBase definitions
-      #  @param [String] csv_file Path to CSV file assigning a MapperBase class to each feature in feature_file
-      #  @param [String] num_header_rows Number of header rows to skip in CSV file  
+      #
+      # name::
+      #   [String] Human readable scenario name
+      # root_dir::
+      #   [String] Root directory for the scenario, contains Gemfile describing dependencies
+      # run_dir::
+      #   [String] Directory for simulation of this scenario, deleting run directory clears the scenario
+      # feature_file::
+      #   [URBANopt::Core::FeatureFile] FeatureFile containing features to simulate  
+      # mapper_files_dir::
+      #   [String] Directory containing all mapper class files containing MapperBase definitions
+      # csv_file::
+      #   [String] Path to CSV file assigning a MapperBase class to each feature in feature_file
+      # num_header_rows::
+      #   [String] Number of header rows to skip in CSV file  
       def initialize(name, root_dir, run_dir, feature_file, mapper_files_dir, csv_file, num_header_rows)
         super(name, root_dir, run_dir, feature_file)
         
@@ -88,9 +95,11 @@ module URBANopt
         end
       end  
 
+      # TODO: document this method
+      
       def simulation_dirs
         
-        # DLM: TODO use HeaderConverters from CSV module
+        # TODO: (DLM) use HeaderConverters from CSV module
         
         rows_skipped = 0
         result = []
