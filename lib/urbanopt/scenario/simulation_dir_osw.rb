@@ -58,6 +58,7 @@ module URBANopt
         end
 
         @mapper_class = mapper_class
+
       end
 
       attr_reader :mapper_class

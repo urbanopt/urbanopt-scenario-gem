@@ -50,7 +50,8 @@ module URBANopt
       ##
       class FeatureReport
         attr_accessor :id, :name, :directory_name, :feature_type, :timesteps_per_hour, :simulation_status, 
-                      :timeseries_csv, :location, :program, :design_parameters, :construction_costs, :reporting_periods # :nodoc:
+                      :timeseries_csv, :location, :program, :design_parameters, :construction_costs, :reporting_periods,
+                      :reopt_assumptions_file # :nodoc:
         ##
         # Each FeatureReport object corresponds to a single Feature.
         ##
@@ -76,6 +77,7 @@ module URBANopt
           hash[:construction_costs].each do |cc|
             @constructiion_costs << ConstructionCost.new(cc)
           end
+          @reopt_assumptions_file = hash[:reopt_assumptions_file]
 
           @reporting_periods = []
           hash[:reporting_periods].each do |rp|
@@ -146,6 +148,8 @@ module URBANopt
             # default_feature_reports_json.each do |feature_report|
             # result << FeatureReport.new(feature_report)
             # end
+
+            default_feature_reports_json[:reopt_assumptions_file] = features[0].feature_json[:properties][:reopt_assumptions_file]
             result << FeatureReport.new(default_feature_reports_json) # should we keep it as an array !? or each each report can only include 1 feature
 
           else
@@ -156,6 +160,7 @@ module URBANopt
               hash[:name] = feature.name
               hash[:directory_name] = simulation_dir.run_dir
               hash[:simulation_status] = simulation_status
+              hash[:reopt_assumptions_file] = feature.feature_json[:properties][:reopt_assumptions_file]
               result << FeatureReport.new(hash)
             end
           end

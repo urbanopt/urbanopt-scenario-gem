@@ -33,6 +33,7 @@ require 'urbanopt/scenario/simulation_dir_osw'
 
 require 'csv'
 require 'fileutils'
+require 'pry'
 
 module URBANopt
   module Scenario
@@ -51,20 +52,25 @@ module URBANopt
       # +csv_file+ - _String_ - Path to CSV file assigning a MapperBase class to each feature in feature_file.  
       # +num_header_rows+ - _Strng_ - Number of header rows to skip in CSV file.  
 
-      def initialize(name, root_dir, run_dir, feature_file, mapper_files_dir, csv_file, num_header_rows)
+      def initialize(name, root_dir, run_dir, feature_file, mapper_files_dir, csv_file, num_header_rows, reopt_files_dir=nil, scenario_reopt_assumptions_file_name=nil)
         super(name, root_dir, run_dir, feature_file)
 
         @mapper_files_dir = mapper_files_dir
         @csv_file = csv_file
         @num_header_rows = num_header_rows
-
+        @reopt_files_dir = reopt_files_dir
         @@logger ||= URBANopt::Scenario.logger
+        @reopt_files_dir = reopt_files_dir
+        @scenario_reopt_assumptions_file = nil
+        if !reopt_files_dir.nil? and !scenario_reopt_assumptions_file_name.nil?
+          @scenario_reopt_assumptions_file = File.join(@reopt_files_dir, scenario_reopt_assumptions_file_name)
+        end
 
         load_mapper_files
       end
 
       # Path to CSV file
-      attr_reader :csv_file #:nodoc:
+      attr_reader :csv_file, :scenario_reopt_assumptions_file #:nodoc:
 
       # Number of header rows to skip in CSV file
       attr_reader :num_header_rows #:nodoc:
@@ -90,6 +96,7 @@ module URBANopt
 
         rows_skipped = 0
         result = []
+        reopt_assumptions = nil
         CSV.foreach(@csv_file) do |row|
           if rows_skipped < @num_header_rows
             rows_skipped += 1
@@ -102,15 +109,24 @@ module URBANopt
           feature_id = row[0].chomp
           feature_name = row[1].chomp
           mapper_class = row[2].chomp
+          if row.length > 3
+            if !@reopt_files_dir.nil?
+              if reopt_assumptions.nil?
+                reopt_assumptions = File.join(@reopt_files_dir,row[3].chomp)
+              end
+            end
+
+          end
+
 
           # gets +features+ from the feature_file.
           features = []
           feature = feature_file.get_feature_by_id(feature_id)
+          feature.feature_json[:properties][:reopt_assumptions_file] = reopt_assumptions
           features << feature
 
           feature_names = []
           feature_names << feature_name
-
           simulation_dir = SimulationDirOSW.new(self, features, feature_names, mapper_class)
 
           result << simulation_dir
