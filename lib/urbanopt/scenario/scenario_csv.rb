@@ -33,7 +33,6 @@ require 'urbanopt/scenario/simulation_dir_osw'
 
 require 'csv'
 require 'fileutils'
-require 'pry'
 
 module URBANopt
   module Scenario
@@ -75,7 +74,7 @@ module URBANopt
       attr_accessor :reopt_feature_assumptions
 
       # Path to CSV file
-      attr_reader :csv_file, :scenario_reopt_assumptions_file #:nodoc:
+      attr_reader :csv_file #:nodoc:
 
       # Number of header rows to skip in CSV file
       attr_reader :num_header_rows #:nodoc:

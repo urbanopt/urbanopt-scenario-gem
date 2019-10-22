@@ -146,7 +146,6 @@ module URBANopt
             # default_feature_reports_json.each do |feature_report|
             # result << FeatureReport.new(feature_report)
             # end
-
             result << FeatureReport.new(default_feature_reports_json) # should we keep it as an array !? or each each report can only include 1 feature
 
           else

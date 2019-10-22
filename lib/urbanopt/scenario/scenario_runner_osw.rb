@@ -55,6 +55,7 @@ module URBANopt
         end
 
         FileUtils.mkdir_p(scenario.run_dir) if !File.exist?(scenario.run_dir)
+
         simulation_dirs = scenario.simulation_dirs
 
         simulation_dirs.each do |simulation_dir|
