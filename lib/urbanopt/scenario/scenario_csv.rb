@@ -70,11 +70,15 @@ module URBANopt
 
         load_mapper_files
       end
-      # Path to json files of reopt assumptions ordered by feature order
+      # Path to json files of reopt assumptions for feature reports ordered by feature order
       attr_accessor :reopt_feature_assumptions
 
+      # Path to json file of reopt assumptions for scenario report
+      attr_reader :scenario_reopt_assumptions_file  #:nodoc:
+
+
       # Path to CSV file
-      attr_reader :csv_file #:nodoc:
+      attr_reader :csv_file  #:nodoc:
 
       # Number of header rows to skip in CSV file
       attr_reader :num_header_rows #:nodoc:
