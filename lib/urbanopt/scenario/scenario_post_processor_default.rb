@@ -50,7 +50,6 @@ module URBANopt
         @scenario_result.id = scenario_base.name
         @scenario_result.name = scenario_base.name
         @scenario_result.directory_name = scenario_base.run_dir
-        @scenario_result.reopt_assumptions_file =  scenario_base.scenario_reopt_assumptions_file
 
         @@logger ||= URBANopt::Scenario::DefaultReports.logger
       end

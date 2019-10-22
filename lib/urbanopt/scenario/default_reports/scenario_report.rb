@@ -51,8 +51,7 @@ module URBANopt
       class ScenarioReport
         attr_accessor :id, :name, :directory_name, :timesteps_per_hour, :number_of_not_started_simulations,
                       :number_of_started_simulations,:number_of_complete_simulations, :number_of_failed_simulations,
-                      :timeseries_csv, :location, :program, :construction_costs, :reporting_periods, :feature_reports,
-                      :reopt_assumptions_file # :nodoc:
+                      :timeseries_csv, :location, :program, :construction_costs, :reporting_periods, :feature_reports # :nodoc:
         # ScenarioReport class intializes the scenario report attributes: 
         # +:id+ , +:name+ , +:directory_name+, +:timesteps_per_hour+ , +:number_of_not_started_simulations+ ,
         # +:number_of_started_simulations+ , +:number_of_complete_simulations+ , +:number_of_failed_simulations+ ,
@@ -81,7 +80,6 @@ module URBANopt
           @timeseries_csv = TimeseriesCSV.new(hash[:timeseries_csv])
           @location = Location.new(hash[:location])
           @program = Program.new(hash[:program])
-          @reopt_assumptions_file = hash[:reopt_assumptions_file]
           
           @construction_costs = []
           hash[:construction_costs].each do |cc|
