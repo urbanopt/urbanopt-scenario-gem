@@ -1,12 +1,4 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
----
-
-Addresses #[issue number here].
+## Addresses #[issue number here].
 
 ## Pull Request Description
 
