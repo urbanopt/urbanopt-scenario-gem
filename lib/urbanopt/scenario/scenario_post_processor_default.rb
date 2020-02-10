@@ -36,6 +36,9 @@ require 'csv'
 require 'json'
 require 'fileutils'
 
+require 'sqlite3'
+
+
 module URBANopt
   module Scenario
     class ScenarioDefaultPostProcessor < ScenarioPostProcessorBase
@@ -93,6 +96,32 @@ module URBANopt
 
         return @scenario_result
       end
+
+    #   
+    #   Save Scenario result in sqlite database file
+    # 
+    # +db_name+ - _String_ - Assign a name to the saved scenario results database
+      def save_db(db_name = "default_scenario_db")
+        db = SQLite3::Database.open eplusout.sql
+        db.results_as_hash = true
+        db.execute "CREATE TABLE IF NOT EXISTS ScenarioData(
+            ReportDataIndex INTEGER PRIMARY KEY,
+            TimeIndex INTEGER,
+            Value REAL
+            )"
+        feature_list = [] # List of features in the scenario
+        value_hash = {}
+        query = db.query "SELECT Value FROM ReportData WHERE TimeIndex=?", time_segment
+        feature_list.each do |feature|  # Loop through each feature in the scenario
+            db = SQLite3::Database.open eplusout.sql
+            something = # Need to read each row in the ReportData table individually, so the results can be added to the value_hash
+            something.each do |time_segment|  # Loop through each time segment in the table
+                value_hash[time_segment] += query  # Add value from table to hash
+            end
+        end
+        db.execute "INSERT INTO ScenarioData ?", value_hash
+      end
+
     end
   end
 end
