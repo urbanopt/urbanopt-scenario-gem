@@ -23,6 +23,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '~> 2.2.4'
 
+  #   use specific versions of these dependencies while using Ruby 2.2
+  spec.add_development_dependency "rack", "2.1.2"
+  spec.add_dependency 'public_suffix', '3.1.1'
+
   spec.add_development_dependency 'bundler', '~> 1.14'
   spec.add_development_dependency 'rake', '12.3'
   spec.add_development_dependency 'rspec', '3.7'
@@ -30,10 +34,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'json-schema'
   spec.add_dependency 'json_pure'
-  spec.add_dependency 'openstudio-model-articulation', '~> 0.1'
-  spec.add_dependency 'urbanopt-core', '~> 0.1'
-
-  # lock the version of these dependencies due to using older version of Ruby.
-  spec.add_dependency 'public_suffix', '3.1.1'
-  spec.add_development_dependency 'rack', '2.1.2'
+  spec.add_dependency 'openstudio-model-articulation', '~> 0.1.1'
+  spec.add_dependency 'urbanopt-core', '~> 0.1.0'
 end
