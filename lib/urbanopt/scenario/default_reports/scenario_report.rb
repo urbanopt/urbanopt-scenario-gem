@@ -148,12 +148,13 @@ module URBANopt
         # 
         # +scenario_name_with_type+ - _String_ - File name of scenario being aggregated
         def create_scenario_db_file()
+          puts @directory_name
             feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
             feature_1_path, feature_1_name = File.split(feature_list[0])  # This is used for time_db only
 
             db_path = File.join(@directory_name, "default_scenario_report.db")
             # scenario_db = SQLite3::Database.open db_path
-            scenario_db = Sequel.sqlite(db_path)
+            scenario_db = Sequel.connect("jdbc:sqlite:#{db_path}")
             scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
                 TimeIndex INTEGER,
                 ReportDataDictionaryIndex INTEGER,
@@ -164,7 +165,7 @@ module URBANopt
             # time_db = Sequel.sqlite("#{@directory_name}#{feature_1_name}/eplusout.sql")
             # Using documentation from here: https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc
             time_db_path = "jdbc:sqlite:#{@directory_name}#{feature_1_name}/eplusout.sql"
-            puts time_db_path
+            # puts time_db_path
             time_db = Sequel.connect(time_db_path)
             time_db.results_as_hash = true
             time_query = time_db.query "SELECT DISTINCT TimeIndex FROM ReportData WHERE (TimeIndex % 2) != 0"
@@ -181,7 +182,8 @@ module URBANopt
                     feature_path, feature_name = File.split(feature)  # Separate the folder name from the rest of the path
                     
                     # feature_db = SQLite3::Database.open "#{@directory_name}#{feature_name}/eplusout.sql"
-                    feature_db = Sequel.sqlite("#{@directory_name}#{feature_name}/eplusout.sql")
+                    feature_db_path = File.join(@directory_name, feature_name, "eplusout.sql")
+                    feature_db = Sequel.connect("jdbc:sqlite:#{feature_db_path}")
                     feature_db.results_as_hash = true
 
                     # RDDI == 11 is the timestep value for facility electricity
