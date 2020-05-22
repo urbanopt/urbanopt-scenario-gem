@@ -166,9 +166,6 @@ module URBANopt
             time_db.close
 
             time_query.each { |time_segment|  # Loop through each (odd-only) TimeIndex, to aggregate all Value's for that time_segment
-              
-                value_list_elec = []
-                value_list_gas = []
                 
                 value_hash = {:elec_val => 0, :gas_val => 0}
                 feature_list.each { |feature|  # Loop through each feature in the scenario
