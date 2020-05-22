@@ -21,21 +21,16 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '~> 2.2.4'
+  spec.required_ruby_version = '~> 2.5.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.14'
-  spec.add_development_dependency 'github_api', '~> 0.18.0'
-  spec.add_development_dependency 'rake', '~> 12.3'
+  spec.add_development_dependency 'bundler', '~> 2.1'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.7'
 
   spec.add_dependency 'json-schema'
   spec.add_dependency 'json_pure'
-  spec.add_dependency 'openstudio-model-articulation', '~> 0.1.1'
-  spec.add_dependency 'urbanopt-core', '~> 0.2.0'
+  spec.add_dependency 'openstudio-common-measures', '~> 0.2.0'
+  spec.add_dependency 'openstudio-model-articulation', '~> 0.2.0'
+  spec.add_dependency 'urbanopt-core', '~> 0.3.0.pre2'
   spec.add_dependency 'sqlite3', '~> 1.4.0'
-
-  # lock the version of these dependencies due to using older version of Ruby.
-  spec.add_dependency 'public_suffix', '3.1.1'
-  spec.add_development_dependency 'rack', '2.1.2'
-  
 end
