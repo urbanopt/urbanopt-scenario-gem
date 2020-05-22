@@ -40,7 +40,7 @@ require 'json-schema'
 
 require 'json'
 require 'pathname'
-require 'sequel'
+require 'sqlite3'
 
 module URBANopt
   module Scenario
@@ -152,20 +152,14 @@ module URBANopt
             feature_1_path, feature_1_name = File.split(feature_list[0])  # This is used for time_db only
 
             db_path = File.join(@directory_name, "default_scenario_report.db")
-            # scenario_db = SQLite3::Database.open db_path
-            scenario_db = Sequel.sqlite(db_path)
+            scenario_db = SQLite3::Database.open db_path
             scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
                 TimeIndex INTEGER,
                 ReportDataDictionaryIndex INTEGER,
                 Value INTEGER
                 )"
 
-            # time_db = SQLite3::Database.open "#{@directory_name}#{feature_1_name}/eplusout.sql"  # This feels icky to open the db just to get the TimeIndexes
-            # time_db = Sequel.sqlite("#{@directory_name}#{feature_1_name}/eplusout.sql")
-            # Using documentation from here: https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc
-            time_db_path = "jdbc:sqlite:#{@directory_name}#{feature_1_name}/eplusout.sql"
-            puts time_db_path
-            time_db = Sequel.connect(time_db_path)
+            time_db = SQLite3::Database.open "#{@directory_name}#{feature_1_name}/eplusout.sql"  # This feels icky to open the db just to get the TimeIndexes
             time_db.results_as_hash = true
             time_query = time_db.query "SELECT DISTINCT TimeIndex FROM ReportData WHERE (TimeIndex % 2) != 0"
             # Odd TimeIndexes use the specified timestep, even TimeIndexes use hourly timestep, as shown in ReportDataDictionary
@@ -180,8 +174,7 @@ module URBANopt
                 feature_list.each { |feature|  # Loop through each feature in the scenario
                     feature_path, feature_name = File.split(feature)  # Separate the folder name from the rest of the path
                     
-                    # feature_db = SQLite3::Database.open "#{@directory_name}#{feature_name}/eplusout.sql"
-                    feature_db = Sequel.sqlite("#{@directory_name}#{feature_name}/eplusout.sql")
+                    feature_db = SQLite3::Database.open "#{@directory_name}#{feature_name}/eplusout.sql"
                     feature_db.results_as_hash = true
 
                     # RDDI == 11 is the timestep value for facility electricity
