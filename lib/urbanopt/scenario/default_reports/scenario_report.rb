@@ -145,8 +145,6 @@ module URBANopt
 
         # Create database file with scenario-level results
         #   Sum values for each timestep across all features. Save to new table in a new database
-        # 
-        # +scenario_name_with_type+ - _String_ - File name of scenario being aggregated
         def create_scenario_db_file()
             feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
             feature_1_path, feature_1_name = File.split(feature_list[0])  # This is used for time_db only
