@@ -226,7 +226,7 @@ module URBANopt
           # reassign the initialize local variable @file_name to the file name input.
           @file_name = file_name
 
-          # save the csv data
+          # save the scenario reports csv and json data
           old_timeseries_path = nil
           if !@timeseries_csv.path.nil?
             old_timeseries_path = @timeseries_csv.path
@@ -320,7 +320,6 @@ module URBANopt
         # +feature_report+ - _FeatureReport_ - An object of FeatureReport class.
         ##
         def add_feature_report(feature_report)
-
           # check if the timesteps_per_hour are identical
           if @timesteps_per_hour.nil? || @timesteps_per_hour == ''
             @timesteps_per_hour = feature_report.timesteps_per_hour

@@ -77,7 +77,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     reporting_frequency_chs << 'Timestep'
     reporting_frequency_chs << 'Hourly'
     reporting_frequency_chs << 'Daily'
-    #reporting_frequency_chs << 'Zone Timestep'
+    # reporting_frequency_chs << 'Zone Timestep'
     reporting_frequency_chs << 'BillingPeriod' # match it to utility bill object
     ## Utility report here to report the start and end for each fueltype
     reporting_frequency_chs << 'Monthly'
@@ -174,12 +174,26 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Gas:Facility,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,DistrictCooling:Facility,#{reporting_frequency};").get
     result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,DistrictHeating:Facility,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Cooling:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Heating:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,InteriorLights:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,ExteriorLights:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,InteriorEquipment:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Fans:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Pumps:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,WaterSystems:Electricity,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,Heating:Gas,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,WaterSystems:Gas,#{reporting_frequency};").get
+    # result << OpenStudio::IdfObject.load("Output:Meter:MeterFileOnly,InteriorEquipment:Gas,#{reporting_frequency};").get
+    result << OpenStudio::IdfObject.load("Output:Variable,*,Heating Coil Heating Rate,hourly; !- HVAC Average [W];").get
 
     timeseries_data = ['District Cooling Chilled Water Rate', 'District Cooling Mass Flow Rate',
                        'District Cooling Inlet Temperature', 'District Cooling Outlet Temperature',
                        'District Heating Hot Water Rate', 'District Heating Mass Flow Rate',
-                       'District Heating Inlet Temperature', 'District Heating Outlet Temperature']
+                       'District Heating Inlet Temperature', 'District Heating Outlet Temperature','Cooling Coil Total Cooling Rate',
+                       'Heating Coil Heating Rate']
 
+                       
     timeseries_data.each do |ts|
       result << OpenStudio::IdfObject.load("Output:Variable,*,#{ts},#{reporting_frequency};").get
     end
@@ -244,7 +258,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
     # Assign the user inputs to variables
     reporting_frequency = runner.getStringArgumentValue('reporting_frequency', user_arguments)
-    
+
     # BilingPeriod reporting frequency not implemented yet
     if reporting_frequency == 'BillingPeriod'
       @@logger.error('BillingPeriod frequency is not implemented yet')
@@ -572,6 +586,19 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     photovoltaic_power = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='Electric Loads Satisfied' AND RowName='Photovoltaic Power' AND ColumnName='Electricity'")
     feature_report.reporting_periods[0].energy_production[:electricity_produced][:photovoltaic] = convert_units(photovoltaic_power, 'GJ', 'kBtu')
 
+    ## Total utility cost
+    total_utility_cost = sql_query(runner, sql_file, 'Economics Results Summary Report', "TableName='Annual Cost' AND RowName='Cost' AND ColumnName='Total'")
+    feature_report.reporting_periods[0].total_utility_cost = total_utility_cost 
+    
+    ## Utility Costs
+    # electricity utility cost
+    elec_utility_cost = sql_query(runner, sql_file, 'Economics Results Summary Report', "TableName='Annual Cost' AND RowName='Cost' AND ColumnName='Electric'")
+    feature_report.reporting_periods[0].utility_costs[0][:fuel_type] = 'Electricity'
+    feature_report.reporting_periods[0].utility_costs[0][:total_cost] = elec_utility_cost
+    # gas utility cost
+    gas_utility_cost = sql_query(runner, sql_file, 'Economics Results Summary Report', "TableName='Annual Cost' AND RowName='Cost' AND ColumnName='Gas'")
+    feature_report.reporting_periods[0].utility_costs << {:fuel_type => 'Natural Gas', :total_cost => gas_utility_cost}
+    
     ## comfort_result
     # time_setpoint_not_met_during_occupied_cooling
     time_setpoint_not_met_during_occupied_cooling = sql_query(runner, sql_file, 'AnnualBuildingUtilityPerformanceSummary', "TableName='Comfort and Setpoint Not Met Summary' AND RowName='Time Setpoint Not Met During Occupied Cooling' AND ColumnName='Facility'")
@@ -608,6 +635,17 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'Electricity:Facility',
       'ElectricityProduced:Facility',
       'Gas:Facility',
+      'Cooling:Electricity',
+      'Heating:Electricity',
+      'InteriorLights:Electricity',
+      'ExteriorLights:Electricity',
+      'InteriorEquipment:Electricity',
+      'Fans:Electricity',
+      'Pumps:Electricity',
+      'WaterSystems:Electricity',
+      'Heating:Gas',
+      'WaterSystems:Gas',
+      'InteriorEquipment:Gas',
       'DistrictCooling:Facility',
       'DistrictHeating:Facility',
       'District Cooling Chilled Water Rate',
@@ -617,12 +655,39 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
       'District Heating Hot Water Rate',
       'District Heating Mass Flow Rate',
       'District Heating Inlet Temperature',
-      'District Heating Outlet Temperature'
+      'District Heating Outlet Temperature', 
+      'Cooling Coil Total Cooling Rate',
+      'Heating Coil Heating Rate'
     ]
 
     # add thermal comfort timeseries
     comfortTimeseries = ['Zone Thermal Comfort Fanger Model PMV', 'Zone Thermal Comfort Fanger Model PPD']
     requested_timeseries_names += comfortTimeseries
+
+    # add additional power timeseries (for calculating transformer apparent power to compare to rating ) in VA
+    powerTimeseries = ['Net Electric Energy', 'Electricity:Facility Power', 'ElectricityProduced:Facility Power', 'Electricity:Facility Apparent Power', 'ElectricityProduced:Facility Apparent Power', 'Net Power', 'Net Apparent Power']
+    requested_timeseries_names += powerTimeseries
+
+    # register info all timeseries
+    runner.registerInfo("All timeseries: #{requested_timeseries_names}")
+
+    # timeseries variables to keep to calculate power
+    tsToKeep = ['Electricity:Facility', 'ElectricityProduced:Facility']
+    tsToKeepIndexes = {}
+
+    ### powerFactor ###
+    # use power_factor default:  0.9
+    # TODO: Set powerFactor default based on building type
+    powerFactor = 0.9
+
+    ### power_conversion ###
+    # divide values by  total_seconds to convert J to W (W = J/sec)
+    # divide values by total_hours to convert kWh to kW (kW = kWh/hrs)
+    total_seconds = (60 / timesteps_per_hour.to_f) * 60 # make sure timesteps_per_hour is a float in the division
+    total_hours = 1 / timesteps_per_hour.to_f # make sure timesteps_per_hour is a float in the division
+    # set power_conversion
+    power_conversion = total_hours # we set the power conversio to total_hours since we want to convert lWh to kW
+    puts "Power Converion: to convert kWh to kW values will be divided by #{power_conversion}"
 
     # number of values in each timeseries
     n = nil
@@ -682,7 +747,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
             new_timeseries_name = key_value
           end
         end
-        #final_timeseries_names << new_timeseries_name
+        # final_timeseries_names << new_timeseries_name
 
         # get the actual timeseries
         ts = sql_file.timeSeries(ann_env_pd.to_s, reporting_frequency.to_s, timeseries_name, key_value)
@@ -700,7 +765,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
           values[key_cnt] = Array.new(n, 0)
         end
 
-        # Unit conversion
+        # unit conversion
         old_unit = ts.get.units if ts.is_initialized
 
         if timeseries_name.include? 'Gas'
@@ -713,23 +778,97 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
                           'kWh'
                         when 'gal'
                           'm3'
+                        when 'W'
+                          'W'
                       end
         end
+        
         # loop through each value and apply unit conversion
         os_vec = values[key_cnt]
         if !timeseries_name.include? 'Zone Thermal Comfort'
           for i in 0..os_vec.length - 1
-            unless new_unit == old_unit
+
+            unless new_unit == old_unit || old_unit.nil?  || new_unit.nil? || !ts.is_initialized
               os_vec[i] = OpenStudio.convert(os_vec[i], old_unit, new_unit).get
+            end
+
+          end
+        end
+
+        # keep certain timeseries to calculate power
+        if tsToKeep.include? timeseries_name
+          tsToKeepIndexes[timeseries_name] = key_cnt
+        end
+
+        # special processing: power
+        if powerTimeseries.include? timeseries_name
+          # special case: net series (subtract generation from load)
+          if timeseries_name.include? 'Net'
+
+            newVals = Array.new(n, 0)
+            # Apparent power calculation
+
+            if timeseries_name.include?('Apparent')
+              (0..n - 1).each do |j|
+                newVals[j] = (values[tsToKeepIndexes['Electricity:Facility']][j].to_f - values[tsToKeepIndexes['ElectricityProduced:Facility']][j].to_f) / power_conversion / powerFactor
+                j += 1
+              end
+              new_unit = 'kVA'
+            elsif timeseries_name.include? 'Net Electric Energy'
+              (0..n - 1).each do |j|
+                newVals[j] = (values[tsToKeepIndexes['Electricity:Facility']][j].to_f - values[tsToKeepIndexes['ElectricityProduced:Facility']][j].to_f)
+                j += 1
+              end
+              new_unit = 'kWh'
+            else
+              runner.registerInfo('Power calc')
+              # Power calculation
+              (0..n - 1).each do |j|
+                newVals[j] = (values[tsToKeepIndexes['Electricity:Facility']][j].to_f - values[tsToKeepIndexes['ElectricityProduced:Facility']][j].to_f) / power_conversion
+                j += 1
+              end
+              new_unit = 'kW'
+            end
+
+            values[key_cnt] = newVals
+          else
+            tsToKeepIndexes.each do |key, indexValue|
+              if timeseries_name.include? key
+                runner.registerInfo("timeseries_name: #{timeseries_name}, key: #{key}")
+                # use this timeseries
+                newVals = Array.new(n, 0)
+                # Apparent power calculation
+                if timeseries_name.include?('Apparent')
+                  (0..n - 1).each do |j|
+                    newVals[j] = values[indexValue][j].to_f / power_conversion / powerFactor
+                    j += 1
+                  end
+                  new_unit = 'kVA'
+                else
+                  # Power calculation
+                  (0..n - 1).each do |j|
+                    newVals[j] = values[indexValue][j].to_f / power_conversion
+                    j += 1
+                  end
+                  new_unit = 'kW'
+                end
+                values[key_cnt] = newVals
+              end
             end
           end
         end
 
-        
         # append units to headers
-        new_timeseries_name = new_timeseries_name + "(#{new_unit})"
+        new_timeseries_name += "(#{new_unit})"
         final_timeseries_names << new_timeseries_name
-        
+
+        # TODO: DELETE PUTS
+        # puts " *********timeseries_name = #{timeseries_name}******************"
+        # if timeseries_name.include? 'Power'
+        #   puts "values = #{values[key_cnt]}"
+        #   puts "units = #{new_unit}"
+        # end
+
         # comfort results usually have multiple timeseries (per zone), aggregate into a single series with consistent name and use worst value at each timestep
         if comfortTimeseries.include? timeseries_name
 
@@ -796,10 +935,13 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
 
     # Add datime column
     datetimes = []
-    # check what timeseries is available 
-    available_ts = sql_file.availableTimeSeries()
+    # check what timeseries is available
+    available_ts = sql_file.availableTimeSeries
+
     # get the timeseries for any of available timeseries
-    ts_d = sql_file.timeSeries(ann_env_pd.to_s, reporting_frequency.to_s, available_ts[0], '')
+    # RK: code enhancement needed
+    ts_d = sql_file.timeSeries(ann_env_pd.to_s, reporting_frequency.to_s, available_ts[2], '')
+      
     timeseries_d = ts_d.get
     # get formated datetimes
     timeseries_d.dateTimes.each do |datetime|
@@ -809,6 +951,7 @@ class DefaultFeatureReports < OpenStudio::Measure::ReportingMeasure
     values.insert(0, datetimes)
     # insert datetime header to names
     final_timeseries_names.insert(0, 'Datetime')
+
 
     # rubocop: enable Metrics/BlockLength
     runner.registerInfo("new final_timeseries_names size: #{final_timeseries_names.size}")
