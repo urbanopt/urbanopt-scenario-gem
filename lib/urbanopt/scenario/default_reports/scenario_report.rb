@@ -178,11 +178,6 @@ module URBANopt
                     feature_db.results_as_hash = true
 
                     # RDDI == 11 is the timestep value for facility electricity
-                    # elec_query = feature_db.query "SELECT *
-                    #     FROM ReportData
-                    #     WHERE TimeIndex=?
-                    #     AND ReportDataDictionaryIndex=11", time_segment['TimeIndex']
-
                     elec_query = feature_db.query "SELECT *
                         FROM ReportData
                         WHERE EXISTS (
@@ -197,8 +192,9 @@ module URBANopt
                     # RDDI == 252 is the timestep value for facility gas
                     gas_query = feature_db.query "SELECT *
                         FROM ReportData
-                        WHERE TimeIndex=?
-                        AND ReportDataDictionaryIndex=252", time_segment['TimeIndex']
+                        WHERE EXISTS (
+                            select * from ReportData WHERE TimeIndex=?
+                            AND ReportDataDictionaryIndex=252)", time_segment['TimeIndex']
                     
                     gas_query.each { |row|
                         value_hash[:gas_val] += Float(row['Value'])
