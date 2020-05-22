@@ -146,70 +146,70 @@ module URBANopt
         # Create database file with scenario-level results
         #   Sum values for each timestep across all features. Save to new table in a new database
         def create_scenario_db_file()
-            feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
-            feature_1_path, feature_1_name = File.split(feature_list[0])  # This is used for time_db only
+          feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
+          feature_1_path, feature_1_name = File.split(feature_list[0])  # This is used for time_db only
 
-            db_path = File.join(@directory_name, "default_scenario_report.db")
-            scenario_db = SQLite3::Database.open db_path
-            scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
-                TimeIndex INTEGER,
-                ReportDataDictionaryIndex INTEGER,
-                Value INTEGER
-                )"
+          new_db_file = File.join(@directory_name, "default_scenario_report.db")
+          scenario_db = SQLite3::Database.open new_db_file
+          scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
+            TimeIndex INTEGER,
+            ReportDataDictionaryIndex INTEGER,
+            Value INTEGER
+            )"
 
-            time_db = SQLite3::Database.open "#{@directory_name}#{feature_1_name}/eplusout.sql"  # This feels icky to open the db just to get the TimeIndexes
-            time_db.results_as_hash = true
-            time_query = time_db.query "SELECT DISTINCT TimeIndex FROM ReportData WHERE (TimeIndex % 2) != 0"
-            # Odd TimeIndexes use the specified timestep, even TimeIndexes use hourly timestep, as shown in ReportDataDictionary
-            time_db.close
+          time_db = SQLite3::Database.open "#{@directory_name}#{feature_1_name}/eplusout.sql"  # This feels icky to open the db just to get the TimeIndexes
+          time_db.results_as_hash = true
+          time_query = time_db.query "SELECT DISTINCT TimeIndex FROM ReportData WHERE (TimeIndex % 2) != 0"
+          # Odd TimeIndexes use the specified timestep, even TimeIndexes use hourly timestep, as shown in ReportDataDictionary
+          time_db.close
 
-            time_query.each { |time_segment|  # Loop through each (odd-only) TimeIndex, to aggregate all Value's for that time_segment
+          time_query.each { |time_segment|  # Loop through each (odd-only) TimeIndex, to aggregate all Value's for that time_segment
+              
+            value_hash = {:elec_val => 0, :gas_val => 0}
+            feature_list.each { |feature|  # Loop through each feature in the scenario
+              feature_path, feature_name = File.split(feature)  # Separate the folder name from the rest of the path
+              
+              feature_db = SQLite3::Database.open "#{@directory_name}#{feature_name}/eplusout.sql"
+              feature_db.results_as_hash = true
+
+              # RDDI == 11 is the timestep value for facility electricity
+              elec_query = feature_db.query "SELECT *
+                FRO M ReportData
+                WHERE EXISTS (
+                  select * from ReportData WHERE TimeIndex=?
+                  AND ReportDataDictionaryIndex=11)", time_segment['TimeIndex']
+                  
+
+              elec_query.each { |row|  # Add up all the values for electricity usage across all Features at this timestep
+                value_hash[:elec_val] += Float(row['Value'])
+              }  # End elec_query
+
+              # RDDI == 252 is the timestep value for facility gas
+              gas_query = feature_db.query "SELECT *
+                FROM ReportData
+                WHERE EXISTS (
+                  select * from ReportData WHERE TimeIndex=?
+                  AND ReportDataDictionaryIndex=252)", time_segment['TimeIndex']
+              
+              gas_query.each { |row|
+                value_hash[:gas_val] += Float(row['Value'])
+              }  # End gas_query
+              gas_query.close
+              elec_query.close
+              feature_db.close
                 
-                value_hash = {:elec_val => 0, :gas_val => 0}
-                feature_list.each { |feature|  # Loop through each feature in the scenario
-                    feature_path, feature_name = File.split(feature)  # Separate the folder name from the rest of the path
-                    
-                    feature_db = SQLite3::Database.open "#{@directory_name}#{feature_name}/eplusout.sql"
-                    feature_db.results_as_hash = true
+            }  # End feature_list loop
 
-                    # RDDI == 11 is the timestep value for facility electricity
-                    elec_query = feature_db.query "SELECT *
-                        FROM ReportData
-                        WHERE EXISTS (
-                            select * from ReportData WHERE TimeIndex=?
-                            AND ReportDataDictionaryIndex=11)", time_segment['TimeIndex']
-                        
-
-                    elec_query.each { |row|  # Add up all the values for electricity usage across all Features at this timestep
-                        value_hash[:elec_val] += Float(row['Value'])
-                    }  # End elec_query
-
-                    # RDDI == 252 is the timestep value for facility gas
-                    gas_query = feature_db.query "SELECT *
-                        FROM ReportData
-                        WHERE EXISTS (
-                            select * from ReportData WHERE TimeIndex=?
-                            AND ReportDataDictionaryIndex=252)", time_segment['TimeIndex']
-                    
-                    gas_query.each { |row|
-                        value_hash[:gas_val] += Float(row['Value'])
-                    }  # End gas_query
-                    gas_query.close
-                    elec_query.close
-                    feature_db.close
-                    
-                }  # End feature_list loop
-
-                # Put summed Values into the database
-                scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES (?, ?, ?)",
-                    Integer(time_segment['TimeIndex']), 11, value_hash[:elec_val])
-                
-                scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES (?, ?, ?)",
-                    Integer(time_segment['TimeIndex']), 252, value_hash[:gas_val])
-
-            }  # End time_query loop
+            # Put summed Values into the database
+            scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES (?, ?, ?)",
+              Integer(time_segment['TimeIndex']), 11, value_hash[:elec_val])
             
-            scenario_db.close
+            scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES (?, ?, ?)",
+              Integer(time_segment['TimeIndex']), 252, value_hash[:gas_val])
+
+          }  # End time_query loop
+          
+          scenario_db.close
         end
 
         ##
