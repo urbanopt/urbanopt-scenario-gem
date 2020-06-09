@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files         = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|lib.measures.*tests|spec|features)/}) }
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'json_pure'
   spec.add_dependency 'openstudio-common-measures', '~> 0.2.0'
   spec.add_dependency 'openstudio-model-articulation', '~> 0.2.0'
-  spec.add_dependency 'urbanopt-core', '~> 0.3.0.pre2'
   spec.add_dependency 'sqlite3', '~> 1.3.13'
+  spec.add_dependency 'urbanopt-core', '~> 0.3.0'
+
 end
