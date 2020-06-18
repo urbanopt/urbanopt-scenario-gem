@@ -157,11 +157,10 @@ module URBANopt
             Value INTEGER
             )"
 
-          time_db = SQLite3::Database.open "#{@directory_name}#{feature_1_name}/eplusout.sql"  # This feels icky to open the db just to get the TimeIndexes
+          time_db = SQLite3::Database.open "#{@directory_name}/#{feature_1_name}/eplusout.sql"  # This feels icky to open the db just to get the TimeIndexes
           time_db.results_as_hash = true
           time_query = time_db.query "SELECT DISTINCT TimeIndex FROM ReportData WHERE (TimeIndex % 2) != 0"
           # Odd TimeIndexes use the specified timestep, even TimeIndexes use hourly timestep, as shown in ReportDataDictionary
-          time_db.close
 
           time_query.each { |time_segment|  # Loop through each (odd-only) TimeIndex, to aggregate all Value's for that time_segment
               
@@ -169,12 +168,12 @@ module URBANopt
             feature_list.each { |feature|  # Loop through each feature in the scenario
               feature_path, feature_name = File.split(feature)  # Separate the folder name from the rest of the path
               
-              feature_db = SQLite3::Database.open "#{@directory_name}#{feature_name}/eplusout.sql"
+              feature_db = SQLite3::Database.open "#{@directory_name}/#{feature_name}/eplusout.sql"
               feature_db.results_as_hash = true
 
               # RDDI == 11 is the timestep value for facility electricity
               elec_query = feature_db.query "SELECT *
-                FRO M ReportData
+                FROM ReportData
                 WHERE EXISTS (
                   select * from ReportData WHERE TimeIndex=?
                   AND ReportDataDictionaryIndex=11)", time_segment['TimeIndex']
@@ -183,6 +182,7 @@ module URBANopt
               elec_query.each { |row|  # Add up all the values for electricity usage across all Features at this timestep
                 value_hash[:elec_val] += Float(row['Value'])
               }  # End elec_query
+              elec_query.close
 
               # RDDI == 252 is the timestep value for facility gas
               gas_query = feature_db.query "SELECT *
@@ -195,7 +195,6 @@ module URBANopt
                 value_hash[:gas_val] += Float(row['Value'])
               }  # End gas_query
               gas_query.close
-              elec_query.close
               feature_db.close
                 
             }  # End feature_list loop
@@ -208,7 +207,8 @@ module URBANopt
               Integer(time_segment['TimeIndex']), 252, value_hash[:gas_val])
 
           }  # End time_query loop
-          
+          time_query.close
+          time_db.close
           scenario_db.close
         end
 
