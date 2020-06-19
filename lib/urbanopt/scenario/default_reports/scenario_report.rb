@@ -145,11 +145,11 @@ module URBANopt
 
         # Create database file with scenario-level results
         #   Sum values for each timestep across all features. Save to new table in a new database
-        def create_scenario_db_file()
+        def create_scenario_db_file(file_name)
           feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
           feature_1_path, feature_1_name = File.split(feature_list[0])  # This is used for time_db only
 
-          new_db_file = File.join(@directory_name, "default_scenario_report.db")
+          new_db_file = File.join(@directory_name, "#{file_name}.db")
           scenario_db = SQLite3::Database.open new_db_file
           scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
             TimeIndex INTEGER,
@@ -171,12 +171,11 @@ module URBANopt
               feature_db = SQLite3::Database.open "#{@directory_name}/#{feature_name}/eplusout.sql"
               feature_db.results_as_hash = true
 
-              # RDDI == 11 is the timestep value for facility electricity
+              # RDDI == 10 is the timestep value for facility electricity
               elec_query = feature_db.query "SELECT *
                 FROM ReportData
-                WHERE EXISTS (
-                  select * from ReportData WHERE TimeIndex=?
-                  AND ReportDataDictionaryIndex=11)", time_segment['TimeIndex']
+                WHERE TimeIndex=?
+                AND ReportDataDictionaryIndex=10", time_segment['TimeIndex']
                   
 
               elec_query.each { |row|  # Add up all the values for electricity usage across all Features at this timestep
@@ -184,12 +183,11 @@ module URBANopt
               }  # End elec_query
               elec_query.close
 
-              # RDDI == 252 is the timestep value for facility gas
+              # RDDI == 255 is the timestep value for facility gas
               gas_query = feature_db.query "SELECT *
                 FROM ReportData
-                WHERE EXISTS (
-                  select * from ReportData WHERE TimeIndex=?
-                  AND ReportDataDictionaryIndex=252)", time_segment['TimeIndex']
+                WHERE TimeIndex=?
+                AND ReportDataDictionaryIndex=255", time_segment['TimeIndex']
               
               gas_query.each { |row|
                 value_hash[:gas_val] += Float(row['Value'])
@@ -201,10 +199,10 @@ module URBANopt
 
             # Put summed Values into the database
             scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES (?, ?, ?)",
-              Integer(time_segment['TimeIndex']), 11, value_hash[:elec_val])
+              Integer(time_segment['TimeIndex']), 10, value_hash[:elec_val])
             
             scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES (?, ?, ?)",
-              Integer(time_segment['TimeIndex']), 252, value_hash[:gas_val])
+              Integer(time_segment['TimeIndex']), 255, value_hash[:gas_val])
 
           }  # End time_query loop
           time_query.close
@@ -254,7 +252,7 @@ module URBANopt
           else
             @timeseries_csv.path = File.join(@directory_name, file_name + '.csv')
           end
-          create_scenario_db_file()
+          create_scenario_db_file(file_name)
           return true
         end
 
