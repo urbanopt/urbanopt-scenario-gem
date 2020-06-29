@@ -157,7 +157,8 @@ module URBANopt
             Value INTEGER
             )"
 
-          time_db = SQLite3::Database.open "#{@directory_name}/#{feature_1_name}/eplusout.sql"  # This feels icky to open the db just to get the TimeIndexes
+          uo_output_sql_file = File.join(@directory_name, feature_1_name, "eplusout.sql")
+          time_db = SQLite3::Database.open uo_output_sql_file  # This feels icky to open the db just to get the TimeIndexes
           time_db.results_as_hash = true
           time_query = time_db.query "SELECT DISTINCT TimeIndex FROM ReportData WHERE (TimeIndex % 2) != 0"
           # Odd TimeIndexes use the specified timestep, even TimeIndexes use hourly timestep, as shown in ReportDataDictionary
@@ -168,7 +169,7 @@ module URBANopt
             feature_list.each { |feature|  # Loop through each feature in the scenario
               feature_path, feature_name = File.split(feature)  # Separate the folder name from the rest of the path
               
-              feature_db = SQLite3::Database.open "#{@directory_name}/#{feature_name}/eplusout.sql"
+              feature_db = SQLite3::Database.open uo_output_sql_file
               feature_db.results_as_hash = true
 
               # RDDI == 10 is the timestep value for facility electricity
