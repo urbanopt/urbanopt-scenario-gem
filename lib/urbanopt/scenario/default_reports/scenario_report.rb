@@ -146,10 +146,6 @@ module URBANopt
         # Create database file with scenario-level results
         #   Sum values for each timestep across all features. Save to new table in a new database
         def create_scenario_db_file(file_name)
-          puts "start: #{Time.now}"
-          feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
-          feature_1_path, feature_1_name = File.split(feature_list[0])  # This is used for time_db only
-
           new_db_file = File.join(@directory_name, "#{file_name}.db")
           scenario_db = SQLite3::Database.open new_db_file
           scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
@@ -157,21 +153,13 @@ module URBANopt
             ReportDataDictionaryIndex INTEGER,
             Value INTEGER
             )"
-
-          uo_output_sql_file = File.join(@directory_name, feature_1_name, "eplusout.sql")
-          time_db = SQLite3::Database.open uo_output_sql_file  # This feels icky to open the db just to get the TimeIndexes
-          time_db.results_as_hash = true
-          time_query = time_db.query "SELECT DISTINCT TimeIndex FROM ReportData WHERE (TimeIndex % 2) != 0 order by TimeIndex"
-          # Odd TimeIndexes use the specified timestep, even TimeIndexes use hourly timestep, as shown in ReportDataDictionary
-
-          #time_query.each do |time_segment|  # Loop through each (odd-only) TimeIndex, to aggregate all Value's for that time_segment
               
-          values_arr = []  
-          #value_hash = {:elec_val => 0, :gas_val => 0}
-          feature_list.each do |feature|  # Loop through each feature in the scenario
-            feature_path, feature_name = File.split(feature)  # Separate the folder name from the rest of the path
-            
-            feature_db = SQLite3::Database.open "#{@directory_name}/#{feature_name}/eplusout.sql"
+          values_arr = []
+          feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
+          feature_1_name = File.basename(feature_list[0])  # Get name of first feature, so we can read eplusout.sql from there
+          uo_output_sql_file = File.join(@directory_name, feature_1_name, "eplusout.sql")
+          feature_list.each do |feature|  # Loop through each feature in the scenario            
+            feature_db = SQLite3::Database.open uo_output_sql_file
             feature_db.results_as_hash = true
 
             # RDDI == 10 is the timestep value for facility electricity
@@ -222,18 +210,12 @@ module URBANopt
 
           # Put summed Values into the database
           scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES #{elec_sql.join(', ')}")
-          
           scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES #{gas_sql.join(', ')}")
-
-         # end  # End time_query loop
-          time_query.close
-          time_db.close
           scenario_db.close
-          puts "end: #{Time.now}"
         end
 
         ##
-        # Saves the 'default_scenario_report.json' and 'default_scenario_report.csv' files
+        # Saves the 'default_scenario_report.json', 'default_scenario_report.db', and 'default_scenario_report.csv' files
         ##
         # [parameters]:
         # +file_name+ - _String_ - Assign a name to the saved scenario results file without an extension
