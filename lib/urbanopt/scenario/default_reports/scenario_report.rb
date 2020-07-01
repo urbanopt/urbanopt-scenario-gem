@@ -160,40 +160,41 @@ module URBANopt
           uo_output_sql_file = File.join(@directory_name, feature_1_name, "eplusout.sql")
           feature_list.each do |feature|  # Loop through each feature in the scenario            
             feature_db = SQLite3::Database.open uo_output_sql_file
-            feature_db.results_as_hash = true
 
             # RDDI == 10 is the timestep value for facility electricity
-            elec_query = feature_db.query "SELECT *
+            elec_query = feature_db.query "SELECT TimeIndex, ReportDataDictionaryIndex, Value
               FROM ReportData
               WHERE (TimeIndex % 2) != 0
               AND ReportDataDictionaryIndex=10 order by TimeIndex"
 
             elec_query.each do |row|  # Add up all the values for electricity usage across all Features at this timestep
-              arr_match = values_arr.find {|v| v[:time_index] == row['TimeIndex'] }
+              # row[0] == TimeIndex, row[1] == ReportDataDictionaryIndex, row[2] == Value
+              arr_match = values_arr.find {|v| v[:time_index] == row[0] }
               if arr_match.nil?
                 # add new row to value_arr
-                values_arr << {time_index: row['TimeIndex'], elec_val: Float(row['Value']), gas_val: 0}
+                values_arr << {time_index: row[0], elec_val: Float(row[2]), gas_val: 0}
               else
                 # running sum
-                arr_match[:elec_val] += Float(row['Value'])
+                arr_match[:elec_val] += Float(row[2])
               end
             end  # End elec_query
             elec_query.close
 
             # RDDI == 255 is the timestep value for facility gas
-            gas_query = feature_db.query "SELECT *
+            gas_query = feature_db.query "SELECT TimeIndex, ReportDataDictionaryIndex, Value
               FROM ReportData
               WHERE (TimeIndex % 2) != 0
               AND ReportDataDictionaryIndex=255 order by TimeIndex"
             
             gas_query.each do |row|
-              arr_match = values_arr.find {|v| v[:time_index] == row['TimeIndex'] }
+              # row[0] == TimeIndex, row[1] == ReportDataDictionaryIndex, row[2] == Value
+              arr_match = values_arr.find {|v| v[:time_index] == row[0] }
               if arr_match.nil?
                 # add new row to value_arr
-                values_arr << {time_index: row['TimeIndex'], gas_val: Float(row['Value']), elec_val: 0}
+                values_arr << {time_index: row[0], gas_val: Float(row[2]), elec_val: 0}
               else
                 # running sum
-                arr_match[:gas_val] += Float(row['Value'])
+                arr_match[:gas_val] += Float(row[2])
               end
             end # End gas_query
             gas_query.close
