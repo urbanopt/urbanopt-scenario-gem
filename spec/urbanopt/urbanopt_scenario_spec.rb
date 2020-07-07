@@ -53,7 +53,10 @@ RSpec.describe URBANopt::Scenario do
     mapper_files_dir = File.join(File.dirname(__FILE__), '../files/mappers/')
     csv_file = File.join(File.dirname(__FILE__), '../files/example_scenario.csv')
     num_header_rows = 1
-    root_dir = File.join(File.dirname(__FILE__), '../../')
+    root_dir = File.join(File.dirname(__FILE__), '../test/')
+
+    # copy gemfile to example scenario (want to use this gemfile for bundling instead of repo Gemfile)
+    FileUtils.copy(File.join(File.dirname(__FILE__),'../files/Gemfile'), File.join(File.dirname(__FILE__),'../test/Gemfile'))
 
     feature_file = ExampleFeatureFile.new(feature_file_path)
     expect(feature_file.features.size).to eq(3)
@@ -92,6 +95,7 @@ RSpec.describe URBANopt::Scenario do
     end
 
     # create a ScenarioRunnerOSW to run the ScenarioCSV
+
     scenario_runner = URBANopt::Scenario::ScenarioRunnerOSW.new
 
     scenario_runner.create_simulation_files(scenario, clear_results)
@@ -99,7 +103,9 @@ RSpec.describe URBANopt::Scenario do
     expect(File.exist?(simulation_dirs[1].run_dir)).to be true
     expect(File.exist?(simulation_dirs[2].run_dir)).to be true
 
-    simulation_dirs = scenario_runner.run(scenario)
+    # pass Gemfile and bundle paths to extension gem runner, otherwise it will use this gem's and that doesn't work b/c of native gems
+    options = {gemfile_path: File.join(File.dirname(__FILE__),'../test/Gemfile'), bundle_install_path: File.join(File.dirname(__FILE__),'../test/.bundle/install'), skip_config: false}
+    simulation_dirs = scenario_runner.run(scenario, false, options)
     if clear_results
       expect(simulation_dirs.size).to eq(3)
       expect(simulation_dirs[0].in_osw_path).to eq(File.join(run_dir, '1/in.osw'))

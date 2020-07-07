@@ -1,0 +1,11 @@
+
+source 'http://rubygems.org'
+
+ruby '~> 2.5.0'
+
+
+gem 'openstudio-common-measures', '~> 0.2.0'
+gem 'openstudio-model-articulation', '~> 0.2.0'
+gem 'urbanopt-scenario', path: '../../../'
+gem 'urbanopt-geojson', '~> 0.3.0'
+
