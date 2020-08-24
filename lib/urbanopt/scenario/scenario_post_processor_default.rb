@@ -101,6 +101,7 @@ module URBANopt
         uo_output_sql_file = File.join(@directory_name, feature_1_name, "eplusout.sql")
         feature_list.each do |feature|  # Loop through each feature in the scenario
           feature_db = SQLite3::Database.open uo_output_sql_file
+          # Doing "db.results_as_hash = true" is prettier, but in this case significantly slower.
 
           # RDDI == 10 is the timestep value for facility electricity
           elec_query = feature_db.query "SELECT TimeIndex, Value
