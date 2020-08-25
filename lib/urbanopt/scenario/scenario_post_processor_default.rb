@@ -47,8 +47,9 @@ module URBANopt
       def initialize(scenario_base)
         super(scenario_base)
 
-        initialization_hash = { directory_name: scenario_base.run_dir, name: scenario_base.name, id: scenario_base.name }
-        @scenario_result = URBANopt::Reporting::DefaultReports::ScenarioReport.new(initialization_hash)
+        @initialization_hash = { directory_name: scenario_base.run_dir, name: scenario_base.name, id: scenario_base.name }
+        @scenario_result = URBANopt::Reporting::DefaultReports::ScenarioReport.new(@initialization_hash)
+        @default_save_name = "default_scenario_report"
 
         @@logger ||= URBANopt::Reporting::DefaultReports.logger
       end
@@ -86,8 +87,8 @@ module URBANopt
 
       # Create database file with scenario-level results
       #   Sum values for each timestep across all features. Save to new table in a new database
-      def create_scenario_db_file(file_name)
-        new_db_file = File.join(@directory_name, "#{file_name}.db")
+      def create_scenario_db_file(file_name = @default_save_name)
+        new_db_file = File.join(@initialization_hash[:directory_name], "#{file_name}.db")
         scenario_db = SQLite3::Database.open new_db_file
         scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
           TimeIndex INTEGER,
@@ -96,9 +97,9 @@ module URBANopt
           )"
 
         values_arr = []
-        feature_list = Pathname.new(@directory_name).children.select(&:directory?)  # Folders in the run/scenario directory
+        feature_list = Pathname.new(@initialization_hash[:directory_name]).children.select(&:directory?)  # Folders in the run/scenario directory
         feature_1_name = File.basename(feature_list[0])  # Get name of first feature, so we can read eplusout.sql from there
-        uo_output_sql_file = File.join(@directory_name, feature_1_name, "eplusout.sql")
+        uo_output_sql_file = File.join(@initialization_hash[:directory_name], feature_1_name, "eplusout.sql")
         feature_list.each do |feature|  # Loop through each feature in the scenario
           feature_db = SQLite3::Database.open uo_output_sql_file
           # Doing "db.results_as_hash = true" is prettier, but in this case significantly slower.
@@ -162,7 +163,7 @@ module URBANopt
       ##
       # [parameters:]
       # +file_name+ - _String_ - Assign a name to the saved scenario results file
-      def save(file_name = 'default_scenario_report')
+      def save(file_name = @default_save_name)
         @scenario_result.save
 
         return @scenario_result
