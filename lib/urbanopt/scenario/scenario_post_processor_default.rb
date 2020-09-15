@@ -98,17 +98,18 @@ module URBANopt
 
         values_arr = []
         feature_list = Pathname.new(@initialization_hash[:directory_name]).children.select(&:directory?)  # Folders in the run/scenario directory
-        feature_1_name = File.basename(feature_list[0])  # Get name of first feature, so we can read eplusout.sql from there
+        feature_1_name = File.basename(feature_list[-1])  # Get name of last feature, so we can read eplusout.sql from there
         uo_output_sql_file = File.join(@initialization_hash[:directory_name], feature_1_name, "eplusout.sql")
         feature_list.each do |feature|  # Loop through each feature in the scenario
           feature_db = SQLite3::Database.open uo_output_sql_file
-          # Doing "db.results_as_hash = true" is prettier, but in this case significantly slower.
+          # Doing "feature_db.results_as_hash = true" is prettier, but in this case significantly slower.
 
           # RDDI == 10 is the timestep value for facility electricity
           elec_query = feature_db.query "SELECT TimeIndex, Value
             FROM ReportData
             WHERE (TimeIndex % 2) != 0
-            AND ReportDataDictionaryIndex=10 order by TimeIndex"
+            AND ReportDataDictionaryIndex=10
+            ORDER BY TimeIndex"
 
           elec_query.each do |row|  # Add up all the values for electricity usage across all Features at this timestep
             # row[0] == TimeIndex, row[1] == Value
@@ -127,7 +128,8 @@ module URBANopt
           gas_query = feature_db.query "SELECT TimeIndex, Value
             FROM ReportData
             WHERE (TimeIndex % 2) != 0
-            AND ReportDataDictionaryIndex=255 order by TimeIndex"
+            AND ReportDataDictionaryIndex=255
+            ORDER BY TimeIndex"
 
           gas_query.each do |row|
             # row[0] == TimeIndex, row[1] == Value
