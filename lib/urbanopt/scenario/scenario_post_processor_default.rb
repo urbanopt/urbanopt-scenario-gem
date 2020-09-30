@@ -97,7 +97,7 @@ module URBANopt
 
         values_arr = []
         feature_list = Pathname.new(@initialization_hash[:directory_name]).children.select(&:directory?) # Folders in the run/scenario directory
-        
+
         # get scenario CSV
         scenario_csv = File.join(@initialization_hash[:root_dir], @initialization_hash[:name] + '.csv')
         if File.exist?(scenario_csv)
@@ -121,14 +121,15 @@ module URBANopt
           feature_db = SQLite3::Database.open uo_output_sql_file
           # Doing "db.results_as_hash = true" is prettier, but in this case significantly slower.
 
-          # RDDI == 10 is the timestep value for facility electricity
+          # RDDI == 10 is the timestep value for facility electricity in OS 3.0.1
+          # TODO: JOIN query with Time table to return human-readable datetimes
           elec_query = feature_db.query "SELECT TimeIndex, Value
             FROM ReportData
-            WHERE (TimeIndex % 2) != 0
-            AND ReportDataDictionaryIndex=10 order by TimeIndex"
+            WHERE ReportDataDictionaryIndex=10 order by TimeIndex"
 
           elec_query.each do |row| # Add up all the values for electricity usage across all Features at this timestep
             # row[0] == TimeIndex, row[1] == Value
+
             arr_match = values_arr.find { |v| v[:time_index] == row[0] }
             if arr_match.nil?
               # add new row to value_arr
@@ -140,11 +141,11 @@ module URBANopt
           end # End elec_query
           elec_query.close
 
-          # RDDI == 255 is the timestep value for facility gas
+          # RDDI == 1382 is the timestep value for facility gas in OS 3.0.1
+          # TODO: JOIN query with Time table to return human-readable datetimes
           gas_query = feature_db.query "SELECT TimeIndex, Value
             FROM ReportData
-            WHERE (TimeIndex % 2) != 0
-            AND ReportDataDictionaryIndex=255 order by TimeIndex"
+            WHERE ReportDataDictionaryIndex=1382 order by TimeIndex"
 
           gas_query.each do |row|
             # row[0] == TimeIndex, row[1] == Value
