@@ -122,10 +122,12 @@ module URBANopt
           # Doing "db.results_as_hash = true" is prettier, but in this case significantly slower.
 
           # RDDI == 10 is the timestep value for facility electricity in OS 3.0.1
-          # TODO: JOIN query with Time table to return human-readable datetimes
-          elec_query = feature_db.query "SELECT TimeIndex, Value
-            FROM ReportData
-            WHERE ReportDataDictionaryIndex=10 order by TimeIndex"
+          # TODO: Write human-readable time columns to output db
+          elec_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour, Time.Minute, Time.Dst, ReportData.Value
+          FROM ReportData
+          INNER JOIN Time ON Time.TimeIndex=ReportData.TimeIndex
+          WHERE ReportDataDictionaryIndex == 10
+          ORDER BY ReportData.TimeIndex"
 
           elec_query.each do |row| # Add up all the values for electricity usage across all Features at this timestep
             # row[0] == TimeIndex, row[1] == Value
@@ -142,10 +144,12 @@ module URBANopt
           elec_query.close
 
           # RDDI == 1382 is the timestep value for facility gas in OS 3.0.1
-          # TODO: JOIN query with Time table to return human-readable datetimes
-          gas_query = feature_db.query "SELECT TimeIndex, Value
-            FROM ReportData
-            WHERE ReportDataDictionaryIndex=1382 order by TimeIndex"
+          # TODO: Write human-readable time columns to output db
+          gas_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour, Time.Minute, Time.Dst, ReportData.Value
+          FROM ReportData
+          INNER JOIN Time ON Time.TimeIndex=ReportData.TimeIndex
+          WHERE ReportDataDictionaryIndex == 1382
+          ORDER BY ReportData.TimeIndex"
 
           gas_query.each do |row|
             # row[0] == TimeIndex, row[1] == Value
