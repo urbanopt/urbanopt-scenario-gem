@@ -102,10 +102,10 @@ module URBANopt
         scenario_csv = File.join(@initialization_hash[:root_dir], @initialization_hash[:name] + '.csv')
         if File.exist?(scenario_csv)
           # csv found
-          feature_ids = CSV.read(scenario_csv, :headers => true)
+          feature_ids = CSV.read(scenario_csv, headers: true)
           feature_list = []
           # loop through building feature ids from scenario csv
-          feature_ids["Feature Id"].each do |feature|
+          feature_ids['Feature Id'].each do |feature|
             if Dir.exist?(File.join(@initialization_hash[:directory_name], feature))
               feature_list << File.join(@initialization_hash[:directory_name], feature)
             else
