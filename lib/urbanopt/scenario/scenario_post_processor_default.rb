@@ -91,6 +91,12 @@ module URBANopt
         scenario_db = SQLite3::Database.open new_db_file
         scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
           TimeIndex INTEGER,
+          Year VARCHAR(255),
+          Month VARCHAR(255),
+          Day VARCHAR(255),
+          Hour VARCHAR(255),
+          Minute VARCHAR(255),
+          Dst INTEGER,
           ReportDataDictionaryIndex INTEGER,
           Value INTEGER
           )"
@@ -122,6 +128,7 @@ module URBANopt
           # Doing "db.results_as_hash = true" is prettier, but in this case significantly slower.
 
           # RDDI == 10 is the timestep value for facility electricity in OS 3.0.1
+          # TODO: Dynamically read RDDI from table RDDI, insted of hardcoding it
           # TODO: Write human-readable time columns to output db
           elec_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour, Time.Minute, Time.Dst, ReportData.Value
           FROM ReportData
@@ -135,15 +142,16 @@ module URBANopt
             arr_match = values_arr.find { |v| v[:time_index] == row[0] }
             if arr_match.nil?
               # add new row to value_arr
-              values_arr << { time_index: row[0], elec_val: Float(row[1]), gas_val: 0 }
+              values_arr << { time_index: row[0], year: row[1], month: row[2], day: row[3], hour: row[4], minute: row[5], dst: row[6], elec_val: Float(row[7]), gas_val: 0 }
             else
               # running sum
-              arr_match[:elec_val] += Float(row[1])
+              arr_match[:elec_val] += Float(row[7])
             end
           end # End elec_query
           elec_query.close
 
           # RDDI == 1382 is the timestep value for facility gas in OS 3.0.1
+          # TODO: Dynamically read RDDI from table RDDI, insted of hardcoding it
           # TODO: Write human-readable time columns to output db
           gas_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour, Time.Minute, Time.Dst, ReportData.Value
           FROM ReportData
@@ -156,10 +164,10 @@ module URBANopt
             arr_match = values_arr.find { |v| v[:time_index] == row[0] }
             if arr_match.nil?
               # add new row to value_arr
-              values_arr << { time_index: row[0], gas_val: Float(row[1]), elec_val: 0 }
+              values_arr << { time_index: row[0], year: row[1], month: row[2], day: row[3], hour: row[4], minute: row[5], dst: row[6], gas_val: Float(row[7]), elec_val: 0 }
             else
               # running sum
-              arr_match[:gas_val] += Float(row[1])
+              arr_match[:gas_val] += Float(row[7])
             end
           end # End gas_query
           gas_query.close
@@ -169,13 +177,13 @@ module URBANopt
         elec_sql = []
         gas_sql = []
         values_arr.each do |i|
-          elec_sql << "(#{i[:time_index]}, 10, #{i[:elec_val]})"
-          gas_sql << "(#{i[:time_index]}, 255, #{i[:gas_val]})"
+          elec_sql << "(#{i[:time_index]}, #{i[:year]}, #{i[:month]}, #{i[:day]}, #{i[:hour]}, #{i[:minute]}, #{i[:dst]}, 10, #{i[:elec_val]})"
+          gas_sql << "(#{i[:time_index]}, #{i[:year]}, #{i[:month]}, #{i[:day]}, #{i[:hour]}, #{i[:minute]}, #{i[:dst]}, 1382, #{i[:gas_val]})"
         end
 
         # Put summed Values into the database
-        scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES #{elec_sql.join(', ')}")
-        scenario_db.execute("INSERT INTO ReportData (TimeIndex, ReportDataDictionaryIndex, Value) VALUES #{gas_sql.join(', ')}")
+        scenario_db.execute("INSERT INTO ReportData VALUES #{elec_sql.join(', ')}")
+        scenario_db.execute("INSERT INTO ReportData VALUES #{gas_sql.join(', ')}")
         scenario_db.close
       end
 
