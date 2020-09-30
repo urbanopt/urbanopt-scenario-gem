@@ -129,7 +129,6 @@ module URBANopt
 
           # RDDI == 10 is the timestep value for facility electricity in OS 3.0.1
           # TODO: Dynamically read RDDI from table RDDI, insted of hardcoding it
-          # TODO: Write human-readable time columns to output db
           elec_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour, Time.Minute, Time.Dst, ReportData.Value
           FROM ReportData
           INNER JOIN Time ON Time.TimeIndex=ReportData.TimeIndex
@@ -152,7 +151,6 @@ module URBANopt
 
           # RDDI == 1382 is the timestep value for facility gas in OS 3.0.1
           # TODO: Dynamically read RDDI from table RDDI, insted of hardcoding it
-          # TODO: Write human-readable time columns to output db
           gas_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour, Time.Minute, Time.Dst, ReportData.Value
           FROM ReportData
           INNER JOIN Time ON Time.TimeIndex=ReportData.TimeIndex
