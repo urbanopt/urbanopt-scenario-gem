@@ -5,13 +5,7 @@ module.exports = {
   themeConfig: {
     navbar: false,
     sidebar: [
-      "/",
-      {
-        title: "Schemas",
-        children: [
-          "/schemas/scenario-schema.md"
-        ]
-      }
+      "/"
     ]
   },
   chainWebpack: config => {
