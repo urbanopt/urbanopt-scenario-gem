@@ -33,7 +33,7 @@ require_relative '../files/example_feature_file'
 require 'json'
 require 'json-schema'
 RSpec.describe URBANopt::Scenario do
-  @@logger ||= URBANopt::Reporting::DefaultReports.logger
+  logger ||= URBANopt::Reporting::DefaultReports.logger
 
   it 'has a version number' do
     expect(URBANopt::Scenario::VERSION).not_to be nil
@@ -214,7 +214,7 @@ RSpec.describe URBANopt::Scenario do
     # Read scenario json file and validated againt schema
     scenario_json = JSON.parse(File.read(scenario_json_file))
 
-    @@logger.info("Schema Validation Errors: #{JSON::Validator.fully_validate(schema, scenario_json)}")
+    logger.info("Schema Validation Errors: #{JSON::Validator.fully_validate(schema, scenario_json)}")
     expect(JSON::Validator.fully_validate(schema, scenario_json).empty?).to be true
 
     # close json file
