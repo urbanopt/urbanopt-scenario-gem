@@ -16,6 +16,8 @@ Gemfile.lock
 /lib/measures/*/tests/output
 /spec/run/*/scenarioData.js
 /spec/run/scenarioData.js
+/spec/vis_test/scenarioData.js
+/spec/vis_test/baseline_scenario/scenarioData.js
 
 .rubocop*s3*
 
@@ -25,4 +27,3 @@ Gemfile.lock
 # Ignore IDE files
 /.idea
 runner.conf
-
