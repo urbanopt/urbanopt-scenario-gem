@@ -199,10 +199,14 @@ module URBANopt
               # running sum
               arr_match[:dc_it] += row[7]
               arr_match[:dc_ot] += row[9]
-              arr_match[:dc_mfr] += row[11]
+              if row[11] > arr_match[:dc_mfr]
+                arr_match[:dc_mfr] = row[11]
+              end
               arr_match[:dh_it] += row[13]
               arr_match[:dh_ot] += row[15]
-              arr_match[:dh_mfr] += row[17]
+              if row[17] > arr_match[:dh_mfr]
+                arr_match[:dh_mfr] = row[17]
+              end
               arr_match[:gas_val] += row[19]
               arr_match[:elec_val] += row[21]
             end
