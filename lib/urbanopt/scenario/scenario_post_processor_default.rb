@@ -146,44 +146,44 @@ module URBANopt
 
           # This query pivots the data so each value requested in the rddi becomes its own column for a single time index
           query = feature_db.query "Select  tindex, year, month, day, hour, minute, dst,
-              max(case when col_name = 'District Cooling Inlet Temperature' then IFNULL(col_value,0) end) dc_it,
-              max(case when col_name = 'District Cooling Inlet Temperature' then col_unit end) dc_it_units,
-              max(case when col_name = 'District Cooling Outlet Temperature' then IFNULL(col_value,0) end) dc_ot,
-              max(case when col_name = 'District Cooling Outlet Temperature' then col_unit end) dc_ot_units,
-              max(case when col_name = 'District Cooling Mass Flow Rate' then IFNULL(col_value,0) end) dc_mfr,
-              max(case when col_name = 'District Cooling Mass Flow Rate' then col_unit end) dc_mfr_units,
-              max(case when col_name = 'District Heating Inlet Temperature' then IFNULL(col_value,0) end) dh_it,
-              max(case when col_name = 'District Heating Inlet Temperature' then col_unit end) dh_it_units,
-              max(case when col_name = 'District Heating Outlet Temperature' then IFNULL(col_value,0) end) dh_ot,
-              max(case when col_name = 'District Heating Outlet Temperature' then col_unit end) dh_ot_units,
-              max(case when col_name = 'District Heating Mass Flow Rate' then IFNULL(col_value,0) end) dh_mfr,
-              max(case when col_name = 'District Heating Mass Flow Rate' then col_unit end) dh_mfr_units,
-              max(case when col_name = 'Gas:Facility' then IFNULL(col_value,0) end) gas_val,
-              max(case when col_name = 'Gas:Facility' then col_unit end) gas_units,
-              max(case when col_name = 'Electricity:Facility' then IFNULL(col_value,0) end) elec_val,
-              max(case when col_name = 'Electricity:Facility' then col_unit end) elec_units
-            from (
-              SELECT ReportData.TimeIndex as tindex,
-                Time.Year as year, Time.Month as month, Time.Day as day, Time.Hour as hour, Time.Minute as minute, Time.Dst as dst,
-                rddi.Name as col_name,
-                ReportData.Value as col_value,
-                rddi.Units as col_unit
-              FROM ReportData
-              INNER JOIN Time ON Time.TimeIndex=tindex
-              INNER JOIN ReportDataDictionary AS rddi ON rddi.ReportDataDictionaryIndex=ReportData.ReportDataDictionaryIndex
-              WHERE year > 1900
-              AND rddi.ReportingFrequency = 'Zone Timestep'
-                AND (rddi.Name = 'Gas:Facility'
-                OR rddi.Name = 'Electricity:Facility'
-                OR rddi.Name = 'District Heating Mass Flow Rate'
-                OR rddi.Name = 'District Heating Inlet Temperature'
-                OR rddi.Name = 'District Heating Outlet Temperature'
-                OR rddi.Name = 'District Cooling Mass Flow Rate'
-                OR rddi.Name = 'District Cooling Inlet Temperature'
-                OR rddi.Name = 'District Cooling Outlet Temperature' )
-              ORDER BY tindex
-            )
-          group by tindex;"
+          IFNULL(max(case when col_name = 'District Cooling Inlet Temperature' then col_value end), 0) dc_it,
+          IFNULL(max(case when col_name = 'District Cooling Inlet Temperature' then col_unit end), 'C') dc_it_units,
+          IFNULL(max(case when col_name = 'District Cooling Outlet Temperature' then col_value end),0) dc_ot,
+          IFNULL(max(case when col_name = 'District Cooling Outlet Temperature' then col_unit end), 'C') dc_ot_units,
+          IFNULL(max(case when col_name = 'District Cooling Mass Flow Rate' then col_value end),0) dc_mfr,
+          IFNULL(max(case when col_name = 'District Cooling Mass Flow Rate' then col_unit end), 'kg/s') dc_mfr_units,
+          IFNULL(max(case when col_name = 'District Heating Inlet Temperature' then col_value end),0) dh_it,
+          IFNULL(max(case when col_name = 'District Heating Inlet Temperature' then col_unit end), 'C') dh_it_units,
+          IFNULL(max(case when col_name = 'District Heating Outlet Temperature' then col_value end),0) dh_ot,
+          IFNULL(max(case when col_name = 'District Heating Outlet Temperature' then col_unit end), 'C') dh_ot_units,
+          IFNULL(max(case when col_name = 'District Heating Mass Flow Rate' then col_value end),0) dh_mfr,
+          IFNULL(max(case when col_name = 'District Heating Mass Flow Rate' then col_unit end), 'kg/s') dh_mfr_units,
+          IFNULL(max(case when col_name = 'Gas:Facility' then col_value end),0) gas_val,
+          IFNULL(max(case when col_name = 'Gas:Facility' then col_unit end), 'J') gas_units,
+          IFNULL(max(case when col_name = 'Electricity:Facility' then col_value end),0) elec_val,
+          IFNULL(max(case when col_name = 'Electricity:Facility' then col_unit end), 'J') elec_units
+        from (
+          SELECT ReportData.TimeIndex as tindex,
+            Time.Year as year, Time.Month as month, Time.Day as day, Time.Hour as hour, Time.Minute as minute, Time.Dst as dst,
+            rddi.Name as col_name,
+            ReportData.Value as col_value,
+            rddi.Units as col_unit
+          FROM ReportData
+          INNER JOIN Time ON Time.TimeIndex=tindex
+          INNER JOIN ReportDataDictionary AS rddi ON rddi.ReportDataDictionaryIndex=ReportData.ReportDataDictionaryIndex
+          WHERE year > 1900
+          AND rddi.ReportingFrequency = 'Zone Timestep'
+            AND (rddi.Name = 'Gas:Facility'
+            OR rddi.Name = 'Electricity:Facility'
+            OR rddi.Name = 'District Heating Mass Flow Rate'
+            OR rddi.Name = 'District Heating Inlet Temperature'
+            OR rddi.Name = 'District Heating Outlet Temperature'
+            OR rddi.Name = 'District Cooling Mass Flow Rate'
+            OR rddi.Name = 'District Cooling Inlet Temperature'
+            OR rddi.Name = 'District Cooling Outlet Temperature' )
+          ORDER BY tindex
+        )
+      group by tindex;"
 
           query.each do |row| # Add up all the values for electricity usage across all Features at this timestep
 
@@ -214,16 +214,12 @@ module URBANopt
         sql_array = []
         values_arr.each do |i|
           sql_array << "(#{i[:time_index]}, #{i[:year]}, #{i[:month]}, #{i[:day]}, #{i[:hour]}, #{i[:minute]}, #{i[:dst]},
-          #{i[:dc_it]}, #{i[:dc_it_units]}, #{i[:dc_ot]}, #{i[:dc_ot_units]}, #{i[:dc_mfr]}, #{i[:dc_mfr_units]}, #{i[:dh_it]},
-          #{i[:dh_it_units]}, #{i[:dh_ot]}, #{i[:dh_ot_units]}, #{i[:dh_mfr]}, #{i[:dh_mfr_units]}, #{i[:gas_val]}, #{i[:gas_units]},
-          #{i[:elec_val]}, #{i[:elec_units]})"
+          #{i[:dc_it]}, '#{i[:dc_it_units]}', #{i[:dc_ot]}, '#{i[:dc_ot_units]}', #{i[:dc_mfr]}, '#{i[:dc_mfr_units]}', #{i[:dh_it]},
+          '#{i[:dh_it_units]}', #{i[:dh_ot]}, '#{i[:dh_ot_units]}', #{i[:dh_mfr]}, '#{i[:dh_mfr_units]}', #{i[:gas_val]}, '#{i[:gas_units]}',
+          #{i[:elec_val]}, '#{i[:elec_units]}')"
         end
 
         # Put summed Values into the database
-        puts ""
-        puts "sql_array[0]"
-        puts sql_array[1]
-        puts ""
         scenario_db.execute("INSERT INTO ReportData VALUES #{sql_array.join(', ')}")
         scenario_db.close
       end
