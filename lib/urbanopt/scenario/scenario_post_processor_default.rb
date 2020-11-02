@@ -94,15 +94,28 @@ module URBANopt
         scenario_db = SQLite3::Database.open new_db_file
         scenario_db.execute "CREATE TABLE IF NOT EXISTS ReportData(
           TimeIndex INTEGER,
-          Year VARCHAR(255),
-          Month VARCHAR(255),
-          Day VARCHAR(255),
-          Hour VARCHAR(255),
-          Minute VARCHAR(255),
+          Year INTEGER,
+          Month INTEGER,
+          Day INTEGER,
+          Hour INTEGER,
+          Minute INTEGER,
           Dst INTEGER,
-          FuelType VARCHAR(255),
-          Value INTEGER,
-          FuelUnits VARCHAR(255)
+          DC_inlet_temp DECIMAL (5,2),
+          DC_it_units VARCHAR(10),
+          DC_outlet_temp DECIMAL (5,2),
+          DC_ot_units VARCHAR(10),
+          DC_mass_flow_rate DECIMAL (6,3),
+          DC_mfr_units VARCHAR(10),
+          DH_inlet_temp DECIMAL (5,2),
+          DH_it_units VARCHAR(10),
+          DH_outlet_temp DECIMAL (5,2),
+          DH_ot_units VARCHAR(10),
+          DH_mass_flow_rate DECIMAL (6,3),
+          DH_mfr_units VARCHAR (10),
+          Gas_usage FLOAT,
+          Gas_usage_units VARCHAR (10),
+          Electricity_usage FLOAT,
+          Electricity_usage_units VARCHAR(10)
           )"
 
         values_arr = []
@@ -131,65 +144,87 @@ module URBANopt
           feature_db = SQLite3::Database.open uo_output_sql_file
           # Doing "db.results_as_hash = true" is prettier, but in this case significantly slower.
 
-          elec_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour,
-            Time.Minute, Time.Dst, ReportData.Value
-          FROM ReportData
-          INNER JOIN Time ON Time.TimeIndex=ReportData.TimeIndex
-          INNER JOIN ReportDataDictionary AS rddi ON rddi.ReportDataDictionaryIndex=ReportData.ReportDataDictionaryIndex
-          WHERE rddi.IndexGroup == 'Facility:Electricity'
-          AND rddi.ReportingFrequency == 'Zone Timestep'
-          AND Time.Year > 1900
-          ORDER BY ReportData.TimeIndex"
+          # This query pivots the data so each value requested in the rddi becomes its own column for a single time index
+          query = feature_db.query "Select  tindex, year, month, day, hour, minute, dst,
+              max(case when col_name = 'District Cooling Inlet Temperature' then IFNULL(col_value,0) end) dc_it,
+              max(case when col_name = 'District Cooling Inlet Temperature' then col_unit end) dc_it_units,
+              max(case when col_name = 'District Cooling Outlet Temperature' then IFNULL(col_value,0) end) dc_ot,
+              max(case when col_name = 'District Cooling Outlet Temperature' then col_unit end) dc_ot_units,
+              max(case when col_name = 'District Cooling Mass Flow Rate' then IFNULL(col_value,0) end) dc_mfr,
+              max(case when col_name = 'District Cooling Mass Flow Rate' then col_unit end) dc_mfr_units,
+              max(case when col_name = 'District Heating Inlet Temperature' then IFNULL(col_value,0) end) dh_it,
+              max(case when col_name = 'District Heating Inlet Temperature' then col_unit end) dh_it_units,
+              max(case when col_name = 'District Heating Outlet Temperature' then IFNULL(col_value,0) end) dh_ot,
+              max(case when col_name = 'District Heating Outlet Temperature' then col_unit end) dh_ot_units,
+              max(case when col_name = 'District Heating Mass Flow Rate' then IFNULL(col_value,0) end) dh_mfr,
+              max(case when col_name = 'District Heating Mass Flow Rate' then col_unit end) dh_mfr_units,
+              max(case when col_name = 'Gas:Facility' then IFNULL(col_value,0) end) gas_val,
+              max(case when col_name = 'Gas:Facility' then col_unit end) gas_units,
+              max(case when col_name = 'Electricity:Facility' then IFNULL(col_value,0) end) elec_val,
+              max(case when col_name = 'Electricity:Facility' then col_unit end) elec_units
+            from (
+              SELECT ReportData.TimeIndex as tindex,
+                Time.Year as year, Time.Month as month, Time.Day as day, Time.Hour as hour, Time.Minute as minute, Time.Dst as dst,
+                rddi.Name as col_name,
+                ReportData.Value as col_value,
+                rddi.Units as col_unit
+              FROM ReportData
+              INNER JOIN Time ON Time.TimeIndex=tindex
+              INNER JOIN ReportDataDictionary AS rddi ON rddi.ReportDataDictionaryIndex=ReportData.ReportDataDictionaryIndex
+              WHERE year > 1900
+              AND rddi.ReportingFrequency = 'Zone Timestep'
+                AND (rddi.Name = 'Gas:Facility'
+                OR rddi.Name = 'Electricity:Facility'
+                OR rddi.Name = 'District Heating Mass Flow Rate'
+                OR rddi.Name = 'District Heating Inlet Temperature'
+                OR rddi.Name = 'District Heating Outlet Temperature'
+                OR rddi.Name = 'District Cooling Mass Flow Rate'
+                OR rddi.Name = 'District Cooling Inlet Temperature'
+                OR rddi.Name = 'District Cooling Outlet Temperature' )
+              ORDER BY tindex
+            )
+          group by tindex;"
 
-          elec_query.each do |row| # Add up all the values for electricity usage across all Features at this timestep
-            # row[0] == TimeIndex, row[1] == Value
+          query.each do |row| # Add up all the values for electricity usage across all Features at this timestep
 
             arr_match = values_arr.find { |v| v[:time_index] == row[0] }
             if arr_match.nil?
               # add new row to value_arr
-              values_arr << { time_index: row[0], year: row[1], month: row[2], day: row[3], hour: row[4], minute: row[5], dst: row[6], elec_val: Float(row[7]), gas_val: 0 }
+            values_arr << { time_index: row[0], year: row[1], month: row[2], day: row[3], hour: row[4], minute: row[5],
+              dst: row[6], dc_it: row[7], dc_it_units: row[8], dc_ot: row[9], dc_ot_units: row[10],
+              dc_mfr: row[11], dc_mfr_units: row[12], dh_it: row[13], dh_it_units: row[14], dh_ot: row[15],
+              dh_ot_units: row[16], dh_mfr: row[17], dh_mfr_units: row[18], gas_val: row[19], gas_units: row[20],
+              elec_val: row[21], elec_units: row[22] }
             else
               # running sum
-              arr_match[:elec_val] += Float(row[7])
+              arr_match[:dc_it] += row[7]
+              arr_match[:dc_ot] += row[9]
+              arr_match[:dc_mfr] += row[11]
+              arr_match[:dh_it] += row[13]
+              arr_match[:dh_ot] += row[15]
+              arr_match[:dh_mfr] += row[17]
+              arr_match[:gas_val] += row[19]
+              arr_match[:elec_val] += row[21]
             end
-          end # End elec_query
-          elec_query.close
-
-          gas_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour,
-            Time.Minute, Time.Dst, ReportData.Value
-          FROM ReportData
-          INNER JOIN Time ON Time.TimeIndex=ReportData.TimeIndex
-          INNER JOIN ReportDataDictionary AS rddi ON rddi.ReportDataDictionaryIndex=ReportData.ReportDataDictionaryIndex
-          WHERE rddi.IndexGroup == 'Facility:Gas'
-          AND rddi.ReportingFrequency == 'Zone Timestep'
-          AND Time.Year > 1900
-          ORDER BY ReportData.TimeIndex"
-
-          gas_query.each do |row|
-            # row[0] == TimeIndex, row[1] == Value
-            arr_match = values_arr.find { |v| v[:time_index] == row[0] }
-            if arr_match.nil?
-              # add new row to value_arr
-              values_arr << { time_index: row[0], year: row[1], month: row[2], day: row[3], hour: row[4], minute: row[5], dst: row[6], gas_val: Float(row[7]), elec_val: 0 }
-            else
-              # running sum
-              arr_match[:gas_val] += Float(row[7])
-            end
-          end # End gas_query
-          gas_query.close
+          end # End query
+          query.close
           feature_db.close
         end # End feature_list loop
 
-        elec_sql = []
-        gas_sql = []
+        sql_array = []
         values_arr.each do |i|
-          elec_sql << "(#{i[:time_index]}, #{i[:year]}, #{i[:month]}, #{i[:day]}, #{i[:hour]}, #{i[:minute]}, #{i[:dst]}, 'Electricity', #{i[:elec_val]}, 'J')"
-          gas_sql << "(#{i[:time_index]}, #{i[:year]}, #{i[:month]}, #{i[:day]}, #{i[:hour]}, #{i[:minute]}, #{i[:dst]}, 'Gas', #{i[:gas_val]}, 'J')"
+          sql_array << "(#{i[:time_index]}, #{i[:year]}, #{i[:month]}, #{i[:day]}, #{i[:hour]}, #{i[:minute]}, #{i[:dst]},
+          #{i[:dc_it]}, #{i[:dc_it_units]}, #{i[:dc_ot]}, #{i[:dc_ot_units]}, #{i[:dc_mfr]}, #{i[:dc_mfr_units]}, #{i[:dh_it]},
+          #{i[:dh_it_units]}, #{i[:dh_ot]}, #{i[:dh_ot_units]}, #{i[:dh_mfr]}, #{i[:dh_mfr_units]}, #{i[:gas_val]}, #{i[:gas_units]},
+          #{i[:elec_val]}, #{i[:elec_units]})"
         end
 
         # Put summed Values into the database
-        scenario_db.execute("INSERT INTO ReportData VALUES #{elec_sql.join(', ')}")
-        scenario_db.execute("INSERT INTO ReportData VALUES #{gas_sql.join(', ')}")
+        puts ""
+        puts "sql_array[0]"
+        puts sql_array[1]
+        puts ""
+        scenario_db.execute("INSERT INTO ReportData VALUES #{sql_array.join(', ')}")
         scenario_db.close
       end
 
