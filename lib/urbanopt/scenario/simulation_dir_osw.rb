@@ -67,7 +67,7 @@ module URBANopt
       def run_dir
         raise 'Feature ID not set' if @feature_id.nil?
         raise 'Scenario run dir not set' if scenario.run_dir.nil?
-        return File.join(scenario.run_dir, @feature_id + '/')
+        return File.join(scenario.run_dir, @feature_name + '_' + @feature_id + '/')
       end
 
       ##

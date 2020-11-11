@@ -99,7 +99,7 @@ RSpec.describe URBANopt::Scenario do
     expect(simulation_dirs[0].features[0].id).to eq('1')
     expect(simulation_dirs[0].feature_names[0]).to eq('Building 1')
     expect(simulation_dirs[0].mapper_class).to eq('URBANopt::Scenario::TestMapper1')
-    expect(simulation_dirs[0].run_dir).to eq(File.join(run_dir, '1/'))
+    expect(simulation_dirs[0].run_dir).to eq(File.join(run_dir, 'Building 1_1/'))
 
     if clear_results
       expect(File.exist?(simulation_dirs[0].run_dir)).to be false
@@ -121,9 +121,9 @@ RSpec.describe URBANopt::Scenario do
     simulation_dirs = scenario_runner.run(scenario, false, options)
     if clear_results
       expect(simulation_dirs.size).to eq(3)
-      expect(simulation_dirs[0].in_osw_path).to eq(File.join(run_dir, '1/in.osw'))
-      expect(simulation_dirs[1].in_osw_path).to eq(File.join(run_dir, '2/in.osw'))
-      expect(simulation_dirs[2].in_osw_path).to eq(File.join(run_dir, '3/in.osw'))
+      expect(simulation_dirs[0].in_osw_path).to eq(File.join(run_dir, 'Building 1_1/in.osw'))
+      expect(simulation_dirs[1].in_osw_path).to eq(File.join(run_dir, 'Building 2_2/in.osw'))
+      expect(simulation_dirs[2].in_osw_path).to eq(File.join(run_dir, 'Building 3_3/in.osw'))
     end
 
     failures = []
