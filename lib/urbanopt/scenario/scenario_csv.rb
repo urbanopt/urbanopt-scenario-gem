@@ -51,6 +51,7 @@ module URBANopt
       # * +num_header_rows+ - _String_ - Number of header rows to skip in CSV file.
       def initialize(name, root_dir, run_dir, feature_file, mapper_files_dir, csv_file, num_header_rows)
         super(name, root_dir, run_dir, feature_file)
+        @root_dir = root_dir
         @mapper_files_dir = mapper_files_dir
         @csv_file = csv_file
         @num_header_rows = num_header_rows
@@ -71,6 +72,8 @@ module URBANopt
 
       # Require all simulation mappers in mapper_files_dir
       def load_mapper_files
+        bundle_path = File.join(@root_dir, '.bundle')
+        $LOAD_PATH.unshift(bundle_path)
         dirs = Dir.glob(File.join(@mapper_files_dir, '/*.rb'))
         # order is not guaranteed...attempt to add Baseline first, then High Efficiency
         ordered_dirs = []
@@ -93,6 +96,9 @@ module URBANopt
           @@logger.error(e.message)
           raise
         end
+
+        #puts $LOADED_FEATURES
+
       end
 
       # Gets all the simulation directories
