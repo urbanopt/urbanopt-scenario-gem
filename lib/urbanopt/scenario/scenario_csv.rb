@@ -97,7 +97,9 @@ module URBANopt
           raise
         end
 
-        #puts $LOADED_FEATURES
+        puts "LOAD PATH = #{$LOAD_PATH}"
+
+        puts "LOADED FEATURES = #{$LOADED_FEATURES}"
 
       end
 
