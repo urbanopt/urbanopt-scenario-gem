@@ -72,25 +72,22 @@ module URBANopt
 
       # Require all simulation mappers in mapper_files_dir
       def load_mapper_files
-        bundle_path = File.join(@root_dir, '.bundle')
-        $LOAD_PATH.unshift(bundle_path)
-        dirs = Dir.glob(File.join(@mapper_files_dir, '/*.rb'))
-        # order is not guaranteed...attempt to add Baseline first, then High Efficiency
-        ordered_dirs = []
-        bindex = dirs.find_index { |i| i.include? 'Baseline.rb' }
-        if bindex
-          ordered_dirs << dirs[bindex]
-          dirs.delete_at(bindex)
+        # TODO: if this is the first run, .bundle/install will not exist. 
+        # Need to run bundle update from extension gem first
+        bundle_path = File.join(@root_dir, '.bundle/install')
+        # find all lib dirs in the bundle path and add them to the path
+        lib_dirs = Dir.glob(File.join(bundle_path, '/**/lib'))
+        lib_dirs.each do |ld|
+          # for now only add openstudio and urbanopt gems to the load path
+          if ld.include? 'urbanopt' or ld.include? 'openstudio'
+            puts "adding DIR to load path: #{ld}"
+            $LOAD_PATH.unshift(ld)
+          end
         end
-        hindex = dirs.find_index { |i| i.include? 'HighEfficiency.rb' }
-        if hindex
-          ordered_dirs << dirs[hindex] if hindex
-          dirs.delete_at(hindex)
-        end
-        # then the rest
-        ordered_dirs += dirs
 
-        ordered_dirs.each do |f|
+        dirs = Dir.glob(File.join(@mapper_files_dir, '/*.rb'))
+
+        dirs.each do |f|
           require(f)
         rescue LoadError => e
           @@logger.error(e.message)
@@ -99,7 +96,7 @@ module URBANopt
 
         puts "LOAD PATH = #{$LOAD_PATH}"
 
-        puts "LOADED FEATURES = #{$LOADED_FEATURES}"
+        #puts "LOADED FEATURES = #{$LOADED_FEATURES}"
 
       end
 
