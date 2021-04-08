@@ -75,6 +75,12 @@ module URBANopt
         # TODO: if this is the first run, .bundle/install will not exist. 
         # Need to run bundle update from extension gem first
         bundle_path = File.join(@root_dir, '.bundle/install')
+
+        # checks if bundle path doesn't exist or is empty
+        if !Dir.exists?(bundle_path) or Dir.empty?(bundle_path)
+          OpenStudio::Extension::Runner.new(@root_dir)
+        end
+
         # find all lib dirs in the bundle path and add them to the path
         lib_dirs = Dir.glob(File.join(bundle_path, '/**/lib'))
         lib_dirs.each do |ld|
@@ -95,8 +101,6 @@ module URBANopt
         end
 
         puts "LOAD PATH = #{$LOAD_PATH}"
-
-        #puts "LOADED FEATURES = #{$LOADED_FEATURES}"
 
       end
 
