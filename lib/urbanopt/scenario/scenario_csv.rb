@@ -74,10 +74,22 @@ module URBANopt
       def load_mapper_files
         # TODO: if this is the first run, .bundle/install will not exist. 
         # Need to run bundle update from extension gem first
-        bundle_path = File.join(@root_dir, '.bundle/install')
 
+        # loads default values from extension gem
+        options = OpenStudio::Extension::RunnerConfig.default_config
+        # check if runner.conf file exists
+        if File.exist?(File.join(@root_dir, OpenStudio::Extension::RunnerConfig::FILENAME))
+          runner_config = OpenStudio::Extension::RunnerConfig.new(@root_dir)
+          # use the default values overriden with runner.conf values
+          options = options.merge(runner_config.options)
+        end
+
+        # bundle path is assigned from the runner.conf if it exists or is assigned in the root_dir
+        bundle_path = !options.key?(:bundle_install_path) || options[:bundle_install_path] === '' ? File.join(@root_dir, '.bundle/install/') : options[:bundle_install_path]
+        
         # checks if bundle path doesn't exist or is empty
         if !Dir.exists?(bundle_path) or Dir.empty?(bundle_path)
+          # install bundle
           OpenStudio::Extension::Runner.new(@root_dir)
         end
 
