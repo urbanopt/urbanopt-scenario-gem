@@ -72,8 +72,6 @@ module URBANopt
 
       # Require all simulation mappers in mapper_files_dir
       def load_mapper_files
-        # TODO: if this is the first run, .bundle/install will not exist. 
-        # Need to run bundle update from extension gem first
 
         # loads default values from extension gem
         options = OpenStudio::Extension::RunnerConfig.default_config
@@ -111,8 +109,6 @@ module URBANopt
           @@logger.error(e.message)
           raise
         end
-
-        puts "LOAD PATH = #{$LOAD_PATH}"
 
       end
 
