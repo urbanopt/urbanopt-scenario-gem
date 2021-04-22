@@ -61,6 +61,7 @@ module URBANopt
       # * +num_header_rows+ - _String_ - Number of header rows to skip in CSV file.
       def initialize(name, root_dir, run_dir, feature_file, mapper_files_dir, csv_file, num_header_rows)
         super(name, root_dir, run_dir, feature_file)
+        @root_dir = root_dir
         @mapper_files_dir = mapper_files_dir
         @csv_file = csv_file
         @num_header_rows = num_header_rows
@@ -81,28 +82,44 @@ module URBANopt
 
       # Require all simulation mappers in mapper_files_dir
       def load_mapper_files
-        dirs = Dir.glob(File.join(@mapper_files_dir, '/*.rb'))
-        # order is not guaranteed...attempt to add Baseline first, then High Efficiency
-        ordered_dirs = []
-        bindex = dirs.find_index { |i| i.include? 'Baseline.rb' }
-        if bindex
-          ordered_dirs << dirs[bindex]
-          dirs.delete_at(bindex)
-        end
-        hindex = dirs.find_index { |i| i.include? 'HighEfficiency.rb' }
-        if hindex
-          ordered_dirs << dirs[hindex] if hindex
-          dirs.delete_at(hindex)
-        end
-        # then the rest
-        ordered_dirs += dirs
 
-        ordered_dirs.each do |f|
+        # loads default values from extension gem
+        options = OpenStudio::Extension::RunnerConfig.default_config
+        # check if runner.conf file exists
+        if File.exist?(File.join(@root_dir, OpenStudio::Extension::RunnerConfig::FILENAME))
+          runner_config = OpenStudio::Extension::RunnerConfig.new(@root_dir)
+          # use the default values overriden with runner.conf values
+          options = options.merge(runner_config.options)
+        end
+
+        # bundle path is assigned from the runner.conf if it exists or is assigned in the root_dir
+        bundle_path = !options.key?(:bundle_install_path) || options[:bundle_install_path] === '' ? File.join(@root_dir, '.bundle/install/') : options[:bundle_install_path]
+        
+        # checks if bundle path doesn't exist or is empty
+        if !Dir.exists?(bundle_path) or Dir.empty?(bundle_path)
+          # install bundle
+          OpenStudio::Extension::Runner.new(@root_dir)
+        end
+
+        # find all lib dirs in the bundle path and add them to the path
+        lib_dirs = Dir.glob(File.join(bundle_path, '/**/lib'))
+        lib_dirs.each do |ld|
+          # for now only add openstudio and urbanopt gems to the load path
+          if ld.include? 'urbanopt' or ld.include? 'openstudio'
+            puts "adding DIR to load path: #{ld}"
+            $LOAD_PATH.unshift(ld)
+          end
+        end
+
+        dirs = Dir.glob(File.join(@mapper_files_dir, '/*.rb'))
+
+        dirs.each do |f|
           require(f)
         rescue LoadError => e
           @@logger.error(e.message)
           raise
         end
+
       end
 
       # Gets all the simulation directories
