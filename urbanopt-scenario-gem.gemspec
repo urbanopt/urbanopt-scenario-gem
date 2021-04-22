@@ -42,6 +42,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'openstudio-calibration', '~> 0.3.1'
   spec.add_runtime_dependency 'openstudio-common-measures', '~> 0.3.2'
   spec.add_runtime_dependency 'openstudio-ee', '~> 0.3.2'
-  spec.add_runtime_dependency 'openstudio-load-flexibility-measures', '~> 0.3.0'
+  spec.add_runtime_dependency 'openstudio-load-flexibility-measures', '~> 0.3.1'
   spec.add_runtime_dependency 'openstudio-model-articulation', '~> 0.3.1'
 end
