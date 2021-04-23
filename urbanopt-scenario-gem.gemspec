@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json_pure', '~> 2.3'
 
   spec.add_runtime_dependency 'sqlite3', '1.4.2'
-  spec.add_runtime_dependency 'urbanopt-core', '~> 0.5.1'
+  #spec.add_runtime_dependency 'urbanopt-core', '~> 0.5.1'  # uncomment and fix this line 
   spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.3.6'
 
   # extension gem is included in urbanopt-core so we shouldn't need to explicitly require it here
