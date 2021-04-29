@@ -25,7 +25,6 @@ allow_local = ENV['FAVOR_LOCAL_GEMS']
 # elsif allow_local
 #  gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'develop'
 # end
-gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'ruby27'
 
 # if allow_local && File.exist?('../openstudio-common-measures-gem')
 #   gem 'openstudio-common-measures', path: '../openstudio-common-measures-gem'
@@ -42,8 +41,6 @@ gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'ruby27'
 # if allow_local && File.exist?('../urbanopt-reporting-gem')
 #  gem 'urbanopt-reporting', path: '../urbanopt-reporting-gem'
 # elsif allow_local
-gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'ruby27'
-# end
 
 # if allow_local && File.exist?('../openstudio-load-flexibility-measures-gem')
 #   gem 'openstudio-load-flexibility-measures', path: '../openstudio-load-flexibility-measures-gem'

@@ -31,12 +31,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json_pure', '~> 2.3'
 
   spec.add_runtime_dependency 'sqlite3', '1.4.2'
-  #spec.add_runtime_dependency 'urbanopt-core', '~> 0.5.1'  # uncomment and fix this line 
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.3.6'
+  spec.add_runtime_dependency 'urbanopt-core', '~> 0.6.0'
+  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.4.0'
 
-  # extension gem is included in urbanopt-core so we shouldn't need to explicitly require it here
-  # spec.add_runtime_dependency 'openstudio-extension', '~> 0.4.0'
-
+  # no longer need the below
   # need to include all measure gems listed in mappers in project gemfiles
   # scenario_csv loads the mappers and need access to the extension gems when they are added to a mapper
   # spec.add_runtime_dependency 'openstudio-calibration', '~> 0.3.1'
