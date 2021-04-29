@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '~> 2.5.0'
+  spec.required_ruby_version = '~> 2.7.0'
 
   spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'rake', '~> 13.0'
@@ -31,12 +31,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json_pure', '~> 2.3'
 
   spec.add_runtime_dependency 'sqlite3', '1.4.2'
-  spec.add_runtime_dependency 'urbanopt-core', '~> 0.5.1'
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.3.6'
+  spec.add_runtime_dependency 'urbanopt-core', '~> 0.6.0'
+  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.4.0'
 
-  # extension gem is included in urbanopt-core so we shouldn't need to explicitly require it here
-  # spec.add_runtime_dependency 'openstudio-extension', '~> 0.3.1'
-
+  # no longer need the below
   # need to include all measure gems listed in mappers in project gemfiles
   # scenario_csv loads the mappers and need access to the extension gems when they are added to a mapper
   # spec.add_runtime_dependency 'openstudio-calibration', '~> 0.3.1'
