@@ -1,5 +1,12 @@
 # URBANopt Scenario Gem
 
+## Version 0.6.0
+Date Range: 02/05/21 - 04/29/21
+
+- Fixed [#198]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/198 ), Update copyrights for 2021
+- Fixed [#205]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/205 ), Incorrect bundle paths being used in UO project
+- Updated dependencies for OpenStudio 3.2.0 / Ruby 2.7
+
 ## Version 0.5.1
 Date Range: 12/15/20 - 02/04/21
 
