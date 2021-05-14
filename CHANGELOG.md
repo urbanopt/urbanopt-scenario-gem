@@ -1,5 +1,10 @@
 # URBANopt Scenario Gem
 
+## Version 0.6.1
+Date Range: 04-30-21 - 05/14/21
+
+- Fixed [#227]( https://github.com/urbanopt/urbanopt-cli/issues/227 ), Runtime error when running urbanopt cli example project
+
 ## Version 0.6.0
 Date Range: 02/05/21 - 04/29/21
 
