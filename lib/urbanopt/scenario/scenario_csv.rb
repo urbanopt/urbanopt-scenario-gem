@@ -105,7 +105,9 @@ module URBANopt
         lib_dirs = Dir.glob(File.join(bundle_path, '/**/lib'))
         lib_dirs.each do |ld|
           # for now only add openstudio and urbanopt gems to the load path
-          if ld.include? 'urbanopt' or ld.include? 'openstudio'
+          # and only those with 'urbanopt' or 'openstudio' in the before-last path position
+          tmp_path_arr = Pathname(ld).each_filename.to_a
+          if tmp_path_arr[-2].include? 'urbanopt' or tmp_path_arr[-2].include? 'openstudio'
             puts "adding DIR to load path: #{ld}"
             $LOAD_PATH.unshift(ld)
           end
