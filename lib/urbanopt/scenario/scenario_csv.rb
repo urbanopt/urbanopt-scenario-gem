@@ -108,7 +108,7 @@ module URBANopt
           # and only those with 'urbanopt' or 'openstudio' in the before-last path position
           tmp_path_arr = Pathname(ld).each_filename.to_a
           if tmp_path_arr[-2].include? 'urbanopt' or tmp_path_arr[-2].include? 'openstudio'
-            puts "adding DIR to load path: #{ld}"
+            # puts "adding DIR to load path: #{ld}"
             $LOAD_PATH.unshift(ld)
           end
         end
