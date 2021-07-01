@@ -1,6 +1,6 @@
 var scenarioData = [
   {
-    "name": "1",
+    "name": "1-Building_1",
     "monthly_values": {
       "Electricity:Facility": [
         1833016.431105801,
@@ -1403,7 +1403,7 @@ var scenarioData = [
     "complete_simulation": true
   },
   {
-    "name": "2",
+    "name": "2-Building_2",
     "monthly_values": {
       "Electricity:Facility": [
         2083432.9873940796,

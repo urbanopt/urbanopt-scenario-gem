@@ -41,7 +41,7 @@
 module URBANopt
   module Scenario
     class ScenarioDatapoint
-      attr_reader :scenario, :feature_id, :feature_name, :mapper_class #:nodoc:#
+      attr_reader :scenario, :feature_id, :feature_name, :mapper_class, :feature #:nodoc:#
 
       ##
       # ScenarioDatapoint is an agnostic description of the simulation of a Feature in a Scenario
@@ -58,9 +58,7 @@ module URBANopt
         @feature_name = feature_name
         @feature = scenario.feature_file.get_feature_by_id(feature_id)
         @mapper_class = mapper_class
-      end
-
-      attr_reader :feature #:nodoc:
+      end #:nodoc:
 
       ##
       # Gets the type of a feature
@@ -83,7 +81,8 @@ module URBANopt
       def run_dir
         raise 'Feature ID not set' if @feature_id.nil?
         raise 'Scenario run dir not set' if @scenario.run_dir.nil?
-        return File.join(@scenario.run_dir, @feature_id + '/')
+
+        return File.join(@scenario.run_dir, "#{@feature_id}/")
       end
 
       ##
@@ -138,6 +137,7 @@ module URBANopt
         if !File.exist?(out_osw)
           return true
         end
+
         out_osw_time = File.mtime(out_osw)
 
         # array of files that this datapoint depends on
