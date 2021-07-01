@@ -117,7 +117,7 @@ module URBANopt
         feature_list = Pathname.new(@initialization_hash[:directory_name]).children.select(&:directory?) # Folders in the run/scenario directory
 
         # get scenario CSV
-        scenario_csv = File.join(@initialization_hash[:root_dir], @initialization_hash[:name] + '.csv')
+        scenario_csv = File.join(@initialization_hash[:root_dir], "#{@initialization_hash[:name]}.csv")
         if File.exist?(scenario_csv)
           # csv found
           feature_ids = CSV.read(scenario_csv, headers: true)
@@ -159,7 +159,7 @@ module URBANopt
               # running sum
               arr_match[:elec_val] += Float(row[7])
             end
-          end # End elec_query
+          end
           elec_query.close
 
           gas_query = feature_db.query "SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour,
@@ -182,10 +182,10 @@ module URBANopt
               # running sum
               arr_match[:gas_val] += Float(row[7])
             end
-          end # End gas_query
+          end
           gas_query.close
           feature_db.close
-        end # End feature_list loop
+        end
 
         elec_sql = []
         gas_sql = []

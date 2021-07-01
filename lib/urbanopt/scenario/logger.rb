@@ -42,7 +42,7 @@ require 'logger'
 
 module URBANopt
   module Scenario
-    @@logger = Logger.new(STDOUT)
+    @@logger = Logger.new($stdout)
 
     # Definining class variable "@@logger" to log errors, info and warning messages.
     def self.logger

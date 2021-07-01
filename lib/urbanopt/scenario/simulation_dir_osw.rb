@@ -71,13 +71,15 @@ module URBANopt
       end
 
       attr_reader :mapper_class, :feature_id
+
       ##
       # Return the directory that this simulation will run in.
       ##
       def run_dir
         raise 'Feature ID not set' if @feature_id.nil?
         raise 'Scenario run dir not set' if scenario.run_dir.nil?
-        return File.join(scenario.run_dir, @feature_id + '/')
+
+        return File.join(scenario.run_dir, "#{@feature_id}/")
       end
 
       ##

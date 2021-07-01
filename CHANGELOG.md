@@ -1,5 +1,12 @@
 # URBANopt Scenario Gem
 
+## Version 0.6.2
+Date Range: 05/15/21 - 06/30/21:
+
+- Fixed [#214]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/214 ), update rubocop configs to v4
+- Fixed [#207]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/207 ), Update Load-Flex measure gem version
+- Fixed [#215]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/215 ), update rubocop to v4 #214
+
 ## Version 0.6.1
 Date Range: 04-30-21 - 05/14/21
 

@@ -82,7 +82,6 @@ module URBANopt
 
       # Require all simulation mappers in mapper_files_dir
       def load_mapper_files
-
         # loads default values from extension gem
         options = OpenStudio::Extension::RunnerConfig.default_config
         # check if runner.conf file exists
@@ -94,9 +93,9 @@ module URBANopt
 
         # bundle path is assigned from the runner.conf if it exists or is assigned in the root_dir
         bundle_path = !options.key?(:bundle_install_path) || options[:bundle_install_path] === '' ? File.join(@root_dir, '.bundle/install/') : options[:bundle_install_path]
-        
+
         # checks if bundle path doesn't exist or is empty
-        if !Dir.exists?(bundle_path) or Dir.empty?(bundle_path)
+        if !Dir.exist?(bundle_path) || Dir.empty?(bundle_path)
           # install bundle
           OpenStudio::Extension::Runner.new(@root_dir)
         end
@@ -107,8 +106,8 @@ module URBANopt
           # for now only add openstudio and urbanopt gems to the load path
           # and only those with 'urbanopt' or 'openstudio' in the before-last path position
           tmp_path_arr = Pathname(ld).each_filename.to_a
-          if tmp_path_arr[-2].include? 'urbanopt' or tmp_path_arr[-2].include? 'openstudio'
-            puts "adding DIR to load path: #{ld}"
+          if tmp_path_arr[-2].include?('urbanopt') || tmp_path_arr[-2].include?('openstudio')
+            # puts "adding DIR to load path: #{ld}"
             $LOAD_PATH.unshift(ld)
           end
         end
@@ -121,7 +120,6 @@ module URBANopt
           @@logger.error(e.message)
           raise
         end
-
       end
 
       # Gets all the simulation directories

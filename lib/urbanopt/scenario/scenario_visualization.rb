@@ -50,13 +50,14 @@ module URBANopt
 
         run_dir.each do |folder|
           # create visualization for scenarios
-          if feature == false
+          case feature
+          when false
             name = folder.split('/')[-1]
             csv_dir = File.join(folder, 'default_scenario_report.csv')
           # create visualization for features
-          elsif feature == true
+          when true
             index = run_dir.index(folder)
-            name = folder.split('/')[-1] + '-' + feature_names[index]
+            name = "#{folder.split('/')[-1]}-#{feature_names[index]}"
             csv_dir = File.join(folder, 'feature_reports/default_feature_report.csv')
           end
 
@@ -192,7 +193,6 @@ module URBANopt
                     monthly_sum_dec += v.to_f
                     i += 1
                   end
-
                 end
               end
 
@@ -241,6 +241,6 @@ module URBANopt
           file << "var scenarioData = #{JSON.pretty_generate(@all_results)};"
         end
       end
-    end # ResultVisualization
-  end # Scenario
-end # URBANopt
+    end
+  end
+end
