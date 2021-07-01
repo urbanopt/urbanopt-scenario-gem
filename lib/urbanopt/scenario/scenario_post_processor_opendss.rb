@@ -80,7 +80,7 @@ module URBANopt
         # load building features data
         @scenario_report.feature_reports.each do |feature_report|
           # read results from opendss
-          opendss_csv = CSV.read(File.join(@opendss_results_dir, 'results', 'Features', feature_report.id + '.csv'))
+          opendss_csv = CSV.read(File.join(@opendss_results_dir, 'results', 'Features', "#{feature_report.id}.csv"))
           # add results to data
           @opendss_data[feature_report.id] = opendss_csv
         end
@@ -102,7 +102,7 @@ module URBANopt
         # add transformer results to @opendss_data
         transformer_ids.each do |id|
           # read results from transformers
-          transformer_csv = CSV.read(File.join(tf_results_path, id + '.csv'))
+          transformer_csv = CSV.read(File.join(tf_results_path, "#{id}.csv"))
           # add results to data
           @opendss_data[id] = transformer_csv
         end
@@ -133,7 +133,7 @@ module URBANopt
             if row.include? 'Datetime'
               row.map { |header| header.prepend('opendss_') }
             end
-            csv << (feature_report_data[i] + row[1..-1])
+            csv << (feature_report_data[i] + row[1..])
           end
         end
 
@@ -142,7 +142,7 @@ module URBANopt
 
       # add feature reports for transformers
       def save_transformers_reports
-        @opendss_data.keys.each do |k|
+        @opendss_data.each_key do |k|
           if k.include? 'Transformer'
 
             # create transformer directory
@@ -171,7 +171,7 @@ module URBANopt
             end
 
             # save transformer CSV report
-            File.write(File.join(transformer_dir, 'feature_reports', 'default_feature_report_opendss' + '.csv'), transformer_csv)
+            File.write(File.join(transformer_dir, 'feature_reports', 'default_feature_report_opendss.csv'), transformer_csv)
 
             # create transformer report
             transformer_report = URBANopt::Reporting::DefaultReports::FeatureReport.new(id: k, name: k, directory_name: transformer_dir, feature_type: 'Transformer',
@@ -187,7 +187,7 @@ module URBANopt
             transformer_hash = transformer_report.to_hash
             # transformer_hash.delete_if { |k, v| v.nil? }
 
-            json_name_path = File.join(transformer_dir, 'feature_reports', 'default_feature_report_opendss' + '.json')
+            json_name_path = File.join(transformer_dir, 'feature_reports', 'default_feature_report_opendss.json')
 
             # save the json file
             File.open(json_name_path, 'w') do |f|

@@ -78,6 +78,7 @@ module URBANopt
         if features.size != 1
           raise 'TestMapper1 currently cannot simulate more than one feature'
         end
+
         feature = features[0]
 
         feature_name = feature.name

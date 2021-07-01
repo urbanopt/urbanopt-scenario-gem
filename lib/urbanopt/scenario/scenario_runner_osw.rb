@@ -133,11 +133,12 @@ module URBANopt
           # add each osw file to its corresponding group id +simulation_dir+ is out_of_date
           if simulation_dir.out_of_date?
 
-            if feature_type == 'Building'
+            case feature_type
+            when 'Building'
               building_osws << simulation_dir.in_osw_path
-            elsif feature_type == 'District System'
+            when 'District System'
               district_system_osws << simulation_dir.in_osw_path
-            elsif feature_type == 'Transformer'
+            when 'Transformer'
               transformer_osws << simulation_dir.in_osw_path
             else
               raise "ScenarioRunnerOSW does not know how to run a #{feature_type} feature"

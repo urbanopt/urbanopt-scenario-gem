@@ -255,7 +255,7 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
 
   it 'can create visualization for feature result' do
     run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/1'), File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/2')]
-    feature_names = ["Building_1", "Building_2"]
+    feature_names = ['Building_1', 'Building_2']
 
     scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, true, feature_names)
 
