@@ -52,13 +52,13 @@ module URBANopt
           # create visualization for scenarios
           case feature
           when false
-            name = folder.split('/')[-1]
-            csv_dir = File.join(folder, 'default_scenario_report.csv')
+            name = folder.split('/')[-2]
+            csv_dir = folder
           # create visualization for features
           when true
             index = run_dir.index(folder)
-            name = "#{folder.split('/')[-1]}-#{feature_names[index]}"
-            csv_dir = File.join(folder, 'feature_reports/default_feature_report.csv')
+            name = "#{folder.split('/')[-3]}-#{feature_names[index]}"
+            csv_dir = folder
           end
 
           if File.exist?(csv_dir)
@@ -236,7 +236,13 @@ module URBANopt
           end
         end
         # create json with required data stored in a variable
-        results_path = File.join(run_dir[0], '../scenarioData.js')
+        if feature == false
+          # In case of scenario visualization store result at top of the run folder
+          results_path = File.join(run_dir[0], '../../scenarioData.js')
+        else
+          # In case of feature visualization store result at top of scenario folder folder
+          results_path = File.join(run_dir[0], '../../../scenarioData.js')
+        end
         File.open(results_path, 'w') do |file|
           file << "var scenarioData = #{JSON.pretty_generate(@all_results)};"
         end
