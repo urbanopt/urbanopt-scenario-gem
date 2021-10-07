@@ -234,9 +234,9 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
   end
 
   it 'can create visualization for scenario result' do
-    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario')]
+    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/default_scenario_report.csv')]
     scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, false)
-    file = File.join(run_dir[0], '../scenarioData.js')
+    file = File.expand_path("../../scenarioData.js", run_dir[0])
 
     expect(File.exist?(file)).to be true
 
@@ -254,12 +254,12 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
   end
 
   it 'can create visualization for feature result' do
-    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/1'), File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/2')]
+    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/1/feature_reports/default_feature_report.csv'), File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/2/feature_reports/default_feature_report.csv')]
     feature_names = ['Building_1', 'Building_2']
 
     scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, true, feature_names)
 
-    file = File.join(run_dir[0], '../scenarioData.js')
+    file = File.expand_path("../../../scenarioData.js", run_dir[0])
     expect(File.exist?(file)).to be true
 
     visualization_file = File.read(file)
@@ -281,7 +281,7 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
       expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 3230104.6829592995
     else
       expect(json_file[0]['monthly_values']['Electricity:Facility'][0]).to eq 2083432.9873940796
-      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 27937661.623504374
+      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 27935873.47948147
     end
   end
 end
