@@ -238,10 +238,11 @@ module URBANopt
         # create json with required data stored in a variable
         if feature == false
           # In case of scenario visualization store result at top of the run folder
-          results_path = File.join(run_dir[0], '../../scenarioData.js')
+          results_path = File.expand_path("../../scenarioData.js", run_dir[0])
+
         else
           # In case of feature visualization store result at top of scenario folder folder
-          results_path = File.join(run_dir[0], '../../../scenarioData.js')
+          results_path = File.expand_path("../../../scenarioData.js", run_dir[0])
         end
         File.open(results_path, 'w') do |file|
           file << "var scenarioData = #{JSON.pretty_generate(@all_results)};"
