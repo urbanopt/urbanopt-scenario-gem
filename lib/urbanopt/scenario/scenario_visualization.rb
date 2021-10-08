@@ -48,13 +48,14 @@ module URBANopt
 
       def self.create_visualization(run_dir, feature = true, feature_names = false)
         @all_results = []
-
+        name = nil
         run_dir.each do |folder|
           # create visualization for scenarios
           case feature
           when false
             name = folder.split('/')[-2]
             csv_dir = folder
+
           # create visualization for features
           when true
             index = run_dir.index(folder)
@@ -206,34 +207,34 @@ module URBANopt
               annual_values[headers_unitless[j]] = annual_sum
             end
 
-            @results = {}
-            @results['name'] = name
-            @results['monthly_values'] = {}
-            @results['annual_values'] = {}
+            results = {}
+            results['name'] = name
+            results['monthly_values'] = {}
+            results['annual_values'] = {}
 
             if @jan_next_year_index.nil? || @feb_index.nil? || @mar_index.nil? || @apr_index.nil? || @may_index.nil? || @jun_index.nil? || @jul_index.nil? || @aug_index.nil? || @sep_index.nil? || @oct_index.nil? || @nov_index.nil? || @dec_index.nil?
-              @results['complete_simulation'] = false
+              results['complete_simulation'] = false
               puts "#{name} did not contain an annual simulation…visualizations will not render for it."
             else
-              @results['complete_simulation'] = true
+              results['complete_simulation'] = true
             end
 
             monthly_totals&.each do |key, value|
               unless key == 'Datetime'
-                @results['monthly_values'][key] = value
+                results['monthly_values'][key] = value
               end
             end
 
             annual_values&.each do |key, value|
               unless key == 'Datetime'
-                @results['annual_values'][key] = value
+                results['annual_values'][key] = value
               end
             end
 
           end
 
-          unless @results.nil?
-            @all_results << @results
+          unless results.nil?
+            @all_results << results
           end
 
         end

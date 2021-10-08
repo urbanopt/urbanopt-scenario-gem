@@ -268,17 +268,18 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
     visualization_file = visualization_file.split(';')[0]
 
     json_file = JSON.parse(visualization_file)
-    # order does not seem to be the same
-    if ['1-Building_1', '2-Building_2'].include? json_file[0]['name']
+    # order does not seem to be the same, but ensure they both made it in the results file
+    if json_file.size == 2 and ['1-Building_1', '2-Building_2'].include? json_file[0]['name'] and ['1-Building_1', '2-Building_2'].include? json_file[1]['name']
       testName = true
     else
       testName = false
     end
     expect(testName).to be_truthy
+
     expect(json_file[0]['monthly_values']['Electricity:Facility'].size).to eq 12
     if json_file[0]['name'] == '1-Building_1'
-      expect(json_file[0]['monthly_values']['Electricity:Facility'][0]).to eq 1833016.431105801
-      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 3230104.6829592995
+      expect(json_file[0]['monthly_values']['Electricity:Facility'][0]).to eq 72221.14380692659
+      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 875327.0812539927
     else
       expect(json_file[0]['monthly_values']['Electricity:Facility'][0]).to eq 2083432.9873940796
       expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 27935873.47948147
