@@ -45,20 +45,22 @@ require 'json'
 module URBANopt
   module Scenario
     class ResultVisualization
+
       def self.create_visualization(run_dir, feature = true, feature_names = false)
         @all_results = []
-
+        name = nil
         run_dir.each do |folder|
           # create visualization for scenarios
           case feature
           when false
-            name = folder.split('/')[-1]
-            csv_dir = File.join(folder, 'default_scenario_report.csv')
+            name = folder.split('/')[-2]
+            csv_dir = folder
+
           # create visualization for features
           when true
             index = run_dir.index(folder)
-            name = "#{folder.split('/')[-1]}-#{feature_names[index]}"
-            csv_dir = File.join(folder, 'feature_reports/default_feature_report.csv')
+            name = "#{folder.split('/')[-3]}-#{feature_names[index]}"
+            csv_dir = folder
           end
 
           if File.exist?(csv_dir)
@@ -205,42 +207,52 @@ module URBANopt
               annual_values[headers_unitless[j]] = annual_sum
             end
 
-            @results = {}
-            @results['name'] = name
-            @results['monthly_values'] = {}
-            @results['annual_values'] = {}
+            results = {}
+            results['name'] = name
+            results['monthly_values'] = {}
+            results['annual_values'] = {}
 
             if @jan_next_year_index.nil? || @feb_index.nil? || @mar_index.nil? || @apr_index.nil? || @may_index.nil? || @jun_index.nil? || @jul_index.nil? || @aug_index.nil? || @sep_index.nil? || @oct_index.nil? || @nov_index.nil? || @dec_index.nil?
-              @results['complete_simulation'] = false
+              results['complete_simulation'] = false
               puts "#{name} did not contain an annual simulation…visualizations will not render for it."
             else
-              @results['complete_simulation'] = true
+              results['complete_simulation'] = true
             end
 
             monthly_totals&.each do |key, value|
               unless key == 'Datetime'
-                @results['monthly_values'][key] = value
+                results['monthly_values'][key] = value
               end
             end
 
             annual_values&.each do |key, value|
               unless key == 'Datetime'
-                @results['annual_values'][key] = value
+                results['annual_values'][key] = value
               end
             end
 
           end
 
-          unless @results.nil?
-            @all_results << @results
+          unless results.nil?
+            @all_results << results
           end
+
         end
+
         # create json with required data stored in a variable
-        results_path = File.join(run_dir[0], '../scenarioData.js')
+        if feature == false
+          # In case of scenario visualization store result at top of the run folder
+          results_path = File.expand_path("../../scenarioData.js", run_dir[0])
+        else
+          # In case of feature visualization store result at top of scenario folder folder
+          results_path = File.expand_path("../../../scenarioData.js", run_dir[0])
+        end
         File.open(results_path, 'w') do |file|
           file << "var scenarioData = #{JSON.pretty_generate(@all_results)};"
         end
+
       end
-    end
-  end
-end
+
+    end #ResultVisualization
+  end #Scenario
+end # URBANopt
