@@ -234,9 +234,9 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
   end
 
   it 'can create visualization for scenario result' do
-    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario')]
+    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/default_scenario_report.csv')]
     scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, false)
-    file = File.join(run_dir[0], '../scenarioData.js')
+    file = File.expand_path('../../scenarioData.js', run_dir[0])
 
     expect(File.exist?(file)).to be true
 
@@ -254,12 +254,12 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
   end
 
   it 'can create visualization for feature result' do
-    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/1'), File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/2')]
+    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/1/feature_reports/default_feature_report.csv'), File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/2/feature_reports/default_feature_report.csv')]
     feature_names = ['Building_1', 'Building_2']
 
     scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, true, feature_names)
 
-    file = File.join(run_dir[0], '../scenarioData.js')
+    file = File.expand_path('../../../scenarioData.js', run_dir[0])
     expect(File.exist?(file)).to be true
 
     visualization_file = File.read(file)
@@ -268,20 +268,21 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
     visualization_file = visualization_file.split(';')[0]
 
     json_file = JSON.parse(visualization_file)
-    # order does not seem to be the same
-    if ['1-Building_1', '2-Building_2'].include? json_file[0]['name']
+    # order does not seem to be the same, but ensure they both made it in the results file
+    if (json_file.size == 2) && ['1-Building_1', '2-Building_2'].include?(json_file[0]['name']) && ['1-Building_1', '2-Building_2'].include?(json_file[1]['name'])
       testName = true
     else
       testName = false
     end
     expect(testName).to be_truthy
+
     expect(json_file[0]['monthly_values']['Electricity:Facility'].size).to eq 12
     if json_file[0]['name'] == '1-Building_1'
-      expect(json_file[0]['monthly_values']['Electricity:Facility'][0]).to eq 1833016.431105801
-      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 3230104.6829592995
+      expect(json_file[0]['monthly_values']['Electricity:Facility'][0]).to eq 72221.14380692659
+      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 875327.0812539927
     else
       expect(json_file[0]['monthly_values']['Electricity:Facility'][0]).to eq 2083432.9873940796
-      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 27937661.623504374
+      expect(json_file[0]['annual_values']['Electricity:Facility']).to eq 27935873.47948147
     end
   end
 end

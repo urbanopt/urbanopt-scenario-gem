@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'sqlite3', '1.4.2'
   spec.add_runtime_dependency 'urbanopt-core', '~> 0.6.1'
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.4.1'
+  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.4.2'
 
   # no longer need the below
   # need to include all measure gems listed in mappers in project gemfiles

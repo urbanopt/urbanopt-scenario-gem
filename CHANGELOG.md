@@ -1,5 +1,11 @@
 # URBANopt Scenario Gem
 
+## Version 0.6.3
+Date Range: 07/01/21 - 10/15/21:
+
+- Fixed [#219]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/219), Add support for REopt
+  results for Electricity Produced in Scenario and Feature visualization
+
 ## Version 0.6.2
 Date Range: 05/15/21 - 06/30/21:
 
