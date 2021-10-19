@@ -236,7 +236,7 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
   it 'can create visualization for scenario result' do
     run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/default_scenario_report.csv')]
     scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, false)
-    file = File.expand_path("../../scenarioData.js", run_dir[0])
+    file = File.expand_path('../../scenarioData.js', run_dir[0])
 
     expect(File.exist?(file)).to be true
 
@@ -259,7 +259,7 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
 
     scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, true, feature_names)
 
-    file = File.expand_path("../../../scenarioData.js", run_dir[0])
+    file = File.expand_path('../../../scenarioData.js', run_dir[0])
     expect(File.exist?(file)).to be true
 
     visualization_file = File.read(file)
@@ -269,7 +269,7 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
 
     json_file = JSON.parse(visualization_file)
     # order does not seem to be the same, but ensure they both made it in the results file
-    if json_file.size == 2 and ['1-Building_1', '2-Building_2'].include? json_file[0]['name'] and ['1-Building_1', '2-Building_2'].include? json_file[1]['name']
+    if (json_file.size == 2) && ['1-Building_1', '2-Building_2'].include?(json_file[0]['name']) && ['1-Building_1', '2-Building_2'].include?(json_file[1]['name'])
       testName = true
     else
       testName = false

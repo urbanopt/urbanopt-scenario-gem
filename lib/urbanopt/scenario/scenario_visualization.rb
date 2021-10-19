@@ -45,7 +45,6 @@ require 'json'
 module URBANopt
   module Scenario
     class ResultVisualization
-
       def self.create_visualization(run_dir, feature = true, feature_names = false)
         @all_results = []
         name = nil
@@ -236,23 +235,20 @@ module URBANopt
           unless results.nil?
             @all_results << results
           end
-
         end
 
         # create json with required data stored in a variable
         if feature == false
           # In case of scenario visualization store result at top of the run folder
-          results_path = File.expand_path("../../scenarioData.js", run_dir[0])
+          results_path = File.expand_path('../../scenarioData.js', run_dir[0])
         else
           # In case of feature visualization store result at top of scenario folder folder
-          results_path = File.expand_path("../../../scenarioData.js", run_dir[0])
+          results_path = File.expand_path('../../../scenarioData.js', run_dir[0])
         end
         File.open(results_path, 'w') do |file|
           file << "var scenarioData = #{JSON.pretty_generate(@all_results)};"
         end
-
       end
-
-    end #ResultVisualization
-  end #Scenario
-end # URBANopt
+    end
+  end
+end
