@@ -1,5 +1,10 @@
 # URBANopt Scenario Gem
 
+## Version 0.7.0
+Date Range: 10/16/21 - 11/22/21:
+
+- Updated dependencies for OpenStudio 3.3
+
 ## Version 0.6.3
 Date Range: 07/01/21 - 10/15/21:
 
