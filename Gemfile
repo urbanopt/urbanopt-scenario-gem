@@ -45,7 +45,6 @@ allow_local = ENV['FAVOR_LOCAL_GEMS']
 # end
 
 # temporary
-gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'OS_3.3'
 gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'OS_3.3'
 
 
