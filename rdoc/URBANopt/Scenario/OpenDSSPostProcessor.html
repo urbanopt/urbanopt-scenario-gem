@@ -11,12 +11,19 @@
   var index_rel_prefix = "../../";
 </script>
 
-<script src="../../js/jquery.js"></script>
-<script src="../../js/darkfish.js"></script>
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
 
 <link href="../../css/fonts.css" rel="stylesheet">
 <link href="../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -135,21 +142,20 @@
 
         <div class="method-description">
           
-          <p><a href="OpenDSSPostProcessor.html">OpenDSSPostProcessor</a> post-processes
-OpenDSS results to selected OpenDSS results and integrate them in scenario
-and feature reports.</p>
+          <p><a href="OpenDSSPostProcessor.html"><code>OpenDSSPostProcessor</code></a> post-processes OpenDSS results to selected OpenDSS results and integrate them in scenario and feature reports.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>scenario_report</code> - <em>ScenarioBase</em> - An object of
-Scenario_report class. <code>opendss_results_dir_name</code> - _directory
-name of opendss results</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>scenario_report</code> - <em>ScenarioBase</em> - An object of Scenario_report class.</p>
+</li><li>
+<p><code>opendss_results_dir_name</code> - _directory name of opendss results</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">scenario_report</span>, <span class="ruby-identifier">opendss_results_dir_name</span> = <span class="ruby-string">&#39;opendss&#39;</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">scenario_report</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-ivar">@scenario_report</span> = <span class="ruby-identifier">scenario_report</span>
@@ -203,16 +209,16 @@ name of opendss results</p>
           
           <p>create opendss json report results</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>feature_report</code> - _feature report object_ - An onject of the
-feature report</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>feature_report</code> - _feature report object_ - An onject of the feature report</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="add_summary_results-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 217</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 226</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_summary_results</span>(<span class="ruby-identifier">feature_report</span>)
   <span class="ruby-identifier">under_voltage_hrs</span> = <span class="ruby-value">0</span>
   <span class="ruby-identifier">over_voltage_hrs</span> = <span class="ruby-value">0</span>
@@ -267,7 +273,7 @@ feature report</p>
 
           
           <div class="method-source-code" id="load_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 113</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_data</span>
   <span class="ruby-comment"># load selected opendss data</span>
   <span class="ruby-identifier">load_opendss_data</span>
@@ -303,7 +309,7 @@ feature report</p>
 
           
           <div class="method-source-code" id="load_feature_report_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_feature_report_data</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># read feature results</span>
@@ -341,12 +347,12 @@ feature report</p>
 
           
           <div class="method-source-code" id="load_opendss_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 70</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_opendss_data</span>
   <span class="ruby-comment"># load building features data</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># read results from opendss</span>
-    <span class="ruby-identifier">opendss_csv</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@opendss_results_dir</span>, <span class="ruby-string">&#39;results&#39;</span>, <span class="ruby-string">&#39;Features&#39;</span>, <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.csv&#39;</span>))
+    <span class="ruby-identifier">opendss_csv</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@opendss_results_dir</span>, <span class="ruby-string">&#39;results&#39;</span>, <span class="ruby-string">&#39;Features&#39;</span>, <span class="ruby-node">&quot;#{feature_report.id}.csv&quot;</span>))
     <span class="ruby-comment"># add results to data</span>
     <span class="ruby-ivar">@opendss_data</span>[<span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">opendss_csv</span>
   <span class="ruby-keyword">end</span>
@@ -368,7 +374,7 @@ feature report</p>
   <span class="ruby-comment"># add transformer results to @opendss_data</span>
   <span class="ruby-identifier">transformer_ids</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">id</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># read results from transformers</span>
-    <span class="ruby-identifier">transformer_csv</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">tf_results_path</span>, <span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.csv&#39;</span>))
+    <span class="ruby-identifier">transformer_csv</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">tf_results_path</span>, <span class="ruby-node">&quot;#{id}.csv&quot;</span>))
     <span class="ruby-comment"># add results to data</span>
     <span class="ruby-ivar">@opendss_data</span>[<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">transformer_csv</span>
   <span class="ruby-keyword">end</span>
@@ -402,14 +408,14 @@ feature report</p>
 
           
           <div class="method-source-code" id="merge_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 121</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_data</span>(<span class="ruby-identifier">feature_report_data</span>, <span class="ruby-identifier">opendss_data</span>)
   <span class="ruby-identifier">output</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">generate</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">csv</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">opendss_data</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
       <span class="ruby-keyword">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&#39;Datetime&#39;</span>
         <span class="ruby-identifier">row</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">header</span><span class="ruby-operator">|</span> <span class="ruby-identifier">header</span>.<span class="ruby-identifier">prepend</span>(<span class="ruby-string">&#39;opendss_&#39;</span>) }
       <span class="ruby-keyword">end</span>
-      <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">feature_report_data</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">row</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>])
+      <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">feature_report_data</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">row</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span>])
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
@@ -444,7 +450,7 @@ feature report</p>
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 246</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 255</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># load data</span>
@@ -460,7 +466,7 @@ feature report</p>
     <span class="ruby-identifier">updated_feature_csv</span> = <span class="ruby-identifier">merge_data</span>(<span class="ruby-ivar">@feature_reports_data</span>[<span class="ruby-identifier">id</span>], <span class="ruby-ivar">@opendss_data</span>[<span class="ruby-identifier">id</span>])
 
     <span class="ruby-comment"># save fetaure reports</span>
-    <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">save_feature_report</span>(<span class="ruby-string">&#39;default_feature_report_opendss&#39;</span>)
+    <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">save_json_report</span>(<span class="ruby-string">&#39;default_feature_report_opendss&#39;</span>)
 
     <span class="ruby-comment"># resave updated csv report</span>
     <span class="ruby-identifier">save_csv</span>(<span class="ruby-identifier">feature_report</span>, <span class="ruby-identifier">updated_feature_csv</span>, <span class="ruby-string">&#39;default_feature_report_opendss&#39;</span>)
@@ -470,7 +476,8 @@ feature report</p>
   <span class="ruby-identifier">save_transformers_reports</span>
 
   <span class="ruby-comment"># save the updated scenario reports</span>
-  <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">save</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;scenario_report_opendss&#39;</span>)
+  <span class="ruby-comment"># set save_feature_reports to false since only the scenario reports should be saved now</span>
+  <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">save</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;scenario_report_opendss&#39;</span>, <span class="ruby-identifier">save_feature_reports</span> = <span class="ruby-keyword">false</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -497,18 +504,20 @@ feature report</p>
           
           <p>Save csv report method</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>feature_report</code> - _feature report object_ - An onject of the
-feature report <code>updated_feature_report_csv</code> - <em>CSV</em> - An
-updated feature report csv <code>file_name</code> - <em>String</em> -
-Assigned name to save the file with no extension</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>feature_report</code> - _feature report object_ - An onject of the feature report</p>
+</li><li>
+<p><code>updated_feature_report_csv</code> - <em>CSV</em> - An updated feature report csv</p>
+</li><li>
+<p><code>file_name</code> - <em>String</em> - Assigned name to save the file with no extension</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="save_csv-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 208</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 217</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_csv</span>(<span class="ruby-identifier">feature_report</span>, <span class="ruby-identifier">updated_feature_report_csv</span>, <span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_feature_report&#39;</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">directory_name</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>, <span class="ruby-node">&quot;#{file_name}.csv&quot;</span>), <span class="ruby-identifier">updated_feature_report_csv</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -541,9 +550,9 @@ Assigned name to save the file with no extension</p>
 
           
           <div class="method-source-code" id="save_transformers_reports-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 135</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 144</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_transformers_reports</span>
-  <span class="ruby-ivar">@opendss_data</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+  <span class="ruby-ivar">@opendss_data</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&#39;Transformer&#39;</span>
 
       <span class="ruby-comment"># create transformer directory</span>
@@ -572,7 +581,7 @@ Assigned name to save the file with no extension</p>
       <span class="ruby-keyword">end</span>
 
       <span class="ruby-comment"># save transformer CSV report</span>
-      <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">transformer_dir</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>, <span class="ruby-string">&#39;default_feature_report_opendss&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.csv&#39;</span>), <span class="ruby-identifier">transformer_csv</span>)
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">transformer_dir</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>, <span class="ruby-string">&#39;default_feature_report_opendss.csv&#39;</span>), <span class="ruby-identifier">transformer_csv</span>)
 
       <span class="ruby-comment"># create transformer report</span>
       <span class="ruby-identifier">transformer_report</span> = <span class="ruby-constant">URBANopt</span><span class="ruby-operator">::</span><span class="ruby-constant">Reporting</span><span class="ruby-operator">::</span><span class="ruby-constant">DefaultReports</span><span class="ruby-operator">::</span><span class="ruby-constant">FeatureReport</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">id:</span> <span class="ruby-identifier">k</span>, <span class="ruby-value">name:</span> <span class="ruby-identifier">k</span>, <span class="ruby-value">directory_name:</span> <span class="ruby-identifier">transformer_dir</span>, <span class="ruby-value">feature_type:</span> <span class="ruby-string">&#39;Transformer&#39;</span>,
@@ -588,7 +597,7 @@ Assigned name to save the file with no extension</p>
       <span class="ruby-identifier">transformer_hash</span> = <span class="ruby-identifier">transformer_report</span>.<span class="ruby-identifier">to_hash</span>
       <span class="ruby-comment"># transformer_hash.delete_if { |k, v| v.nil? }</span>
 
-      <span class="ruby-identifier">json_name_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">transformer_dir</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>, <span class="ruby-string">&#39;default_feature_report_opendss&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.json&#39;</span>)
+      <span class="ruby-identifier">json_name_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">transformer_dir</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>, <span class="ruby-string">&#39;default_feature_report_opendss.json&#39;</span>)
 
       <span class="ruby-comment"># save the json file</span>
       <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">json_name_path</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
@@ -620,12 +629,13 @@ Assigned name to save the file with no extension</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

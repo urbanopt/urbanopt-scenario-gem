@@ -11,12 +11,19 @@
   var index_rel_prefix = "../../";
 </script>
 
-<script src="../../js/jquery.js"></script>
-<script src="../../js/darkfish.js"></script>
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
 
 <link href="../../css/fonts.css" rel="stylesheet">
 <link href="../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -125,14 +132,13 @@
 
         <div class="method-description">
           
-          <p><a href="ScenarioRunnerOSW.html">ScenarioRunnerOSW</a> is a class to create
-and run SimulationFileOSWs</p>
+          <p><a href="ScenarioRunnerOSW.html"><code>ScenarioRunnerOSW</code></a> is a class to create and run SimulationFileOSWs</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>; <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -165,26 +171,24 @@ and run SimulationFileOSWs</p>
 
         <div class="method-description">
           
-          <p>Create all OSWs for <a href="../Scenario.html">Scenario</a>.</p>
+          <p>Create all OSWs for <a href="../Scenario.html"><code>Scenario</code></a>.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>scenario</code> - <em>ScenarioBase</em> - <a
-href="../Scenario.html">Scenario</a> to create simulation input files for.
-<code>force_clear</code> - <em>Bool</em> - Clear <a
-href="../Scenario.html">Scenario</a> before creating simulation input
-files.</p>
+<dd></dd></dl>
+<ul><li>
+<p><code>scenario</code> - <em>ScenarioBase</em> - <a href="../Scenario.html"><code>Scenario</code></a> to create simulation input files for.</p>
+</li><li>
+<p><code>force_clear</code> - <em>Bool</em> - Clear <a href="../Scenario.html"><code>Scenario</code></a> before creating simulation input files.</p>
+</li></ul>
 <dl class="rdoc-list label-list"><dt>return:
 <dd>
-<p><em>Array</em> Returns array of all SimulationDirs, even those created
-previously, for <a href="../Scenario.html">Scenario</a>.</p>
-</dd></dl>
+<p><em>Array</em> Returns array of all SimulationDirs, even those created previously, for <a href="../Scenario.html"><code>Scenario</code></a>.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="create_simulation_files-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_simulation_files</span>(<span class="ruby-identifier">scenario</span>, <span class="ruby-identifier">force_clear</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">force_clear</span>
     <span class="ruby-identifier">scenario</span>.<span class="ruby-identifier">clear</span>
@@ -232,7 +236,7 @@ previously, for <a href="../Scenario.html">Scenario</a>.</p>
 
           
           <div class="method-source-code" id="get_results-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 167</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 180</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">get_results</span>(<span class="ruby-identifier">scenario</span>, <span class="ruby-identifier">simulation_dirs</span>)
   <span class="ruby-comment"># look for other failed datapoints (command line display)</span>
   <span class="ruby-comment"># also compile datapoint status for latest_run.json file</span>
@@ -275,9 +279,7 @@ previously, for <a href="../Scenario.html">Scenario</a>.</p>
 
         <div class="method-description">
           
-          <p>Create and run all SimulationFileOSW for <a
-href="../Scenario.html">Scenario</a>. A staged runner is implented to run
-buildings, then transformers then district systems.</p>
+          <p>Create and run all SimulationFileOSW for <a href="../Scenario.html"><code>Scenario</code></a>. A staged runner is implented to run buildings, then transformers then district systems.</p>
 <ul><li>
 <p>instantiate openstudio runner to run .osw files.</p>
 </li><li>
@@ -285,32 +287,29 @@ buildings, then transformers then district systems.</p>
 </li><li>
 <p>get feature_type value from in.osw files</p>
 </li><li>
-<p>cretae 3 groups to store .osw files (<code>building_osws</code> ,
-<code>transformer_osws</code> , <code>district_system_osws</code>)</p>
+<p>cretae 3 groups to store .osw files (<code>building_osws</code> , <code>transformer_osws</code> , <code>district_system_osws</code>)</p>
 </li><li>
-<p>add each osw file to its corresponding group id <code>simulation_dir</code>
-is out_of_date</p>
+<p>add each osw file to its corresponding group id <code>simulation_dir</code> is out_of_date</p>
 </li><li>
 <p>Run osw file groups in order and store simulation failure in a array.</p>
 </li></ul>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>scenario</code> - <em>ScenarioBase</em> - <a
-href="../Scenario.html">Scenario</a> to create and run SimulationFiles for.
-<code>force_clear</code> - <em>Bool</em> - Clear <a
-href="../Scenario.html">Scenario</a> before creating SimulationFiles.</p>
+<dd></dd></dl>
+<ul><li>
+<p><code>scenario</code> - <em>ScenarioBase</em> - <a href="../Scenario.html"><code>Scenario</code></a> to create and run SimulationFiles for.</p>
+</li><li>
+<p><code>force_clear</code> - <em>Bool</em> - Clear <a href="../Scenario.html"><code>Scenario</code></a> before creating SimulationFiles.</p>
+</li></ul>
 <dl class="rdoc-list label-list"><dt>return:
 <dd>
-<p><em>Array</em> Returns array of all SimulationFiles, even those created
-previously, for <a href="../Scenario.html">Scenario</a>.</p>
-</dd></dl>
+<p><em>Array</em> Returns array of all SimulationFiles, even those created previously, for <a href="../Scenario.html"><code>Scenario</code></a>.</p>
 </dd></dl>
           
           
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 85</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_runner_osw.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>(<span class="ruby-identifier">scenario</span>, <span class="ruby-identifier">force_clear</span> = <span class="ruby-keyword">false</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-comment"># instantiate openstudio runner - use the defaults for now. If need to change then create</span>
   <span class="ruby-comment"># the runner.conf file (i.e. run `rake openstudio:runner:init`)</span>
@@ -350,11 +349,12 @@ previously, for <a href="../Scenario.html">Scenario</a>.</p>
     <span class="ruby-comment"># add each osw file to its corresponding group id +simulation_dir+ is out_of_date</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">simulation_dir</span>.<span class="ruby-identifier">out_of_date?</span>
 
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">feature_type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Building&#39;</span>
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">feature_type</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;Building&#39;</span>
         <span class="ruby-identifier">building_osws</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">simulation_dir</span>.<span class="ruby-identifier">in_osw_path</span>
-      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">feature_type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;District System&#39;</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;District System&#39;</span>
         <span class="ruby-identifier">district_system_osws</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">simulation_dir</span>.<span class="ruby-identifier">in_osw_path</span>
-      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">feature_type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Transformer&#39;</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;Transformer&#39;</span>
         <span class="ruby-identifier">transformer_osws</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">simulation_dir</span>.<span class="ruby-identifier">in_osw_path</span>
       <span class="ruby-keyword">else</span>
         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;ScenarioRunnerOSW does not know how to run a #{feature_type} feature&quot;</span>
@@ -405,12 +405,13 @@ previously, for <a href="../Scenario.html">Scenario</a>.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

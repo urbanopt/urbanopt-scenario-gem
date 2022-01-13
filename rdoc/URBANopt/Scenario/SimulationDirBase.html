@@ -11,12 +11,19 @@
   var index_rel_prefix = "../../";
 </script>
 
-<script src="../../js/jquery.js"></script>
-<script src="../../js/darkfish.js"></script>
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
 
 <link href="../../css/fonts.css" rel="stylesheet">
 <link href="../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -129,24 +136,22 @@
 
         <div class="method-description">
           
-          <p><a href="SimulationDirBase.html">SimulationDirBase</a> is the agnostic
-representation of a directory of simulation input files.</p>
+          <p><a href="SimulationDirBase.html"><code>SimulationDirBase</code></a> is the agnostic representation of a directory of simulation input files.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>scenario</code> - <em>ScenarioBase</em> - <a
-href="../Scenario.html">Scenario</a> containing this <a
-href="SimulationDirBase.html">SimulationDirBase</a>. <code>features</code>
-- <em>Array</em> - Array of Features that this <a
-href="SimulationDirBase.html">SimulationDirBase</a> represents.
-<code>feature_names</code> - <em>Array</em> - Array of scenario specific
-names for these Features.</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>scenario</code> - <em>ScenarioBase</em> - <a href="../Scenario.html"><code>Scenario</code></a> containing this <a href="SimulationDirBase.html"><code>SimulationDirBase</code></a>.</p>
+</li><li>
+<p><code>features</code> - <em>Array</em> - Array of Features that this <a href="SimulationDirBase.html"><code>SimulationDirBase</code></a> represents.</p>
+</li><li>
+<p><code>feature_names</code> - <em>Array</em> - Array of scenario specific names for these Features.</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">scenario</span>, <span class="ruby-identifier">features</span>, <span class="ruby-identifier">feature_names</span>)
   <span class="ruby-ivar">@scenario</span> = <span class="ruby-identifier">scenario</span>
   <span class="ruby-ivar">@features</span> = <span class="ruby-identifier">features</span>
@@ -189,7 +194,7 @@ names for these Features.</p>
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;clear is not implemented for SimulationFileBase, override in your class&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -216,14 +221,13 @@ names for these Features.</p>
 
         <div class="method-description">
           
-          <p>Create run directory and generate simulation inputs, all previous contents
-of directory are removed</p>
+          <p>Create run directory and generate simulation inputs, all previous contents of directory are removed</p>
           
           
 
           
           <div class="method-source-code" id="create_input_files-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 85</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_input_files</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;create_input_files is not implemented for SimulationFileBase, override in your class&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -250,15 +254,13 @@ of directory are removed</p>
 
         <div class="method-description">
           
-          <p>Return true if the simulation is out of date (input files newer than
-results), false otherwise. Non-existant simulation input files are out of
-date.</p>
+          <p>Return true if the simulation is out of date (input files newer than results), false otherwise. Non-existant simulation input files are out of date.</p>
           
           
 
           
           <div class="method-source-code" id="out_of_date-3F-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">out_of_date?</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;out_of_date? is not implemented for SimulationFileBase, override in your class&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -291,7 +293,7 @@ date.</p>
 
           
           <div class="method-source-code" id="run_dir-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 56</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_dir</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;run_dir is not implemented for SimulationFileBase, override in your class&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -318,14 +320,13 @@ date.</p>
 
         <div class="method-description">
           
-          <p>Returns simulation status one of {&#39;Not Started&#39;, &#39;Started&#39;,
-&#39;Complete&#39;, &#39;Failed&#39;}</p>
+          <p>Returns simulation status one of {&#39;Not Started&#39;, &#39;Started&#39;, &#39;Complete&#39;, &#39;Failed&#39;}</p>
           
           
 
           
           <div class="method-source-code" id="simulation_status-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 71</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_base.rb, line 77</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">simulation_status</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;simulation_status is not implemented for SimulationFileBase, override in your class&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -342,12 +343,13 @@ date.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

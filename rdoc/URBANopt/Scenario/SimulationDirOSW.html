@@ -11,12 +11,19 @@
   var index_rel_prefix = "../../";
 </script>
 
-<script src="../../js/jquery.js"></script>
-<script src="../../js/darkfish.js"></script>
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
 
 <link href="../../css/fonts.css" rel="stylesheet">
 <link href="../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -177,32 +184,29 @@
 
         <div class="method-description">
           
-          <p><a href="SimulationDirOSW.html">SimulationDirOSW</a> creates a OSW file to
-simulate features, a <a
-href="SimulationMapperBase.html">SimulationMapperBase</a> is invoked to
-translate features to OSW.</p>
+          <p><a href="SimulationDirOSW.html"><code>SimulationDirOSW</code></a> creates a OSW file to simulate features, a <a href="SimulationMapperBase.html"><code>SimulationMapperBase</code></a> is invoked to translate features to OSW.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>scenario</code> - <em>ScenarioBase</em> - <a
-href="../Scenario.html">Scenario</a> containing this SimulationFileBase.
-<code>features</code> - <em>Array</em> - Array of Features this
-SimulationFile represents. <code>feature_names</code> - <em>Array</em> -
-Array of scenario specific names for these Features.
-<code>mapper_class</code> - <em>String</em> - Name of class derived frmo <a
-href="SimulationMapperBase.html">SimulationMapperBase</a> used to translate
-feature to simulation OSW.</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>scenario</code> - <em>ScenarioBase</em> - <a href="../Scenario.html"><code>Scenario</code></a> containing this SimulationFileBase.</p>
+</li><li>
+<p><code>features</code> - <em>Array</em> - Array of Features this SimulationFile represents.</p>
+</li><li>
+<p><code>feature_names</code> - <em>Array</em> - Array of scenario specific names for these Features.</p>
+</li><li>
+<p><code>mapper_class</code> - <em>String</em> - Name of class derived frmo <a href="SimulationMapperBase.html"><code>SimulationMapperBase</code></a> used to translate feature to simulation OSW.</p>
+</li></ul>
           
           
             <div class="method-calls-super">
               Calls superclass method
-              <a href="SimulationDirBase.html#method-c-new">URBANopt::Scenario::SimulationDirBase.new</a>
+              <a href="SimulationDirBase.html#method-c-new"><code>URBANopt::Scenario::SimulationDirBase::new</code></a>
             </div>
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 44</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">scenario</span>, <span class="ruby-identifier">features</span>, <span class="ruby-identifier">feature_names</span>, <span class="ruby-identifier">mapper_class</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">scenario</span>, <span class="ruby-identifier">features</span>, <span class="ruby-identifier">feature_names</span>)
 
@@ -258,7 +262,7 @@ feature to simulation OSW.</p>
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 218</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 230</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">run_dir</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dir</span>)
@@ -289,16 +293,13 @@ feature to simulation OSW.</p>
 
         <div class="method-description">
           
-          <p>Create run directory and generate simulation OSW, all previous contents of
-directory are removed The simulation OSW is created by evaluating the <a
-href="SimulationDirOSW.html#attribute-i-mapper_class">#mapper_class</a>&#39;s
-create_osw method</p>
+          <p>Create run directory and generate simulation OSW, all previous contents of directory are removed The simulation OSW is created by evaluating the <a href="SimulationDirOSW.html#attribute-i-mapper_class"><code>mapper_class</code></a>&#39;s create_osw method</p>
           
           
 
           
           <div class="method-source-code" id="create_input_files-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 233</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 245</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_input_files</span>
   <span class="ruby-identifier">clear</span>
 
@@ -345,7 +346,7 @@ create_osw method</p>
 
           
           <div class="method-source-code" id="failed_job_path-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">failed_job_path</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">run_dir</span>, <span class="ruby-string">&#39;failed.job&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -378,7 +379,7 @@ create_osw method</p>
 
           
           <div class="method-source-code" id="finished_job_path-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 110</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">finished_job_path</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">run_dir</span>, <span class="ruby-string">&#39;finished.job&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -411,7 +412,7 @@ create_osw method</p>
 
           
           <div class="method-source-code" id="in_osw-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">in_osw</span>
   <span class="ruby-identifier">result</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">in_osw_path</span>)
@@ -450,7 +451,7 @@ create_osw method</p>
 
           
           <div class="method-source-code" id="in_osw_path-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 76</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">in_osw_path</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">run_dir</span>, <span class="ruby-string">&#39;in.osw&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -477,15 +478,13 @@ create_osw method</p>
 
         <div class="method-description">
           
-          <p>Return true if the simulation is out of date (input files newer than
-results), false otherwise. Non-existant simulation input files are out of
-date.</p>
+          <p>Return true if the simulation is out of date (input files newer than results), false otherwise. Non-existant simulation input files are out of date.</p>
           
           
 
           
           <div class="method-source-code" id="out_of_date-3F-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 138</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 150</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">out_of_date?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">run_dir</span>)
     <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;run_dir &#39;#{run_dir}&#39; does not exist, simulation dir &#39;#{run_dir}&#39; out of date&quot;</span>
@@ -574,7 +573,7 @@ date.</p>
 
           
           <div class="method-source-code" id="out_osw-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 124</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 136</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">out_osw</span>
   <span class="ruby-identifier">result</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">out_osw_path</span>)
@@ -613,7 +612,7 @@ date.</p>
 
           
           <div class="method-source-code" id="out_osw_path-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">out_osw_path</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">run_dir</span>, <span class="ruby-string">&#39;out.osw&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -646,11 +645,12 @@ date.</p>
 
           
           <div class="method-source-code" id="run_dir-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 67</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 78</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_dir</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Feature ID not set&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@feature_id</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Scenario run dir not set&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">scenario</span>.<span class="ruby-identifier">run_dir</span>.<span class="ruby-identifier">nil?</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">scenario</span>.<span class="ruby-identifier">run_dir</span>, <span class="ruby-ivar">@feature_id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>)
+
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">scenario</span>.<span class="ruby-identifier">run_dir</span>, <span class="ruby-node">&quot;#{@feature_id}/&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -675,14 +675,13 @@ date.</p>
 
         <div class="method-description">
           
-          <p>Return simulation status one of {&#39;Not Started&#39;, &#39;Started&#39;,
-&#39;Complete&#39;, &#39;Failed&#39;}</p>
+          <p>Return simulation status one of {&#39;Not Started&#39;, &#39;Started&#39;, &#39;Complete&#39;, &#39;Failed&#39;}</p>
           
           
 
           
           <div class="method-source-code" id="simulation_status-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 201</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 213</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">simulation_status</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">failed_job_path</span>)
     <span class="ruby-keyword">return</span> <span class="ruby-string">&#39;Failed&#39;</span>
@@ -725,7 +724,7 @@ date.</p>
 
           
           <div class="method-source-code" id="started_job_path-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 96</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/simulation_dir_osw.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">started_job_path</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">run_dir</span>, <span class="ruby-string">&#39;started.job&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -742,12 +741,13 @@ date.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

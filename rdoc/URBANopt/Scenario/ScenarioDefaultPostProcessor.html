@@ -11,12 +11,19 @@
   var index_rel_prefix = "../../";
 </script>
 
-<script src="../../js/jquery.js"></script>
-<script src="../../js/darkfish.js"></script>
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
 
 <link href="../../css/fonts.css" rel="stylesheet">
 <link href="../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -127,24 +134,23 @@
 
         <div class="method-description">
           
-          <p><a href="ScenarioPostProcessorBase.html">ScenarioPostProcessorBase</a>
-post-processes a scenario to create scenario level results</p>
+          <p><a href="ScenarioPostProcessorBase.html"><code>ScenarioPostProcessorBase</code></a> post-processes a scenario to create scenario level results</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>scenario_base</code> - <em>ScenarioBase</em> - An object of <a
-href="ScenarioBase.html">ScenarioBase</a> class.</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>scenario_base</code> - <em>ScenarioBase</em> - An object of <a href="ScenarioBase.html"><code>ScenarioBase</code></a> class.</p>
+</li></ul>
           
           
             <div class="method-calls-super">
               Calls superclass method
-              <a href="ScenarioPostProcessorBase.html#method-c-new">URBANopt::Scenario::ScenarioPostProcessorBase.new</a>
+              <a href="ScenarioPostProcessorBase.html#method-c-new"><code>URBANopt::Scenario::ScenarioPostProcessorBase::new</code></a>
             </div>
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 47</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">scenario_base</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">scenario_base</span>)
 
@@ -187,16 +193,16 @@ href="ScenarioBase.html">ScenarioBase</a> class.</p>
           
           <p>Add results from a simulation_dir to this result.</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>simulation_dir</code> - <em>SimulationDirOSW</em> - An object on <a
-href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>simulation_dir</code> - <em>SimulationDirOSW</em> - An object on <a href="SimulationDirOSW.html"><code>SimulationDirOSW</code></a> class.</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="add_simulation_dir-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 73</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_simulation_dir</span>(<span class="ruby-identifier">simulation_dir</span>)
   <span class="ruby-identifier">feature_reports</span> = <span class="ruby-constant">URBANopt</span><span class="ruby-operator">::</span><span class="ruby-constant">Reporting</span><span class="ruby-operator">::</span><span class="ruby-constant">DefaultReports</span><span class="ruby-operator">::</span><span class="ruby-constant">FeatureReport</span>.<span class="ruby-identifier">from_simulation_dir</span>(<span class="ruby-identifier">simulation_dir</span>)
 
@@ -236,12 +242,17 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
           <p>Create database file with scenario-level results</p>
 
 <pre>Sum values for each timestep across all features. Save to new table in a new database</pre>
+<dl class="rdoc-list label-list"><dt>parameters:
+<dd></dd></dl>
+<ul><li>
+<p><code>file_name</code> - <em>String</em> - Assign a name to the saved scenario results file</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="create_scenario_db_file-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 89</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 100</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_scenario_db_file</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-ivar">@default_save_name</span>)
   <span class="ruby-identifier">new_db_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@initialization_hash</span>[<span class="ruby-value">:directory_name</span>], <span class="ruby-node">&quot;#{file_name}.db&quot;</span>)
   <span class="ruby-identifier">scenario_db</span> = <span class="ruby-constant">SQLite3</span><span class="ruby-operator">::</span><span class="ruby-constant">Database</span>.<span class="ruby-identifier">open</span> <span class="ruby-identifier">new_db_file</span>
@@ -262,7 +273,7 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
   <span class="ruby-identifier">feature_list</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@initialization_hash</span>[<span class="ruby-value">:directory_name</span>]).<span class="ruby-identifier">children</span>.<span class="ruby-identifier">select</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:directory?</span>) <span class="ruby-comment"># Folders in the run/scenario directory</span>
 
   <span class="ruby-comment"># get scenario CSV</span>
-  <span class="ruby-identifier">scenario_csv</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@initialization_hash</span>[<span class="ruby-value">:root_dir</span>], <span class="ruby-ivar">@initialization_hash</span>[<span class="ruby-value">:name</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&#39;.csv&#39;</span>)
+  <span class="ruby-identifier">scenario_csv</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@initialization_hash</span>[<span class="ruby-value">:root_dir</span>], <span class="ruby-node">&quot;#{@initialization_hash[:name]}.csv&quot;</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">scenario_csv</span>)
     <span class="ruby-comment"># csv found</span>
     <span class="ruby-identifier">feature_ids</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">scenario_csv</span>, <span class="ruby-value">headers:</span> <span class="ruby-keyword">true</span>)
@@ -278,9 +289,8 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Couldn&#39;t find scenario CSV: #{scenario_csv}&quot;</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">feature_1_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">feature_list</span>[<span class="ruby-value">0</span>]) <span class="ruby-comment"># Get name of first feature, so we can read eplusout.sql from there</span>
-  <span class="ruby-identifier">uo_output_sql_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@initialization_hash</span>[<span class="ruby-value">:directory_name</span>], <span class="ruby-identifier">feature_1_name</span>, <span class="ruby-string">&#39;eplusout.sql&#39;</span>)
   <span class="ruby-identifier">feature_list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature</span><span class="ruby-operator">|</span> <span class="ruby-comment"># Loop through each feature in the scenario</span>
+    <span class="ruby-identifier">uo_output_sql_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@initialization_hash</span>[<span class="ruby-value">:directory_name</span>], <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">feature</span>), <span class="ruby-string">&#39;eplusout.sql&#39;</span>)
     <span class="ruby-identifier">feature_db</span> = <span class="ruby-constant">SQLite3</span><span class="ruby-operator">::</span><span class="ruby-constant">Database</span>.<span class="ruby-identifier">open</span> <span class="ruby-identifier">uo_output_sql_file</span>
     <span class="ruby-comment"># Doing &quot;db.results_as_hash = true&quot; is prettier, but in this case significantly slower.</span>
 
@@ -291,6 +301,7 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
     INNER JOIN ReportDataDictionary AS rddi ON rddi.ReportDataDictionaryIndex=ReportData.ReportDataDictionaryIndex
     WHERE rddi.IndexGroup == &#39;Facility:Electricity&#39;
     AND rddi.ReportingFrequency == &#39;Zone Timestep&#39;
+    AND Time.Year &gt; 1900
     ORDER BY ReportData.TimeIndex&quot;</span>
 
     <span class="ruby-identifier">elec_query</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-comment"># Add up all the values for electricity usage across all Features at this timestep</span>
@@ -304,7 +315,7 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
         <span class="ruby-comment"># running sum</span>
         <span class="ruby-identifier">arr_match</span>[<span class="ruby-value">:elec_val</span>] <span class="ruby-operator">+=</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">row</span>[<span class="ruby-value">7</span>])
       <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">end</span> <span class="ruby-comment"># End elec_query</span>
+    <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">elec_query</span>.<span class="ruby-identifier">close</span>
 
     <span class="ruby-identifier">gas_query</span> = <span class="ruby-identifier">feature_db</span>.<span class="ruby-identifier">query</span> <span class="ruby-string">&quot;SELECT ReportData.TimeIndex, Time.Year, Time.Month, Time.Day, Time.Hour,
@@ -314,6 +325,7 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
     INNER JOIN ReportDataDictionary AS rddi ON rddi.ReportDataDictionaryIndex=ReportData.ReportDataDictionaryIndex
     WHERE rddi.IndexGroup == &#39;Facility:Gas&#39;
     AND rddi.ReportingFrequency == &#39;Zone Timestep&#39;
+    AND Time.Year &gt; 1900
     ORDER BY ReportData.TimeIndex&quot;</span>
 
     <span class="ruby-identifier">gas_query</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
@@ -326,10 +338,10 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
         <span class="ruby-comment"># running sum</span>
         <span class="ruby-identifier">arr_match</span>[<span class="ruby-value">:gas_val</span>] <span class="ruby-operator">+=</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">row</span>[<span class="ruby-value">7</span>])
       <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">end</span> <span class="ruby-comment"># End gas_query</span>
+    <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">gas_query</span>.<span class="ruby-identifier">close</span>
     <span class="ruby-identifier">feature_db</span>.<span class="ruby-identifier">close</span>
-  <span class="ruby-keyword">end</span> <span class="ruby-comment"># End feature_list loop</span>
+  <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">elec_sql</span> = []
   <span class="ruby-identifier">gas_sql</span> = []
@@ -366,14 +378,13 @@ href="SimulationDirOSW.html">SimulationDirOSW</a> class.</p>
 
         <div class="method-description">
           
-          <p>Run the post processor on this <a href="../Scenario.html">Scenario</a>.This
-will add all the simulation_dirs.</p>
+          <p>Run the post processor on this <a href="../Scenario.html"><code>Scenario</code></a>.This will add all the simulation_dirs.</p>
           
           
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 60</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-comment"># this run method adds all the simulation_dirs, you can extend it to do more custom stuff</span>
   <span class="ruby-ivar">@scenario_base</span>.<span class="ruby-identifier">simulation_dirs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">simulation_dir</span><span class="ruby-operator">|</span>
@@ -406,16 +417,16 @@ will add all the simulation_dirs.</p>
           
           <p>Save scenario result</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>file_name</code> - <em>String</em> - Assign a name to the saved
-scenario results file</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>file_name</code> - <em>String</em> - Assign a name to the saved scenario results file</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="save-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 196</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_default.rb, line 208</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save</span>(<span class="ruby-identifier">file_name</span> = <span class="ruby-ivar">@default_save_name</span>)
   <span class="ruby-ivar">@scenario_result</span>.<span class="ruby-identifier">save</span>
 
@@ -434,12 +445,13 @@ scenario results file</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

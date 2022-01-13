@@ -11,12 +11,19 @@
   var index_rel_prefix = "../../";
 </script>
 
-<script src="../../js/jquery.js"></script>
-<script src="../../js/darkfish.js"></script>
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
 
 <link href="../../css/fonts.css" rel="stylesheet">
 <link href="../../css/rdoc.css" rel="stylesheet">
+
+
 <link href="../../custom_rdoc_styles.css" rel="stylesheet">
+
+
 
 
 
@@ -131,27 +138,24 @@
 
         <div class="method-description">
           
-          <p><a href="ScenarioDatapoint.html">ScenarioDatapoint</a> is an agnostic
-description of the simulation of a Feature in a <a
-href="../Scenario.html">Scenario</a> A Simulation Mapper will map the</p>
+          <p><a href="ScenarioDatapoint.html"><code>ScenarioDatapoint</code></a> is an agnostic description of the simulation of a Feature in a <a href="../Scenario.html"><code>Scenario</code></a> A Simulation Mapper will map the</p>
 <dl class="rdoc-list label-list"><dt>parameters:
-<dd>
-<p><code>scenario</code> - <em>ScenarioBase</em> - <a
-href="../Scenario.html">Scenario</a> containing this <a
-href="ScenarioDatapoint.html">ScenarioDatapoint</a>.
-<code>feature_id</code> - <em>String</em> - Unique id of the feature for
-this <a href="ScenarioDatapoint.html">ScenarioDatapoint</a>.
-<code>feature_name</code> - <em>String</em> - Human readable name of the
-feature for this <a href="ScenarioDatapoint.html">ScenarioDatapoint</a>.
-<code>mapper_class</code> - <em>String</em> - Name of Ruby class used to
-translate feature to simulation OSW.</p>
-</dd></dl>
+<dd></dd></dl>
+<ul><li>
+<p><code>scenario</code> - <em>ScenarioBase</em> - <a href="../Scenario.html"><code>Scenario</code></a> containing this <a href="ScenarioDatapoint.html"><code>ScenarioDatapoint</code></a>.</p>
+</li><li>
+<p><code>feature_id</code> - <em>String</em> - Unique id of the feature for this <a href="ScenarioDatapoint.html"><code>ScenarioDatapoint</code></a>.</p>
+</li><li>
+<p><code>feature_name</code> - <em>String</em> - Human readable name of the feature for this <a href="ScenarioDatapoint.html"><code>ScenarioDatapoint</code></a>.</p>
+</li><li>
+<p><code>mapper_class</code> - <em>String</em> - Name of Ruby class used to translate feature to simulation OSW.</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">scenario</span>, <span class="ruby-identifier">feature_id</span>, <span class="ruby-identifier">feature_name</span>, <span class="ruby-identifier">mapper_class</span>)
   <span class="ruby-ivar">@scenario</span> = <span class="ruby-identifier">scenario</span>
   <span class="ruby-ivar">@feature_id</span> = <span class="ruby-identifier">feature_id</span>
@@ -196,7 +200,7 @@ translate feature to simulation OSW.</p>
 
           
           <div class="method-source-code" id="clear-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear</span>
   <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">run_dir</span>
   <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dir</span>)
@@ -225,10 +229,7 @@ translate feature to simulation OSW.</p>
 
         <div class="method-description">
           
-          <p>Create run directory and generate simulation OSW, all previous contents of
-directory are removed The simulation OSW is created by evaluating the
-mapper_class&#39;s <a
-href="ScenarioDatapoint.html#method-i-create_osw">#create_osw</a> method</p>
+          <p>Create run directory and generate simulation OSW, all previous contents of directory are removed The simulation OSW is created by evaluating the mapper_class&#39;s <a href="ScenarioDatapoint.html#method-i-create_osw"><code>create_osw</code></a> method</p>
 <dl class="rdoc-list label-list"><dt>return:
 <dd>
 <p><em>String</em> - Path to the simulation OSW.</p>
@@ -238,7 +239,7 @@ href="ScenarioDatapoint.html#method-i-create_osw">#create_osw</a> method</p>
 
           
           <div class="method-source-code" id="create_osw-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 97</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create_osw</span>
   <span class="ruby-identifier">osw</span> = <span class="ruby-identifier">eval</span>(<span class="ruby-node">&quot;#{@mapper_class}.new.create_osw(@scenario, @feature_id, @feature_name)&quot;</span>)
   <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">run_dir</span>
@@ -285,7 +286,7 @@ href="ScenarioDatapoint.html#method-i-create_osw">#create_osw</a> method</p>
 
           
           <div class="method-source-code" id="feature_location-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">feature_location</span>
   <span class="ruby-ivar">@feature</span>.<span class="ruby-identifier">feature_location</span>
 <span class="ruby-keyword">end</span></pre>
@@ -318,7 +319,7 @@ href="ScenarioDatapoint.html#method-i-create_osw">#create_osw</a> method</p>
 
           
           <div class="method-source-code" id="feature_type-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 58</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">feature_type</span>
   <span class="ruby-ivar">@feature</span>.<span class="ruby-identifier">feature_type</span>
 <span class="ruby-keyword">end</span></pre>
@@ -345,8 +346,7 @@ href="ScenarioDatapoint.html#method-i-create_osw">#create_osw</a> method</p>
 
         <div class="method-description">
           
-          <p>Return true if the datapoint is out of date, false otherwise.  Non-existant
-files are out of date.</p>
+          <p>Return true if the datapoint is out of date, false otherwise.  Non-existant files are out of date.</p>
 <dl class="rdoc-list label-list"><dt>return:
 <dd>
 <p><em>Boolean</em> - True if the datapoint is out of date, false otherwise.</p>
@@ -356,7 +356,7 @@ files are out of date.</p>
 
           
           <div class="method-source-code" id="out_of_date-3F-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 121</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">out_of_date?</span>
   <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">run_dir</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dir</span>)
@@ -367,6 +367,7 @@ files are out of date.</p>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">out_osw</span>)
     <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
   <span class="ruby-keyword">end</span>
+
   <span class="ruby-identifier">out_osw_time</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">out_osw</span>)
 
   <span class="ruby-comment"># array of files that this datapoint depends on</span>
@@ -436,11 +437,12 @@ files are out of date.</p>
 
           
           <div class="method-source-code" id="run_dir-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 73</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_datapoint_base.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run_dir</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Feature ID not set&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@feature_id</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Scenario run dir not set&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@scenario</span>.<span class="ruby-identifier">run_dir</span>.<span class="ruby-identifier">nil?</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@scenario</span>.<span class="ruby-identifier">run_dir</span>, <span class="ruby-ivar">@feature_id</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span>)
+
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@scenario</span>.<span class="ruby-identifier">run_dir</span>, <span class="ruby-node">&quot;#{@feature_id}/&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -455,12 +457,13 @@ files are out of date.</p>
     </section>
   
   </section>
+
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
