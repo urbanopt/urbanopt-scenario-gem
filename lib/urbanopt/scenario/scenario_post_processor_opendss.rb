@@ -200,8 +200,13 @@ module URBANopt
             # store under voltages and over voltages
             under_voltage_hrs = 0
             over_voltage_hrs = 0
-            nominal_capacity = t_res[t_key]['nominal_capacity']
-            r_r_ratio = t_res[t_key]['reactance_resistance_ratio']
+            nominal_capacity = nil
+            r_r_ratio = nil
+            begin
+              nominal_capacity = t_res[t_key]['nominal_capacity']
+              r_r_ratio = t_res[t_key]['reactance_resistance_ratio']
+            rescue
+            end
 
             transformer_csv = CSV.generate do |csv|
               @opendss_data[k].each_with_index do |row, i|
