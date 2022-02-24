@@ -174,9 +174,6 @@ module URBANopt
         # depends on the feature file
         dependencies << scenario.feature_file.path
 
-        # depends on the csv file
-        dependencies << scenario.csv_file
-
         # depends on the mapper classes
         Dir.glob(File.join(scenario.mapper_files_dir, '*')).each do |f|
           dependencies << f
