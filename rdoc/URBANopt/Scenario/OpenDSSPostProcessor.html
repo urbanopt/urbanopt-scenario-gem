@@ -83,6 +83,8 @@
     
     <li ><a href="#method-i-add_summary_results">#add_summary_results</a>
     
+    <li ><a href="#method-i-compute_transformer_results">#compute_transformer_results</a>
+    
     <li ><a href="#method-i-load_data">#load_data</a>
     
     <li ><a href="#method-i-load_feature_report_data">#load_feature_report_data</a>
@@ -94,6 +96,8 @@
     <li ><a href="#method-i-run">#run</a>
     
     <li ><a href="#method-i-save_csv">#save_csv</a>
+    
+    <li ><a href="#method-i-save_opendss_scenario">#save_opendss_scenario</a>
     
     <li ><a href="#method-i-save_transformers_reports">#save_transformers_reports</a>
     
@@ -173,6 +177,9 @@
   <span class="ruby-comment"># initialize feature_reports data</span>
   <span class="ruby-ivar">@feature_reports_data</span> = {}
 
+  <span class="ruby-comment"># initialize opendss json results</span>
+  <span class="ruby-ivar">@opendss_json_results</span> = {}
+
   <span class="ruby-comment"># initialize logger</span>
   <span class="ruby-identifier">@@logger</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">URBANopt</span><span class="ruby-operator">::</span><span class="ruby-constant">Reporting</span><span class="ruby-operator">::</span><span class="ruby-constant">DefaultReports</span>.<span class="ruby-identifier">logger</span>
 <span class="ruby-keyword">end</span></pre>
@@ -218,10 +225,13 @@
 
           
           <div class="method-source-code" id="add_summary_results-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 226</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 279</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_summary_results</span>(<span class="ruby-identifier">feature_report</span>)
   <span class="ruby-identifier">under_voltage_hrs</span> = <span class="ruby-value">0</span>
   <span class="ruby-identifier">over_voltage_hrs</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">kw</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">kvar</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">nominal_voltage</span> = <span class="ruby-keyword">nil</span>
 
   <span class="ruby-identifier">id</span> = <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">id</span>
   <span class="ruby-ivar">@opendss_data</span>[<span class="ruby-identifier">id</span>].<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
@@ -238,11 +248,108 @@
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
+  <span class="ruby-comment"># also add additional keys for OpenDSS Loads</span>
+  <span class="ruby-identifier">loads</span> = <span class="ruby-ivar">@opendss_json_results</span>[<span class="ruby-string">&#39;model&#39;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;class&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Load&#39;</span> }
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">loads</span>
+    <span class="ruby-identifier">bld_load</span> = <span class="ruby-identifier">loads</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;name&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">id</span> }
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">bld_load</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">bld_load</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+        <span class="ruby-identifier">bld_load</span> = <span class="ruby-identifier">bld_load</span>[<span class="ruby-value">0</span>]
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">kw</span> = <span class="ruby-value">0</span>
+      <span class="ruby-identifier">kvar</span> = <span class="ruby-value">0</span>
+      <span class="ruby-comment"># nominal_voltage (V)</span>
+      <span class="ruby-identifier">nominal_voltage</span> = <span class="ruby-identifier">bld_load</span>[<span class="ruby-string">&#39;nominal_voltage&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">nominal_voltage</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">300</span>
+        <span class="ruby-identifier">nominal_voltage</span> <span class="ruby-operator">*=</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>(<span class="ruby-value">3</span>)
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">nominal_voltage</span> = <span class="ruby-identifier">nominal_voltage</span>
+
+      <span class="ruby-comment"># max_power_kw</span>
+      <span class="ruby-comment"># max_reactive_power_kvar</span>
+      <span class="ruby-identifier">pls</span> = <span class="ruby-identifier">bld_load</span>[<span class="ruby-string">&#39;phase_loads&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+      <span class="ruby-identifier">pls</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pl</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">kw</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">pl</span>[<span class="ruby-string">&#39;p&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+        <span class="ruby-identifier">kvar</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">pl</span>[<span class="ruby-string">&#39;q&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">kw</span> <span class="ruby-operator">/=</span> <span class="ruby-value">1000</span>
+      <span class="ruby-identifier">kvar</span> <span class="ruby-operator">/=</span> <span class="ruby-value">1000</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;No load matching id #{id} found in OpenDSS Model.json results&quot;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">@@logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-string">&#39;No loads information found in OpenDSS Model.json results file&#39;</span>)
+  <span class="ruby-keyword">end</span>
   <span class="ruby-comment"># assign results to feature report</span>
   <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">over_voltage_hours</span> = <span class="ruby-identifier">over_voltage_hrs</span>
   <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">under_voltage_hours</span> = <span class="ruby-identifier">under_voltage_hrs</span>
+  <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">nominal_voltage</span> = <span class="ruby-identifier">nominal_voltage</span>
+  <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">max_power_kw</span> = <span class="ruby-identifier">kw</span>
+  <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">max_reactive_power_kvar</span> = <span class="ruby-identifier">kvar</span>
 
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">feature_report</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-compute_transformer_results" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">compute_transformer_results</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>computer transformer results</p>
+          
+          
+
+          
+          <div class="method-source-code" id="compute_transformer_results-source">
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">compute_transformer_results</span>
+  <span class="ruby-comment"># using values from opendss Model.json</span>
+  <span class="ruby-identifier">results</span> = {}
+  <span class="ruby-comment"># retrieve all transformers</span>
+  <span class="ruby-identifier">trsfmrs</span> = <span class="ruby-ivar">@opendss_json_results</span>[<span class="ruby-string">&#39;model&#39;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;class&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;PowerTransformer&#39;</span> }
+  <span class="ruby-identifier">trsfmrs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">t</span> = { <span class="ruby-value">&#39;nominal_capacity&#39;:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">&#39;reactance_resistance_ratio&#39;:</span> <span class="ruby-keyword">nil</span> }
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;name&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+
+    <span class="ruby-comment"># nominal capacity in kVA  (Model.json stores it in VA)</span>
+    <span class="ruby-comment"># TODO: assuming that all windings would have the same rated power, so grabbing first one</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">t</span>[<span class="ruby-string">&#39;nominal_capacity&#39;</span>] = <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;windings&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>][<span class="ruby-value">0</span>][<span class="ruby-string">&#39;rated_power&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>] <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># reactance to resistance ratio:</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-comment"># TODO: grabbing the first one for now. Handle when there are multiple reactances and winding resistances</span>
+      <span class="ruby-identifier">reactance</span> = <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;reactances&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>][<span class="ruby-value">0</span>][<span class="ruby-string">&#39;value&#39;</span>]
+      <span class="ruby-identifier">resistance</span> = <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;windings&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>][<span class="ruby-value">0</span>][<span class="ruby-string">&#39;resistance&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+
+      <span class="ruby-identifier">t</span>[<span class="ruby-string">&#39;reactance_resistance_ratio&#39;</span>] = <span class="ruby-identifier">reactance</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">resistance</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">results</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">t</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -273,7 +380,7 @@
 
           
           <div class="method-source-code" id="load_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_data</span>
   <span class="ruby-comment"># load selected opendss data</span>
   <span class="ruby-identifier">load_opendss_data</span>
@@ -309,7 +416,7 @@
 
           
           <div class="method-source-code" id="load_feature_report_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 112</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 121</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_feature_report_data</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># read feature results</span>
@@ -347,7 +454,7 @@
 
           
           <div class="method-source-code" id="load_opendss_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_opendss_data</span>
   <span class="ruby-comment"># load building features data</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
@@ -355,6 +462,12 @@
     <span class="ruby-identifier">opendss_csv</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@opendss_results_dir</span>, <span class="ruby-string">&#39;results&#39;</span>, <span class="ruby-string">&#39;Features&#39;</span>, <span class="ruby-node">&quot;#{feature_report.id}.csv&quot;</span>))
     <span class="ruby-comment"># add results to data</span>
     <span class="ruby-ivar">@opendss_data</span>[<span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">opendss_csv</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># load Model.json results (if exists)</span>
+  <span class="ruby-identifier">opendss_json_filename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@opendss_results_dir</span>, <span class="ruby-string">&#39;json_files&#39;</span>, <span class="ruby-string">&#39;Model.json&#39;</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">opendss_json_filename</span>)
+    <span class="ruby-ivar">@opendss_json_results</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">opendss_json_filename</span>))
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment">## load transformers data</span>
@@ -408,7 +521,7 @@
 
           
           <div class="method-source-code" id="merge_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 130</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 139</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_data</span>(<span class="ruby-identifier">feature_report_data</span>, <span class="ruby-identifier">opendss_data</span>)
   <span class="ruby-identifier">output</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">generate</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">csv</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">opendss_data</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
@@ -450,7 +563,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 255</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 405</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># load data</span>
@@ -465,7 +578,7 @@
     <span class="ruby-identifier">id</span> = <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">id</span>
     <span class="ruby-identifier">updated_feature_csv</span> = <span class="ruby-identifier">merge_data</span>(<span class="ruby-ivar">@feature_reports_data</span>[<span class="ruby-identifier">id</span>], <span class="ruby-ivar">@opendss_data</span>[<span class="ruby-identifier">id</span>])
 
-    <span class="ruby-comment"># save fetaure reports</span>
+    <span class="ruby-comment"># save feature reports</span>
     <span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">save_json_report</span>(<span class="ruby-string">&#39;default_feature_report_opendss&#39;</span>)
 
     <span class="ruby-comment"># resave updated csv report</span>
@@ -474,6 +587,9 @@
 
   <span class="ruby-comment"># add transformer reports</span>
   <span class="ruby-identifier">save_transformers_reports</span>
+
+  <span class="ruby-comment"># save additional global opendss fields</span>
+  <span class="ruby-identifier">save_opendss_scenario</span>
 
   <span class="ruby-comment"># save the updated scenario reports</span>
   <span class="ruby-comment"># set save_feature_reports to false since only the scenario reports should be saved now</span>
@@ -517,9 +633,93 @@
 
           
           <div class="method-source-code" id="save_csv-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 217</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 270</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_csv</span>(<span class="ruby-identifier">feature_report</span>, <span class="ruby-identifier">updated_feature_report_csv</span>, <span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_feature_report&#39;</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">directory_name</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>, <span class="ruby-node">&quot;#{file_name}.csv&quot;</span>), <span class="ruby-identifier">updated_feature_report_csv</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-save_opendss_scenario" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">save_opendss_scenario</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>save opendss scenario fields</p>
+          
+          
+
+          
+          <div class="method-source-code" id="save_opendss_scenario-source">
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 347</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_opendss_scenario</span>
+  <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">scenario_power_distribution</span> = <span class="ruby-constant">URBANopt</span><span class="ruby-operator">::</span><span class="ruby-constant">Reporting</span><span class="ruby-operator">::</span><span class="ruby-constant">DefaultReports</span><span class="ruby-operator">::</span><span class="ruby-constant">ScenarioPowerDistribution</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-comment">## SUBSTATION</span>
+  <span class="ruby-identifier">subs</span> = []
+  <span class="ruby-identifier">feeders</span> = <span class="ruby-ivar">@opendss_json_results</span>[<span class="ruby-string">&#39;model&#39;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;class&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Feeder_metadata&#39;</span> }
+
+  <span class="ruby-identifier">feeders</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># nominal_voltage - RMS voltage low side (V)</span>
+    <span class="ruby-identifier">substation</span> = { <span class="ruby-value">nominal_voltage:</span> <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;nominal_voltage&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>] }
+    <span class="ruby-identifier">subs</span>.<span class="ruby-identifier">append</span>(<span class="ruby-identifier">substation</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">scenario_power_distribution</span>.<span class="ruby-identifier">substations</span> = <span class="ruby-identifier">subs</span>
+
+  <span class="ruby-comment">## LINES</span>
+  <span class="ruby-comment"># retrieve all lines</span>
+  <span class="ruby-identifier">dist_lines</span> = []
+  <span class="ruby-identifier">lines</span> = <span class="ruby-ivar">@opendss_json_results</span>[<span class="ruby-string">&#39;model&#39;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;class&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Line&#39;</span> }
+  <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">line</span> = {}
+    <span class="ruby-comment"># length (m)</span>
+    <span class="ruby-identifier">line</span>[<span class="ruby-string">&#39;length&#39;</span>] = <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;length&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+
+    <span class="ruby-comment"># max ampacity: iterate through N-1 wires and add up ampacity</span>
+    <span class="ruby-identifier">amps</span> = <span class="ruby-value">0</span>
+    <span class="ruby-identifier">num_wires</span> = <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;wires&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>].<span class="ruby-identifier">length</span>
+    (<span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">num_wires</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">amps</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;wires&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>][<span class="ruby-identifier">i</span>][<span class="ruby-string">&#39;ampacity&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">line</span>[<span class="ruby-string">&#39;ampacity&#39;</span>] = <span class="ruby-identifier">amps</span>
+
+    <span class="ruby-comment"># commercial line type</span>
+    <span class="ruby-identifier">line</span>[<span class="ruby-string">&#39;commercial_line_type&#39;</span>] = []
+    <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;wires&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">wire</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">line</span>[<span class="ruby-string">&#39;commercial_line_type&#39;</span>].<span class="ruby-identifier">append</span>(<span class="ruby-identifier">wire</span>[<span class="ruby-string">&#39;nameclass&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>])
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">dist_lines</span>.<span class="ruby-identifier">append</span>(<span class="ruby-identifier">line</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">scenario_power_distribution</span>.<span class="ruby-identifier">distribution_lines</span> = <span class="ruby-identifier">dist_lines</span>
+
+  <span class="ruby-comment"># CAPACITORS</span>
+  <span class="ruby-identifier">caps</span> = []
+  <span class="ruby-identifier">capacitors</span> = <span class="ruby-ivar">@opendss_json_results</span>[<span class="ruby-string">&#39;model&#39;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;class&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Capacitors&#39;</span> }
+  <span class="ruby-identifier">capacitors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">cap</span> = <span class="ruby-value">0</span>
+    <span class="ruby-identifier">item</span>[<span class="ruby-string">&#39;phase_capacitors&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pc</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">pc</span>[<span class="ruby-string">&#39;var&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+        <span class="ruby-identifier">cap</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">pc</span>[<span class="ruby-string">&#39;var&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>]
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">caps</span>.<span class="ruby-identifier">append</span>({ <span class="ruby-value">nominal_capacity:</span> <span class="ruby-identifier">cap</span> })
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">scenario_power_distribution</span>.<span class="ruby-identifier">capacitors</span> = <span class="ruby-identifier">caps</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -550,11 +750,13 @@
 
           
           <div class="method-source-code" id="save_transformers_reports-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 144</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_transformers_reports</span>
+  <span class="ruby-identifier">t_res</span> = <span class="ruby-identifier">compute_transformer_results</span>
+
   <span class="ruby-ivar">@opendss_data</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&#39;Transformer&#39;</span>
-
+      <span class="ruby-identifier">t_key</span> = <span class="ruby-identifier">k</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-string">&#39;Transformer.&#39;</span>, <span class="ruby-string">&#39;&#39;</span>)
       <span class="ruby-comment"># create transformer directory</span>
       <span class="ruby-identifier">transformer_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">directory_name</span>, <span class="ruby-identifier">k</span>)
       <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">transformer_dir</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>))
@@ -563,6 +765,13 @@
       <span class="ruby-comment"># store under voltages and over voltages</span>
       <span class="ruby-identifier">under_voltage_hrs</span> = <span class="ruby-value">0</span>
       <span class="ruby-identifier">over_voltage_hrs</span> = <span class="ruby-value">0</span>
+      <span class="ruby-identifier">nominal_capacity</span> = <span class="ruby-keyword">nil</span>
+      <span class="ruby-identifier">r_r_ratio</span> = <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">begin</span>
+        <span class="ruby-identifier">nominal_capacity</span> = <span class="ruby-identifier">t_res</span>[<span class="ruby-identifier">t_key</span>][<span class="ruby-string">&#39;nominal_capacity&#39;</span>]
+        <span class="ruby-identifier">r_r_ratio</span> = <span class="ruby-identifier">t_res</span>[<span class="ruby-identifier">t_key</span>][<span class="ruby-string">&#39;reactance_resistance_ratio&#39;</span>]
+      <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span>
+      <span class="ruby-keyword">end</span>
 
       <span class="ruby-identifier">transformer_csv</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">generate</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">csv</span><span class="ruby-operator">|</span>
         <span class="ruby-ivar">@opendss_data</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
@@ -588,9 +797,11 @@
                                                                                   <span class="ruby-value">timesteps_per_hour:</span> <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">timesteps_per_hour</span>,
                                                                                   <span class="ruby-value">simulation_status:</span> <span class="ruby-string">&#39;complete&#39;</span>)
 
-      <span class="ruby-comment"># assign results to transfomrer report</span>
+      <span class="ruby-comment"># assign results to transformer report</span>
       <span class="ruby-identifier">transformer_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">over_voltage_hours</span> = <span class="ruby-identifier">over_voltage_hrs</span>
       <span class="ruby-identifier">transformer_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">under_voltage_hours</span> = <span class="ruby-identifier">under_voltage_hrs</span>
+      <span class="ruby-identifier">transformer_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">nominal_capacity</span> = <span class="ruby-identifier">nominal_capacity</span>
+      <span class="ruby-identifier">transformer_report</span>.<span class="ruby-identifier">power_distribution</span>.<span class="ruby-identifier">reactance_resistance_ratio</span> = <span class="ruby-identifier">r_r_ratio</span>
 
       <span class="ruby-comment">## save transformer JSON file</span>
       <span class="ruby-comment"># transformer_hash</span>
@@ -635,7 +846,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
