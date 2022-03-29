@@ -248,7 +248,7 @@ RSpec.describe URBANopt::Scenario do
   end
 
   it 'can integrate opendss results' do
-    # generate opendssreults for testing
+    # generate opendss results for testing
     opendss_results_source = File.join(File.dirname(__FILE__), '../files/opendss_outputs/')
     opendss_results_destination = File.join(File.dirname(__FILE__), '../test/example_scenario')
     FileUtils.copy_entry opendss_results_source, opendss_results_destination
