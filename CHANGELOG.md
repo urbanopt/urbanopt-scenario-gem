@@ -1,5 +1,28 @@
 # URBANopt Scenario Gem
 
+## Version 0.8.0
+
+Date Range: 11/23/21 - 05/10/22
+
+- Fixed [#223]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/223 ), updates for OpenStudio 3.3
+- Fixed [#224]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/224 ), Os 3.3
+- Fixed [#225]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/225 ), fix dependencies
+- Fixed [#226]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/226 ), Bump node-forge from 0.10.0 to 1.0.0 in /docs
+- Fixed [#228]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/228 ), expanding opendss reporting
+- Fixed [#229]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/229 ), Bump follow-redirects from 1.14.1 to 1.14.8 in /docs
+- Fixed [#230]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/230 ), Bump nanoid from 3.1.23 to 3.3.0 in /docs
+- Fixed [#231]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/231 ), Bump url-parse from 1.5.1 to 1.5.7 in /docs
+- Fixed [#232]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/232 ), remove scenario-file (as a whole) from checks to re-run datapoints
+- Fixed [#233]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/233 ), Bump prismjs from 1.23.0 to 1.27.0 in /docs
+- Fixed [#234]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/234 ), Bump url-parse from 1.5.1 to 1.5.10 in /docs
+- Fixed [#235]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/235 ), Renewable pct
+- Fixed [#236]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/236 ), Bump nanoid from 3.1.23 to 3.3.1 in /docs
+- Fixed [#237]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/237 ), Bump follow-redirects from 1.14.1 to 1.14.9 in /docs
+- Fixed [#238]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/238 ), Bump node-forge from 0.10.0 to 1.3.0 in /docs
+- Fixed [#239]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/239 ), Bump minimist from 1.2.5 to 1.2.6 in /docs
+- Fixed [#240]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/240 ), Update copyrights
+- Fixed [#241]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/241 ), Bump async from 2.6.3 to 2.6.4 in /docs
+
 ## Version 0.7.0
 Date Range: 10/16/21 - 11/22/21:
 
