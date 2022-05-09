@@ -1,6 +1,7 @@
 # URBANopt Scenario Gem
 
 ## Version 0.8.0
+
 Date Range: 11/23/21 - 05/10/22
 
 - Fixed [#223]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/223 ), updates for OpenStudio 3.3
