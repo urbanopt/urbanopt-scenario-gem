@@ -238,7 +238,7 @@ RSpec.describe URBANopt::Scenario do
     end
 
     scenario_csv_schema_headers = validator.csv_headers
-    expect(scenario_csv_headers_with_no_units).to eq(scenario_csv_schema_headers)
+    expect((scenario_csv_headers_with_no_units & scenario_csv_schema_headers)).to eq(scenario_csv_headers_with_no_units)
 
     # Read feature_reprot json file and validate against schema
     Dir["#{File.dirname(__FILE__)}/../**/*default_feature_reports.json"].each do |json_file|
