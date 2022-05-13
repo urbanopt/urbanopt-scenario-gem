@@ -4,8 +4,6 @@
 
 Date Range: 11/23/21 - 05/10/22
 
-- Fixed [#223]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/223 ), updates for OpenStudio 3.3
-- Fixed [#224]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/224 ), Os 3.3
 - Fixed [#225]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/225 ), fix dependencies
 - Fixed [#226]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/226 ), Bump node-forge from 0.10.0 to 1.0.0 in /docs
 - Fixed [#228]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/228 ), expanding opendss reporting
