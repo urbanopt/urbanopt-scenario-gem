@@ -1,5 +1,5 @@
 # *********************************************************************************
-# URBANopt™, Copyright (c) 2019-2021, Alliance for Sustainable Energy, LLC, and other
+# URBANopt™, Copyright (c) 2019-2022, Alliance for Sustainable Energy, LLC, and other
 # contributors. All rights reserved.
 
 # Redistribution and use in source and binary forms, with or without modification,
@@ -173,9 +173,6 @@ module URBANopt
 
         # depends on the feature file
         dependencies << scenario.feature_file.path
-
-        # depends on the csv file
-        dependencies << scenario.csv_file
 
         # depends on the mapper classes
         Dir.glob(File.join(scenario.mapper_files_dir, '*')).each do |f|

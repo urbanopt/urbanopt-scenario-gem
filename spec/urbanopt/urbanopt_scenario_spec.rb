@@ -1,5 +1,5 @@
 # *********************************************************************************
-# URBANopt™, Copyright (c) 2019-2021, Alliance for Sustainable Energy, LLC, and other
+# URBANopt™, Copyright (c) 2019-2022, Alliance for Sustainable Energy, LLC, and other
 # contributors. All rights reserved.
 
 # Redistribution and use in source and binary forms, with or without modification,
@@ -238,7 +238,7 @@ RSpec.describe URBANopt::Scenario do
     end
 
     scenario_csv_schema_headers = validator.csv_headers
-    expect(scenario_csv_headers_with_no_units).to eq(scenario_csv_schema_headers)
+    expect((scenario_csv_headers_with_no_units & scenario_csv_schema_headers)).to eq(scenario_csv_headers_with_no_units)
 
     # Read feature_reprot json file and validate against schema
     Dir["#{File.dirname(__FILE__)}/../**/*default_feature_reports.json"].each do |json_file|
@@ -248,7 +248,7 @@ RSpec.describe URBANopt::Scenario do
   end
 
   it 'can integrate opendss results' do
-    # generate opendssreults for testing
+    # generate opendss results for testing
     opendss_results_source = File.join(File.dirname(__FILE__), '../files/opendss_outputs/')
     opendss_results_destination = File.join(File.dirname(__FILE__), '../test/example_scenario')
     FileUtils.copy_entry opendss_results_source, opendss_results_destination

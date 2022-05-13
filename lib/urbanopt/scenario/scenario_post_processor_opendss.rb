@@ -1,5 +1,5 @@
 # *********************************************************************************
-# URBANopt™, Copyright (c) 2019-2021, Alliance for Sustainable Energy, LLC, and other
+# URBANopt™, Copyright (c) 2019-2022, Alliance for Sustainable Energy, LLC, and other
 # contributors. All rights reserved.
 
 # Redistribution and use in source and binary forms, with or without modification,
@@ -71,6 +71,9 @@ module URBANopt
         # initialize feature_reports data
         @feature_reports_data = {}
 
+        # initialize opendss json results
+        @opendss_json_results = {}
+
         # initialize logger
         @@logger ||= URBANopt::Reporting::DefaultReports.logger
       end
@@ -83,6 +86,12 @@ module URBANopt
           opendss_csv = CSV.read(File.join(@opendss_results_dir, 'results', 'Features', "#{feature_report.id}.csv"))
           # add results to data
           @opendss_data[feature_report.id] = opendss_csv
+        end
+
+        # load Model.json results (if exists)
+        opendss_json_filename = File.join(@opendss_results_dir, 'json_files', 'Model.json')
+        if File.exist?(opendss_json_filename)
+          @opendss_json_results = JSON.parse(File.read(opendss_json_filename))
         end
 
         ## load transformers data
@@ -140,11 +149,46 @@ module URBANopt
         return output
       end
 
+      # computer transformer results
+      def compute_transformer_results
+        # using values from opendss Model.json
+        results = {}
+        # retrieve all transformers
+        trsfmrs = @opendss_json_results['model'].select { |d| d['class'] == 'PowerTransformer' }
+        trsfmrs.each do |item|
+          t = { 'nominal_capacity': nil, 'reactance_resistance_ratio': nil }
+          name = item['name']['value']
+
+          # nominal capacity in kVA  (Model.json stores it in VA)
+          # TODO: assuming that all windings would have the same rated power, so grabbing first one
+          begin
+            t['nominal_capacity'] = item['windings']['value'][0]['rated_power']['value'] / 1000
+          rescue StandardError
+          end
+
+          # reactance to resistance ratio:
+          begin
+            # TODO: grabbing the first one for now. Handle when there are multiple reactances and winding resistances
+            reactance = item['reactances']['value'][0]['value']
+            resistance = item['windings']['value'][0]['resistance']['value']
+
+            t['reactance_resistance_ratio'] = reactance / resistance
+          rescue StandardError
+          end
+
+          results[name] = t
+        end
+
+        return results
+      end
+
       # add feature reports for transformers
       def save_transformers_reports
+        t_res = compute_transformer_results
+
         @opendss_data.each_key do |k|
           if k.include? 'Transformer'
-
+            t_key = k.sub('Transformer.', '')
             # create transformer directory
             transformer_dir = File.join(@scenario_report.directory_name, k)
             FileUtils.mkdir_p(File.join(transformer_dir, 'feature_reports'))
@@ -153,6 +197,13 @@ module URBANopt
             # store under voltages and over voltages
             under_voltage_hrs = 0
             over_voltage_hrs = 0
+            nominal_capacity = nil
+            r_r_ratio = nil
+            begin
+              nominal_capacity = t_res[t_key]['nominal_capacity']
+              r_r_ratio = t_res[t_key]['reactance_resistance_ratio']
+            rescue StandardError
+            end
 
             transformer_csv = CSV.generate do |csv|
               @opendss_data[k].each_with_index do |row, i|
@@ -178,9 +229,11 @@ module URBANopt
                                                                                         timesteps_per_hour: @scenario_report.timesteps_per_hour,
                                                                                         simulation_status: 'complete')
 
-            # assign results to transfomrer report
+            # assign results to transformer report
             transformer_report.power_distribution.over_voltage_hours = over_voltage_hrs
             transformer_report.power_distribution.under_voltage_hours = under_voltage_hrs
+            transformer_report.power_distribution.nominal_capacity = nominal_capacity
+            transformer_report.power_distribution.reactance_resistance_ratio = r_r_ratio
 
             ## save transformer JSON file
             # transformer_hash
@@ -226,6 +279,9 @@ module URBANopt
       def add_summary_results(feature_report)
         under_voltage_hrs = 0
         over_voltage_hrs = 0
+        kw = nil
+        kvar = nil
+        nominal_voltage = nil
 
         id = feature_report.id
         @opendss_data[id].each_with_index do |row, i|
@@ -242,11 +298,105 @@ module URBANopt
           end
         end
 
+        # also add additional keys for OpenDSS Loads
+        loads = @opendss_json_results['model'].select { |d| d['class'] == 'Load' }
+        if loads
+          bld_load = loads.select { |d| d['name']['value'] == id }
+          if bld_load
+            if bld_load.is_a?(Array)
+              bld_load = bld_load[0]
+            end
+            kw = 0
+            kvar = 0
+            # nominal_voltage (V)
+            nominal_voltage = bld_load['nominal_voltage']['value']
+            if nominal_voltage < 300
+              nominal_voltage *= Math.sqrt(3)
+            end
+            nominal_voltage = nominal_voltage
+
+            # max_power_kw
+            # max_reactive_power_kvar
+            pls = bld_load['phase_loads']['value']
+            pls.each do |pl|
+              kw += pl['p']['value']
+              kvar += pl['q']['value']
+            end
+
+            kw /= 1000
+            kvar /= 1000
+          else
+            @@logger.info("No load matching id #{id} found in OpenDSS Model.json results")
+          end
+        else
+          @@logger.info('No loads information found in OpenDSS Model.json results file')
+        end
         # assign results to feature report
         feature_report.power_distribution.over_voltage_hours = over_voltage_hrs
         feature_report.power_distribution.under_voltage_hours = under_voltage_hrs
+        feature_report.power_distribution.nominal_voltage = nominal_voltage
+        feature_report.power_distribution.max_power_kw = kw
+        feature_report.power_distribution.max_reactive_power_kvar = kvar
 
         return feature_report
+      end
+
+      ##
+      # save opendss scenario fields
+      ##
+      def save_opendss_scenario
+        @scenario_report.scenario_power_distribution = URBANopt::Reporting::DefaultReports::ScenarioPowerDistribution.new
+
+        ## SUBSTATION
+        subs = []
+        feeders = @opendss_json_results['model'].select { |d| d['class'] == 'Feeder_metadata' }
+
+        feeders.each do |item|
+          # nominal_voltage - RMS voltage low side (V)
+          substation = { nominal_voltage: item['nominal_voltage']['value'] }
+          subs.append(substation)
+        end
+        @scenario_report.scenario_power_distribution.substations = subs
+
+        ## LINES
+        # retrieve all lines
+        dist_lines = []
+        lines = @opendss_json_results['model'].select { |d| d['class'] == 'Line' }
+        lines.each do |item|
+          line = {}
+          # length (m)
+          line['length'] = item['length']['value']
+
+          # max ampacity: iterate through N-1 wires and add up ampacity
+          amps = 0
+          num_wires = item['wires']['value'].length
+          (0..(num_wires - 1)).each do |i|
+            amps += item['wires']['value'][i]['ampacity']['value']
+          end
+          line['ampacity'] = amps
+
+          # commercial line type
+          line['commercial_line_type'] = []
+          item['wires']['value'].each do |wire|
+            line['commercial_line_type'].append(wire['nameclass']['value'])
+          end
+          dist_lines.append(line)
+        end
+        @scenario_report.scenario_power_distribution.distribution_lines = dist_lines
+
+        # CAPACITORS
+        caps = []
+        capacitors = @opendss_json_results['model'].select { |d| d['class'] == 'Capacitors' }
+        capacitors.each do |item|
+          cap = 0
+          item['phase_capacitors']['value'].each do |pc|
+            if pc['var']['value']
+              cap += pc['var']['value']
+            end
+          end
+          caps.append({ nominal_capacity: cap })
+        end
+        @scenario_report.scenario_power_distribution.capacitors = caps
       end
 
       ##
@@ -266,7 +416,7 @@ module URBANopt
           id = feature_report.id
           updated_feature_csv = merge_data(@feature_reports_data[id], @opendss_data[id])
 
-          # save fetaure reports
+          # save feature reports
           feature_report.save_json_report('default_feature_report_opendss')
 
           # resave updated csv report
@@ -275,6 +425,9 @@ module URBANopt
 
         # add transformer reports
         save_transformers_reports
+
+        # save additional global opendss fields
+        save_opendss_scenario
 
         # save the updated scenario reports
         # set save_feature_reports to false since only the scenario reports should be saved now
