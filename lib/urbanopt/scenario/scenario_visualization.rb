@@ -45,7 +45,7 @@ require 'json'
 module URBANopt
   module Scenario
     class ResultVisualization
-      def self.create_visualization(run_dir, feature = true, feature_names = false)
+      def self.create_visualization(run_dir, feature: true, feature_names: false)
         @all_results = []
         name = nil
         run_dir.each do |folder|
@@ -112,9 +112,9 @@ module URBANopt
             dec_date = DateTime.new(year.to_i, 12, 1, 0, 0)
             jan_next_year = DateTime.new(year.to_i + 1, 1, 1, 0, 0)
 
-            monthly_values['Datetime'].each do |i|
-              date_obj = DateTime.strptime(i.to_s, format)
-              index = monthly_values['Datetime'].index(i)
+            monthly_values['Datetime'].each do |date|
+              date_obj = DateTime.strptime(date.to_s, format)
+              index = monthly_values['Datetime'].index(date)
 
               # store index of each date from the csv
               if feb_date == date_obj
