@@ -234,9 +234,9 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
   end
 
   it 'can create visualization for scenario result' do
-    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/default_scenario_report.csv')]
-    scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, false)
-    file = File.expand_path('../../scenarioData.js', run_dir[0])
+    default_report_list = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/default_scenario_report.csv')]
+    scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(default_report_list, false)
+    file = File.expand_path('../../scenarioData.js', default_report_list[0])
 
     expect(File.exist?(file)).to be true
 
@@ -254,12 +254,12 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
   end
 
   it 'can create visualization for feature result' do
-    run_dir = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/1/feature_reports/default_feature_report.csv'), File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/2/feature_reports/default_feature_report.csv')]
+    default_report_list = [File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/1/feature_reports/default_feature_report.csv'), File.join(File.dirname(__FILE__), '../vis_test/baseline_scenario/2/feature_reports/default_feature_report.csv')]
     feature_names = ['Building_1', 'Building_2']
 
-    scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(run_dir, true, feature_names)
+    scenario_visualization = URBANopt::Scenario::ResultVisualization.create_visualization(default_report_list, true, feature_names)
 
-    file = File.expand_path('../../../scenarioData.js', run_dir[0])
+    file = File.expand_path('../../../scenarioData.js', default_report_list[0])
     expect(File.exist?(file)).to be true
 
     visualization_file = File.read(file)

@@ -45,10 +45,10 @@ require 'json'
 module URBANopt
   module Scenario
     class ResultVisualization
-      def self.create_visualization(run_dir, feature = true, feature_names = false)
+      def self.create_visualization(default_report_list, feature = true, feature_names = false)
         @all_results = []
         name = nil
-        run_dir.each do |folder|
+        default_report_list.each do |folder|
           # create visualization for scenarios
           case feature
           when false
@@ -57,7 +57,7 @@ module URBANopt
 
           # create visualization for features
           when true
-            index = run_dir.index(folder)
+            index = default_report_list.index(folder)
             name = "#{folder.split('/')[-3]}-#{feature_names[index]}"
             csv_dir = folder
           end
@@ -241,15 +241,15 @@ module URBANopt
         flag_aggregation = { 'QAQC category': 'Total number of flags' } # Make a hash for count of flags of each category for this scenario
         # This if-tree gets us to the run_dir from the default_report handed to the method
         # FIXME: this is soooo brittle it makes me sad
-        if run_dir[0].to_s.end_with?('scenario')
+        if default_report_list[0].to_s.end_with?('scenario')
           # Handles cases where the run dir is passed straight in - might not ever happen?
-          scenario_run_dir = Pathname.new(run_dir[0])
-        elsif Pathname.new(run_dir[0]).parent.to_s.end_with?('scenario')
+          scenario_run_dir = Pathname.new(default_report_list[0])
+        elsif Pathname.new(default_report_list[0]).parent.to_s.end_with?('scenario')
           # For scenario visualization
-          scenario_run_dir = Pathname.new(run_dir[0])
-        elsif Pathname.new(run_dir[0]).parent.parent.parent.to_s.end_with?('scenario')
+          scenario_run_dir = Pathname.new(default_report_list[0])
+        elsif Pathname.new(default_report_list[0]).parent.parent.parent.to_s.end_with?('scenario')
           # For feature visualization
-          scenario_run_dir = Pathname.new(run_dir[0]).parent.parent
+          scenario_run_dir = Pathname.new(default_report_list[0]).parent.parent
         end
         dirs_in_scenario = scenario_run_dir.parent.children.select(&:directory?)
         # This will occasionally pick up the opendss folder or similar, but the 'next unless' line will skip that dir for us
@@ -277,10 +277,10 @@ module URBANopt
         # create json with required data stored in a variable
         if feature == false
           # In case of scenario visualization store result at top of the run folder
-          results_path = File.expand_path('../../scenarioData.js', run_dir[0])
+          results_path = File.expand_path('../../scenarioData.js', default_report_list[0])
         else
           # In case of feature visualization store result at top of scenario folder folder
-          results_path = File.expand_path('../../../scenarioData.js', run_dir[0])
+          results_path = File.expand_path('../../../scenarioData.js', default_report_list[0])
         end
         File.open(results_path, 'w') do |file|
           file << "var scenarioData = #{JSON.pretty_generate(@all_results)};"
