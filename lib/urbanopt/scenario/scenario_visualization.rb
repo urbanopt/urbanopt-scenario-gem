@@ -262,6 +262,11 @@ module URBANopt
                 end
               end
             end
+            # FIXME: Filthy hack to put 'total_qaqc_flags' at the end of the hash
+            # Purpose is to make it look reasonable when displayed in visualization html report
+            temp_hash_for_ordering = { 'total_qaqc_flags' => flag_aggregation['total_qaqc_flags'] }
+            flag_aggregation.delete('total_qaqc_flags')
+            flag_aggregation['total_qaqc_flags'] = temp_hash_for_ordering['total_qaqc_flags']
             results['qaqc_flags'] = flag_aggregation
           end
 
