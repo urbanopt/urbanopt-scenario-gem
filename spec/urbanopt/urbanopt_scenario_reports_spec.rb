@@ -269,7 +269,7 @@ RSpec.describe URBANopt::Reporting::DefaultReports do
 
     json_file = JSON.parse(visualization_file)
     # order does not seem to be the same, but ensure they both made it in the results file
-    if (json_file.size == 3) && ['1-Building_1', '2-Building_2'].include?(json_file[0]['name']) && ['1-Building_1', '2-Building_2'].include?(json_file[1]['name'])
+    if (json_file.size == 2) && ['1-Building_1', '2-Building_2'].include?(json_file[0]['name']) && ['1-Building_1', '2-Building_2'].include?(json_file[1]['name'])
       test_name = true
     else
       test_name = false
