@@ -232,47 +232,43 @@ module URBANopt
 
           end
 
+          # QAQC flags by category
+          flag_aggregation = {} # Make a hash for count of flags of each category for this scenario
+          # This if-tree gets us to the run_dir from the default_report handed to the method
+          # FIXME: this is soooo brittle it makes me sad
+          if default_report_list[0].to_s.end_with?('scenario')
+            # Handles cases where the run dir is passed straight in - might not ever happen?
+            scenario_run_dir = Pathname.new(default_report_list[0])
+          elsif Pathname.new(default_report_list[0]).parent.to_s.end_with?('scenario')
+            # Only add qaqc summary output to visualization of scenarios
+            scenario_run_dir = Pathname.new(default_report_list[0])
+            dirs_in_scenario = scenario_run_dir.parent.children.select(&:directory?)
+            # This will occasionally pick up the opendss folder or similar, but the 'next unless' line will skip that dir for us
+            dirs_in_scenario.each do |dir_in_scenario| # Go through the list of features in the scenario
+              next unless File.file?(File.join(dir_in_scenario, 'out.osw')) # skip if osw doesn't exist - needed because scenario-gem testing doesn't have osw's
+
+              osw = JSON.parse(File.read(File.join(dir_in_scenario, 'out.osw'))) # Get the qaqc measure data from out.osw
+              osw['steps'].each do |step| # Go through the list of steps in out.osw
+                next unless step['measure_dir_name'] == 'generic_qaqc'
+
+                step['result']['step_values'].each do |step_value| # Go through the list of step values in qaqc
+                  if step_value['units'] == 'flags' && step_value['value'] > 0 # Find categories with flags
+                    # If the category has already been made in the flag hash, add to it; otherwise create the category and populate it
+                    if flag_aggregation[step_value['name']]
+                      flag_aggregation[step_value['name']] += step_value['value']
+                    else flag_aggregation[step_value['name']] = step_value['value']
+                    end
+                  end
+                end
+              end
+            end
+            results['qaqc_flags'] = flag_aggregation
+          end
+
           unless results.nil?
             @all_results << results
           end
         end
-
-        # QAQC flags by category
-        flag_aggregation = { 'QAQC category': 'Total number of flags' } # Make a hash for count of flags of each category for this scenario
-        # This if-tree gets us to the run_dir from the default_report handed to the method
-        # FIXME: this is soooo brittle it makes me sad
-        if default_report_list[0].to_s.end_with?('scenario')
-          # Handles cases where the run dir is passed straight in - might not ever happen?
-          scenario_run_dir = Pathname.new(default_report_list[0])
-        elsif Pathname.new(default_report_list[0]).parent.to_s.end_with?('scenario')
-          # For scenario visualization
-          scenario_run_dir = Pathname.new(default_report_list[0])
-        elsif Pathname.new(default_report_list[0]).parent.parent.parent.to_s.end_with?('scenario')
-          # For feature visualization
-          scenario_run_dir = Pathname.new(default_report_list[0]).parent.parent
-        end
-        dirs_in_scenario = scenario_run_dir.parent.children.select(&:directory?)
-        # This will occasionally pick up the opendss folder or similar, but the 'next unless' line will skip that dir for us
-        dirs_in_scenario.each do |dir_in_scenario| # Go through the list of features in the scenario
-          next unless File.file?(File.join(dir_in_scenario, 'out.osw')) # skip if osw doesn't exist - needed because scenario-gem testing doesn't have osw's
-
-          osw = JSON.parse(File.read(File.join(dir_in_scenario, 'out.osw'))) # Get the qaqc measure data from out.osw
-          osw['steps'].each do |step| # Go through the list of steps in out.osw
-            next unless step['measure_dir_name'] == 'generic_qaqc'
-
-            step['result']['step_values'].each do |step_value| # Go through the list of step values in qaqc
-              if step_value['units'] == 'flags' && step_value['value'] > 0 # Find categories with flags
-                # If the category has already been made in the flag hash, add to it; otherwise create the category and populate it
-                if flag_aggregation[step_value['name']]
-                  flag_aggregation[step_value['name']] += step_value['value']
-                else flag_aggregation[step_value['name']] = step_value['value']
-                end
-              end
-            end
-          end
-        end
-
-        @all_results << flag_aggregation
 
         # create json with required data stored in a variable
         if feature == false
