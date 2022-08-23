@@ -57,7 +57,7 @@ module URBANopt
             def initialize(scenario_report, disco_results_dir_name = 'disco')
                 if !scenario_report.nil?
                     @scenario_report = scenario_report
-                    @disco_results_dir = File.join(@scenario_report.directory_name, opendss_results_dir_name)
+                    @disco_results_dir = File.join(@scenario_report.directory_name, disco_results_dir_name)
                 else
                     raise 'scenario_report is not valid'
                 end
@@ -76,18 +76,61 @@ module URBANopt
             def load_disco_data
 
                 # load disco upgrade summary
-                disco_upgrade_summary = File.join(@disco_results_dir, 'upgrade_summary.json')
-                if File.exist?(disco_upgrade_summary)
-                    @disco_upgrade_summary = JSON.parse(File.read(disco_upgrade_summary))
+                disco_json_filename = File.join(@disco_results_dir, 'upgrade_summary.json')
+                if File.exist?(disco_json_filename)
+                    @disco_json_results = JSON.parse(File.read(disco_json_filename))
                 end
 
             end
+
+            # load disco data
+            def load_data
+                # load selected disco data
+                load_disco_data
+            end
+
 
             ##
             # save disco scenario fields
             ##
             def save_disco_scenario
-                @scenario_report.scenario_power_distribution_cost = URBANopt::Reporting
+                @scenario_report.scenario_power_distribution_cost = URBANopt::Reporting::DefaultReports::ScenarioPowerDistributionCost.new
+
+                # RESULTS
+
+                res = []
+                # read result from JSON report
+                res = @disco_json_results['results']
+                @scenario_report.scenario_power_distribution_cost.results = res
+
+
+
+                # OUTPUTS
+
+                out = []
+                # read result from JSON report
+                #TODO: copy over log file
+                out = @disco_json_results['jobs']
+                @scenario_report.scenario_power_distribution_cost.outputs = out
+
+                # VIOLATION SUMMARY
+
+                vio = []
+                # read result from JSON report
+                vio = @disco_json_results['violation_summary']
+                @scenario_report.scenario_power_distribution_cost.violation_summary = vio
+
+                # COSTS PER EQUIPMENT
+                cos = []
+                # read result from JSON report
+                cos = @disco_json_results['costs_per_equipment']
+                @scenario_report.scenario_power_distribution_cost.costs_per_equipment = cos
+
+                # EQUIPMENT
+                equ = []
+                # read result from JSON report
+                equ = @disco_json_results['equipment']
+                @scenario_report.scenario_power_distribution_cost.equipment = equ
 
             end
             
@@ -96,12 +139,15 @@ module URBANopt
             ##
             def run
 
+                # load data
+                load_data
+
                 # save additional global disco fields
                 save_disco_scenario
 
                 # save the updated scenario reports
                 # set save_feature_reports to false since only the scenario reports should be saved now
-                @scenario_report.save(file_name = 'scenario_report_opendss', save_feature_reports = false)
+                @scenario_report.save(file_name = 'scenario_report_disco', save_feature_reports = false)
             end
 
         end
