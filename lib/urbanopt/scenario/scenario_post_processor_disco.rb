@@ -107,10 +107,13 @@ module URBANopt
 
                 # OUTPUTS
 
-                out = []
+                out = {}
                 # read result from JSON report
-                #TODO: copy over log file
-                out = @disco_json_results['jobs']
+                out[:log_file] = @disco_json_results['outputs']['log_file']
+                out[:jobs] = []
+                @disco_json_results['outputs']['jobs'].each do |job|
+                    out[:jobs] << job
+                end
                 @scenario_report.scenario_power_distribution_cost.outputs = out
 
                 # VIOLATION SUMMARY
@@ -147,7 +150,7 @@ module URBANopt
 
                 # save the updated scenario reports
                 # set save_feature_reports to false since only the scenario reports should be saved now
-                @scenario_report.save(file_name = 'scenario_report_disco', save_feature_reports = false)
+                @scenario_report.save(file_name = 'scenario_report_disco', save_feature_reports = false, save_feature_reports = false)
             end
 
         end
