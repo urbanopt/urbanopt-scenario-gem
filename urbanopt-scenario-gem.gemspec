@@ -26,20 +26,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'simplecov', '~> 0.18.2'
+  spec.add_development_dependency 'simplecov-lcov', '~> 0.8.0'
 
   spec.add_runtime_dependency 'json_pure', '~> 2.3'
   spec.add_runtime_dependency 'json-schema', '~> 2.8'
 
   spec.add_runtime_dependency 'sqlite3', '1.4.2'
   spec.add_runtime_dependency 'urbanopt-core', '~> 0.8.0'
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.6.0'
-
-  # no longer need the below
-  # need to include all measure gems listed in mappers in project gemfiles
-  # scenario_csv loads the mappers and need access to the extension gems when they are added to a mapper
-  # spec.add_runtime_dependency 'openstudio-calibration', '~> 0.3.1'
-  # spec.add_runtime_dependency 'openstudio-common-measures', '~> 0.3.2'
-  # spec.add_runtime_dependency 'openstudio-ee', '~> 0.3.2'
-  # spec.add_runtime_dependency 'openstudio-load-flexibility-measures', '~> 0.2.1'
-  # spec.add_runtime_dependency 'openstudio-model-articulation', '~> 0.3.1'
+  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.6.2'
 end
