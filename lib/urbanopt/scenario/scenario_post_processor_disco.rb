@@ -149,8 +149,9 @@ module URBANopt
                 save_disco_scenario
 
                 # save the updated scenario reports
-                # set save_feature_reports to false since only the scenario reports should be saved now
-                @scenario_report.save(file_name = 'scenario_report_disco', save_feature_reports = false, save_feature_reports = false)
+                # set save_feature_reports to false since only the scenario reports should be saved
+                # now, set save csv reports to false
+                @scenario_report.save(file_name = 'scenario_report_disco', save_feature_reports = false, save_csv_reports = false)
             end
 
         end
