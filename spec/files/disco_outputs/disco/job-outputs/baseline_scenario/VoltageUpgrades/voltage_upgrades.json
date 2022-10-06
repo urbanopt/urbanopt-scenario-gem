@@ -1,0 +1,203 @@
+{
+  "voltage": [
+    {
+      "equipment_type": "RegControl",
+      "name": "new_regcontrol_source_1662563457_525749",
+      "new_controller_added": true,
+      "controller_settings_modified": false,
+      "final_settings": {
+        "vreg": 125.5,
+        "band": 2.0,
+        "at_substation": true,
+        "name": "new_xfmr_source1662563457_4787571",
+        "phases": 3,
+        "windings": 2,
+        "wdg": 2,
+        "bus": "newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4.1.2.3",
+        "conn": "wye",
+        "kV": 12.47,
+        "kVA": 9053.0,
+        "tap": 1.04375,
+        "%R": 0.001,
+        "Rneut": -1.0,
+        "Xneut": 0.0,
+        "buses": [
+          "source.1.2.3",
+          "newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4.1.2.3"
+        ],
+        "conns": [
+          "wye",
+          "wye"
+        ],
+        "kVs": [
+          12.47,
+          12.47
+        ],
+        "kVAs": [
+          9053.0,
+          9053.0
+        ],
+        "taps": [
+          1.0,
+          1.04375
+        ],
+        "XHL": 0.001,
+        "XHT": 35.0,
+        "XLT": 30.0,
+        "Xscarray": [
+          0.001
+        ],
+        "thermal": "2",
+        "n": 0.8,
+        "m": 0.8,
+        "flrise": 65.0,
+        "hsrise": 15.0,
+        "%loadloss": 0.002,
+        "%noloadloss": 0.0,
+        "normhkVA": 9958.3,
+        "emerghkVA": 13579.5,
+        "sub": "No",
+        "MaxTap": 1.1,
+        "MinTap": 0.9,
+        "NumTaps": 32.0,
+        "subname": "",
+        "%imag": 0.0,
+        "ppm_antifloat": 1.0,
+        "%Rs": [
+          0.001,
+          0.001
+        ],
+        "bank": "",
+        "XfmrCode": "",
+        "XRConst": "No",
+        "X12": 0.001,
+        "X13": 35.0,
+        "X23": 30.0,
+        "LeadLag": "Lag",
+        "WdgCurrents": "1189.227, (-44.106), 1139.379, (135.89), 1278.739, (-166.56), 1225.139, (13.442), 1148.042, (66.713), 1099.921, (-113.29), ",
+        "Core": "shell",
+        "RdcOhms": 4.86673901837328e-05,
+        "Seasons": "1",
+        "Ratings": [
+          "1100"
+        ],
+        "normamps": 461.060720583083,
+        "emergamps": 628.719164431477,
+        "faultrate": 0.007,
+        "pctperm": 0.0,
+        "repair": 0.0,
+        "basefreq": 60.0,
+        "enabled": "Yes",
+        "like": "",
+        "equipment_type": "transformer",
+        "bus_names_only": [
+          "source",
+          "newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4"
+        ],
+        "amp_limit_per_phase": 419.146109620985,
+        "substation_xfmr_flag": 1,
+        "is_autotransformer_flag": true
+      },
+      "new_transformer_added": true,
+      "at_substation": true
+    },
+    {
+      "equipment_type": "RegControl",
+      "name": "new_regcontrol_newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea_1662563459_2766428",
+      "new_controller_added": true,
+      "controller_settings_modified": false,
+      "final_settings": {
+        "vreg": 121.5,
+        "band": 1.0,
+        "name": "new_xfmr_7bba9925-4f7c-4f0d-9b94-d0b8298962ea1662563459_1866503",
+        "phases": 3,
+        "windings": 2,
+        "wdg": 1,
+        "bus": "newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea.1.2.3",
+        "conn": "wye",
+        "kV": 12.47,
+        "kVA": 9053.0,
+        "tap": 1.0,
+        "%R": 0.001,
+        "Rneut": -1.0,
+        "Xneut": 0.0,
+        "buses": [
+          "newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea.1.2.3",
+          "7bba9925-4f7c-4f0d-9b94-d0b8298962ea.1.2.3"
+        ],
+        "conns": [
+          "wye",
+          "wye"
+        ],
+        "kVs": [
+          12.47,
+          12.47
+        ],
+        "kVAs": [
+          9053.0,
+          9053.0
+        ],
+        "taps": [
+          1.0,
+          1.0125
+        ],
+        "XHL": 0.001,
+        "XHT": 35.0,
+        "XLT": 30.0,
+        "Xscarray": [
+          0.001
+        ],
+        "thermal": "2",
+        "n": 0.8,
+        "m": 0.8,
+        "flrise": 65.0,
+        "hsrise": 15.0,
+        "%loadloss": 0.002,
+        "%noloadloss": 0.0,
+        "normhkVA": 9958.3,
+        "emerghkVA": 13579.5,
+        "sub": "No",
+        "MaxTap": 1.1,
+        "MinTap": 0.9,
+        "NumTaps": 32.0,
+        "subname": "",
+        "%imag": 0.0,
+        "ppm_antifloat": 1.0,
+        "%Rs": [
+          0.001,
+          0.001
+        ],
+        "bank": "",
+        "XfmrCode": "",
+        "XRConst": "No",
+        "X12": 0.001,
+        "X13": 35.0,
+        "X23": 30.0,
+        "LeadLag": "Lag",
+        "WdgCurrents": "284.0611, (-14.77), 280.5541, (165.23), 283.5824, (-134.82), 280.0813, (45.181), 282.3499, (104.81), 278.864, (-75.187), ",
+        "Core": "shell",
+        "RdcOhms": 4.86673901837328e-05,
+        "Seasons": "1",
+        "Ratings": [
+          "1100"
+        ],
+        "normamps": 461.060720583083,
+        "emergamps": 628.719164431477,
+        "faultrate": 0.007,
+        "pctperm": 0.0,
+        "repair": 0.0,
+        "basefreq": 60.0,
+        "enabled": "Yes",
+        "like": "",
+        "equipment_type": "transformer",
+        "bus_names_only": [
+          "newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea",
+          "7bba9925-4f7c-4f0d-9b94-d0b8298962ea"
+        ],
+        "amp_limit_per_phase": 419.146109620985
+      },
+      "new_transformer_added": true,
+      "at_substation": false
+    }
+  ]
+}

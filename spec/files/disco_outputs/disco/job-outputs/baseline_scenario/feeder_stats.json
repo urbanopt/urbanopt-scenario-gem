@@ -1,0 +1,2638 @@
+{
+  "feeder_metadata": {
+    "total_load(kVABase)": 20634.79884477563,
+    "total_load(kW)": 20112.31406865297,
+    "total_PV(kW)": 0,
+    "total_PV(kVARated)": 0
+  },
+  "stage_results": [
+    {
+      "stage": "initial",
+      "upgrade_type": "thermal",
+      "feeder_components": {
+        "source_bus": "source",
+        "feeder_head_name": "full_network",
+        "feeder_head_basekv": 12.5,
+        "source_num_nodes": 3,
+        "total_num_buses_in_circuit": 27,
+        "substation_xfmr": null,
+        "num_nodes": 81,
+        "num_loads": 13,
+        "num_lines": 23,
+        "num_transformers": 3,
+        "num_pv_systems": 0,
+        "num_capacitors": 0,
+        "num_regulators": 0
+      },
+      "transformer": [
+        {
+          "name": "b02e3fe9-77d0-47f9-86cb-e4db960afd62",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 44.12890465024087,
+          "max_per_unit_loading": 0.9531,
+          "status": "normal"
+        },
+        {
+          "name": "54cd0a5a-2ebe-4b39-936a-f238b503c221",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 300.0,
+          "amp_limit_per_phase": 13.889741840969346,
+          "max_amp_loading": 11.075777075311827,
+          "max_per_unit_loading": 0.7974,
+          "status": "normal"
+        },
+        {
+          "name": "502e96e3-853a-4b3d-b88d-fe59af4d7b65",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 35.119344358288075,
+          "max_per_unit_loading": 0.7585,
+          "status": "normal"
+        }
+      ],
+      "line": [
+        {
+          "name": "11abf04c-1002-4d48-9f1d-edb4872cf9c3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6477",
+          "units": "km",
+          "max_amp_loading": 982.1157238316746,
+          "max_per_unit_loading": 1.4881,
+          "status": "overloaded"
+        },
+        {
+          "name": "17f547a3-aad9-4cc3-98be-327aefe6a1d6",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.4096512",
+          "units": "km",
+          "max_amp_loading": 576.5856671028693,
+          "max_per_unit_loading": 0.8736,
+          "status": "normal"
+        },
+        {
+          "name": "36fd2f4e-8305-4f45-ae4a-5a7a3cc95013",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.118872",
+          "units": "km",
+          "max_amp_loading": 405.53900570115906,
+          "max_per_unit_loading": 0.6145,
+          "status": "normal"
+        },
+        {
+          "name": "16e5aef9-56d0-478e-a9b2-903c7e6f7222",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6071616",
+          "units": "km",
+          "max_amp_loading": 284.7341990360894,
+          "max_per_unit_loading": 0.4314,
+          "status": "normal"
+        },
+        {
+          "name": "1324f2a2-4fc9-4020-b144-b027f2633991",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1926336",
+          "units": "km",
+          "max_amp_loading": 576.5906542929812,
+          "max_per_unit_loading": 0.8736,
+          "status": "normal"
+        },
+        {
+          "name": "f912d33f-f017-4ba5-b2fd-2ed2eec38b71",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.3706368",
+          "units": "km",
+          "max_amp_loading": 273.7682811705981,
+          "max_per_unit_loading": 0.4148,
+          "status": "normal"
+        },
+        {
+          "name": "5b3d3f0c-0c14-4c3d-9080-0fb5bbea5470",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1972056",
+          "units": "km",
+          "max_amp_loading": 97.93839432761759,
+          "max_per_unit_loading": 0.1484,
+          "status": "normal"
+        },
+        {
+          "name": "6cdda038-b853-4a8e-bf6d-304c49d93688",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.024384",
+          "units": "km",
+          "max_amp_loading": 11.075666555558822,
+          "max_per_unit_loading": 0.0168,
+          "status": "normal"
+        },
+        {
+          "name": "f2d0448f-aab3-4da0-8aca-17564c8e3a58",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0557784",
+          "units": "km",
+          "max_amp_loading": 291.79843435961067,
+          "max_per_unit_loading": 0.4421,
+          "status": "normal"
+        },
+        {
+          "name": "59f65367-c852-40ab-9d7f-dc30822570f7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.2154936",
+          "units": "km",
+          "max_amp_loading": 287.73936681290513,
+          "max_per_unit_loading": 0.4496,
+          "status": "normal"
+        },
+        {
+          "name": "10e9de09-902c-4373-8fa3-06a3e19e8b38",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0935736",
+          "units": "km",
+          "max_amp_loading": 55.52938300273324,
+          "max_per_unit_loading": 0.0841,
+          "status": "normal"
+        },
+        {
+          "name": "de88d8f3-d596-4088-8ee7-d96326ab083c",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.077724",
+          "units": "km",
+          "max_amp_loading": 65.29793037576174,
+          "max_per_unit_loading": 0.0989,
+          "status": "normal"
+        },
+        {
+          "name": "44c05d80-7a90-4229-94f7-0ef2787b2cc7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 1146.4317891436276,
+          "max_per_unit_loading": 1.7913,
+          "status": "overloaded"
+        },
+        {
+          "name": "40c59858-58c3-4b8c-8521-f7a251f06740",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0795528",
+          "units": "km",
+          "max_amp_loading": 240.82177512965043,
+          "max_per_unit_loading": 0.3649,
+          "status": "normal"
+        },
+        {
+          "name": "96ac00ff-1369-472b-b8cd-d8721355f4c5",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1328928",
+          "units": "km",
+          "max_amp_loading": 68.0714997852246,
+          "max_per_unit_loading": 0.1031,
+          "status": "normal"
+        },
+        {
+          "name": "e2dcff78-1f88-496b-9111-66ea2cc6c889",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0493776",
+          "units": "km",
+          "max_amp_loading": 107.76507887616526,
+          "max_per_unit_loading": 0.1633,
+          "status": "normal"
+        },
+        {
+          "name": "9e3fff1f-2625-4f3f-b510-f4e51683c941",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0694944",
+          "units": "km",
+          "max_amp_loading": 63.064422022688994,
+          "max_per_unit_loading": 0.0956,
+          "status": "normal"
+        },
+        {
+          "name": "a0ba7300-0264-4450-8a1b-6f8045ee7cfe",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.111252",
+          "units": "km",
+          "max_amp_loading": 443.30696777389727,
+          "max_per_unit_loading": 0.6927,
+          "status": "normal"
+        },
+        {
+          "name": "bf23c675-d787-4994-803b-18d8d4900699",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1588008",
+          "units": "km",
+          "max_amp_loading": 20.22538959682833,
+          "max_per_unit_loading": 0.0316,
+          "status": "normal"
+        },
+        {
+          "name": "bbb1f6a0-394e-4b38-bd51-1fa8f70d89dd",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.0969264",
+          "units": "km",
+          "max_amp_loading": 433.6588046458593,
+          "max_per_unit_loading": 0.6776,
+          "status": "normal"
+        },
+        {
+          "name": "68c17aed-1c16-4a75-b0a7-7cf2db5d605d",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.179832",
+          "units": "km",
+          "max_amp_loading": 15.618081206270471,
+          "max_per_unit_loading": 0.0244,
+          "status": "normal"
+        },
+        {
+          "name": "db1a87fb-d770-4939-b747-7cadf1f304f8",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0390144",
+          "units": "km",
+          "max_amp_loading": 44.1282666219808,
+          "max_per_unit_loading": 0.0669,
+          "status": "normal"
+        },
+        {
+          "name": "bfdf4e28-5baf-4d54-9d0a-5a7dc3fbd4f3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0697992",
+          "units": "km",
+          "max_amp_loading": 35.11905695851589,
+          "max_per_unit_loading": 0.0532,
+          "status": "normal"
+        }
+      ],
+      "bus_voltage": [
+        {
+          "name": "source",
+          "max_per_unit_voltage": 0.9948378521064125,
+          "min_per_unit_voltage": 0.9947785092655599,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "6398a8fa-be81-4773-a837-6cb0c35ad1a4",
+          "max_per_unit_voltage": 0.982780531458174,
+          "min_per_unit_voltage": 0.9760924615266848,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "38c748dc-7e65-4798-9c57-7a5ad07a8830",
+          "max_per_unit_voltage": 0.9785014703929643,
+          "min_per_unit_voltage": 0.9692594850355055,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "4deadac5-3035-4051-91fd-f5910c93cd75",
+          "max_per_unit_voltage": 0.9818969119020045,
+          "min_per_unit_voltage": 0.974685810128132,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "7bba9925-4f7c-4f0d-9b94-d0b8298962ea",
+          "max_per_unit_voltage": 0.9787051041713904,
+          "min_per_unit_voltage": 0.9696278855989063,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "df21bd3d-f2a5-40df-a41b-54c8d73829a5",
+          "max_per_unit_voltage": 0.976521718263759,
+          "min_per_unit_voltage": 0.9660657458149323,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "2796b96e-5bc0-4890-9bb0-bcf7b5baf9c7",
+          "max_per_unit_voltage": 0.9747146090422166,
+          "min_per_unit_voltage": 0.9631513955500034,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "258aad84-ed22-48ee-995a-4c5869ae9274",
+          "max_per_unit_voltage": 0.9743634867162052,
+          "min_per_unit_voltage": 0.9625928390136641,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "3ad29eb4-60b2-4050-a87c-dcd858184622",
+          "max_per_unit_voltage": 0.9765163995991284,
+          "min_per_unit_voltage": 0.9660577020026093,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "44963046-644a-4c03-b81c-f65d80475015",
+          "max_per_unit_voltage": 0.9762371374017591,
+          "min_per_unit_voltage": 0.9656006879417427,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b1003fd0-cd27-4de5-9851-f14382846fc4",
+          "max_per_unit_voltage": 0.9762762826814365,
+          "min_per_unit_voltage": 0.965820033569029,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "53c917d8-b04d-4110-bdd9-cbf044e6a1fa",
+          "max_per_unit_voltage": 0.9319606169524961,
+          "min_per_unit_voltage": 0.9213880159026985,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.02861198409730148
+        },
+        {
+          "name": "38a42375-ff02-497e-90ef-c5d9eb78850e",
+          "max_per_unit_voltage": 0.9818057774147287,
+          "min_per_unit_voltage": 0.9745366089806106,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "753b77b9-b88b-443f-9c3b-3cd977bb3558",
+          "max_per_unit_voltage": 0.9818078963226159,
+          "min_per_unit_voltage": 0.9745400783419959,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14080f48-4e0d-4ca6-9ed2-7db253f920f4",
+          "max_per_unit_voltage": 0.9784370271033483,
+          "min_per_unit_voltage": 0.9693487293190839,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "9d037967-7ac1-4296-8f87-2d4a842d7a87",
+          "max_per_unit_voltage": 0.8414724108734917,
+          "min_per_unit_voltage": 0.8201993246774995,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.1298006753225005
+        },
+        {
+          "name": "e4bcf9d6-e0b7-421c-91d4-554d06c69364",
+          "max_per_unit_voltage": 0.9783695779213996,
+          "min_per_unit_voltage": 0.9690793111084376,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "40867501-5a41-4626-a9d4-be5444a5b575",
+          "max_per_unit_voltage": 0.9745566864123292,
+          "min_per_unit_voltage": 0.9628933641834627,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "18fe5a25-2547-4c32-a225-8bd455e93c9b",
+          "max_per_unit_voltage": 0.9746217234347033,
+          "min_per_unit_voltage": 0.9629996127059093,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "67b07fac-6666-4954-98b8-3e08b0896646",
+          "max_per_unit_voltage": 0.9742870057398241,
+          "min_per_unit_voltage": 0.9624678699007125,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "ed866262-f11e-4ea7-b5f9-eecfea8ecbaf",
+          "max_per_unit_voltage": 0.9741689526942235,
+          "min_per_unit_voltage": 0.9623763061756276,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14072af7-3121-4e3d-b85f-c79868702ec9",
+          "max_per_unit_voltage": 0.9390254450520927,
+          "min_per_unit_voltage": 0.9272806145317197,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.02271938546828023
+        },
+        {
+          "name": "db52eea7-f395-4fb1-999d-47c82333a4a7",
+          "max_per_unit_voltage": 0.971945114021706,
+          "min_per_unit_voltage": 0.9604572961705891,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "be6e5e58-e73e-4172-a939-250c6a7a3c2c",
+          "max_per_unit_voltage": 0.9442687313706833,
+          "min_per_unit_voltage": 0.9325705151605783,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.01742948483942164
+        },
+        {
+          "name": "3d1aa47d-69dd-4200-ab34-9b6244ad82d7",
+          "max_per_unit_voltage": 0.9722245608563194,
+          "min_per_unit_voltage": 0.9606983242380652,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "194f2b59-5877-4485-85b9-bd0ac6f75e25",
+          "max_per_unit_voltage": 0.9786662964095143,
+          "min_per_unit_voltage": 0.9695729295794547,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b9ac3056-629d-40cc-b520-cfe15eb7296c",
+          "max_per_unit_voltage": 0.9743161439378846,
+          "min_per_unit_voltage": 0.9625207197685253,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        }
+      ],
+      "capacitor_control": [],
+      "regulator_control": []
+    },
+    {
+      "stage": "final",
+      "upgrade_type": "thermal",
+      "feeder_components": {
+        "source_bus": "source",
+        "feeder_head_name": "full_network",
+        "feeder_head_basekv": 12.5,
+        "source_num_nodes": 3,
+        "total_num_buses_in_circuit": 27,
+        "substation_xfmr": null,
+        "num_nodes": 81,
+        "num_loads": 13,
+        "num_lines": 26,
+        "num_transformers": 3,
+        "num_pv_systems": 0,
+        "num_capacitors": 0,
+        "num_regulators": 0
+      },
+      "transformer": [
+        {
+          "name": "b02e3fe9-77d0-47f9-86cb-e4db960afd62",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 49.48223254860477,
+          "max_per_unit_loading": 1.0688,
+          "status": "normal"
+        },
+        {
+          "name": "54cd0a5a-2ebe-4b39-936a-f238b503c221",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 300.0,
+          "amp_limit_per_phase": 13.889741840969346,
+          "max_amp_loading": 11.154701490071686,
+          "max_per_unit_loading": 0.8031,
+          "status": "normal"
+        },
+        {
+          "name": "502e96e3-853a-4b3d-b88d-fe59af4d7b65",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 35.33807557872835,
+          "max_per_unit_loading": 0.7633,
+          "status": "normal"
+        }
+      ],
+      "line": [
+        {
+          "name": "11abf04c-1002-4d48-9f1d-edb4872cf9c3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6477",
+          "units": "km",
+          "max_amp_loading": 489.6907645450245,
+          "max_per_unit_loading": 0.742,
+          "status": "normal"
+        },
+        {
+          "name": "17f547a3-aad9-4cc3-98be-327aefe6a1d6",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.4096512",
+          "units": "km",
+          "max_amp_loading": 571.8315088052345,
+          "max_per_unit_loading": 0.8664,
+          "status": "normal"
+        },
+        {
+          "name": "36fd2f4e-8305-4f45-ae4a-5a7a3cc95013",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.118872",
+          "units": "km",
+          "max_amp_loading": 407.56862311611667,
+          "max_per_unit_loading": 0.6175,
+          "status": "normal"
+        },
+        {
+          "name": "16e5aef9-56d0-478e-a9b2-903c7e6f7222",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6071616",
+          "units": "km",
+          "max_amp_loading": 287.9219708873587,
+          "max_per_unit_loading": 0.4362,
+          "status": "normal"
+        },
+        {
+          "name": "1324f2a2-4fc9-4020-b144-b027f2633991",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1926336",
+          "units": "km",
+          "max_amp_loading": 571.8365304137752,
+          "max_per_unit_loading": 0.8664,
+          "status": "normal"
+        },
+        {
+          "name": "f912d33f-f017-4ba5-b2fd-2ed2eec38b71",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.3706368",
+          "units": "km",
+          "max_amp_loading": 271.76390790825434,
+          "max_per_unit_loading": 0.4118,
+          "status": "normal"
+        },
+        {
+          "name": "5b3d3f0c-0c14-4c3d-9080-0fb5bbea5470",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1972056",
+          "units": "km",
+          "max_amp_loading": 97.66951655706697,
+          "max_per_unit_loading": 0.148,
+          "status": "normal"
+        },
+        {
+          "name": "6cdda038-b853-4a8e-bf6d-304c49d93688",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.024384",
+          "units": "km",
+          "max_amp_loading": 11.15459111848126,
+          "max_per_unit_loading": 0.0169,
+          "status": "normal"
+        },
+        {
+          "name": "f2d0448f-aab3-4da0-8aca-17564c8e3a58",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0557784",
+          "units": "km",
+          "max_amp_loading": 288.928463575199,
+          "max_per_unit_loading": 0.4378,
+          "status": "normal"
+        },
+        {
+          "name": "59f65367-c852-40ab-9d7f-dc30822570f7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.2154936",
+          "units": "km",
+          "max_amp_loading": 289.7897567091465,
+          "max_per_unit_loading": 0.4528,
+          "status": "normal"
+        },
+        {
+          "name": "10e9de09-902c-4373-8fa3-06a3e19e8b38",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0935736",
+          "units": "km",
+          "max_amp_loading": 54.990561540667564,
+          "max_per_unit_loading": 0.0833,
+          "status": "normal"
+        },
+        {
+          "name": "de88d8f3-d596-4088-8ee7-d96326ab083c",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.077724",
+          "units": "km",
+          "max_amp_loading": 64.66433093802641,
+          "max_per_unit_loading": 0.098,
+          "status": "normal"
+        },
+        {
+          "name": "44c05d80-7a90-4229-94f7-0ef2787b2cc7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 428.50228605444073,
+          "max_per_unit_loading": 0.6695,
+          "status": "normal"
+        },
+        {
+          "name": "40c59858-58c3-4b8c-8521-f7a251f06740",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0795528",
+          "units": "km",
+          "max_amp_loading": 238.47894843594852,
+          "max_per_unit_loading": 0.3613,
+          "status": "normal"
+        },
+        {
+          "name": "96ac00ff-1369-472b-b8cd-d8721355f4c5",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1328928",
+          "units": "km",
+          "max_amp_loading": 67.39959054802875,
+          "max_per_unit_loading": 0.1021,
+          "status": "normal"
+        },
+        {
+          "name": "e2dcff78-1f88-496b-9111-66ea2cc6c889",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0493776",
+          "units": "km",
+          "max_amp_loading": 106.70157299145745,
+          "max_per_unit_loading": 0.1617,
+          "status": "normal"
+        },
+        {
+          "name": "9e3fff1f-2625-4f3f-b510-f4e51683c941",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0694944",
+          "units": "km",
+          "max_amp_loading": 62.44174147040781,
+          "max_per_unit_loading": 0.0946,
+          "status": "normal"
+        },
+        {
+          "name": "a0ba7300-0264-4450-8a1b-6f8045ee7cfe",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.111252",
+          "units": "km",
+          "max_amp_loading": 446.4803733987455,
+          "max_per_unit_loading": 0.6976,
+          "status": "normal"
+        },
+        {
+          "name": "bf23c675-d787-4994-803b-18d8d4900699",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1588008",
+          "units": "km",
+          "max_amp_loading": 20.024902543503362,
+          "max_per_unit_loading": 0.0313,
+          "status": "normal"
+        },
+        {
+          "name": "bbb1f6a0-394e-4b38-bd51-1fa8f70d89dd",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.0969264",
+          "units": "km",
+          "max_amp_loading": 436.3966684429799,
+          "max_per_unit_loading": 0.6819,
+          "status": "normal"
+        },
+        {
+          "name": "68c17aed-1c16-4a75-b0a7-7cf2db5d605d",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.179832",
+          "units": "km",
+          "max_amp_loading": 15.463339263064166,
+          "max_per_unit_loading": 0.0242,
+          "status": "normal"
+        },
+        {
+          "name": "db1a87fb-d770-4939-b747-7cadf1f304f8",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0390144",
+          "units": "km",
+          "max_amp_loading": 49.48170527962829,
+          "max_per_unit_loading": 0.075,
+          "status": "normal"
+        },
+        {
+          "name": "bfdf4e28-5baf-4d54-9d0a-5a7dc3fbd4f3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0697992",
+          "units": "km",
+          "max_amp_loading": 35.33778883660885,
+          "max_per_unit_loading": 0.0535,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_11abf04c-1002-4d48-9f1d-edb4872cf9c31662563454_3067033",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6477",
+          "units": "km",
+          "max_amp_loading": 489.6907645450245,
+          "max_per_unit_loading": 0.742,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3297436",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 428.50228605444073,
+          "max_per_unit_loading": 0.6695,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3307438",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 428.50228605444073,
+          "max_per_unit_loading": 0.6695,
+          "status": "normal"
+        }
+      ],
+      "bus_voltage": [
+        {
+          "name": "source",
+          "max_per_unit_voltage": 0.9949607102254797,
+          "min_per_unit_voltage": 0.994919709830029,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "6398a8fa-be81-4773-a837-6cb0c35ad1a4",
+          "max_per_unit_voltage": 0.9890406801050547,
+          "min_per_unit_voltage": 0.9856444624737009,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "38c748dc-7e65-4798-9c57-7a5ad07a8830",
+          "max_per_unit_voltage": 0.9847871737756254,
+          "min_per_unit_voltage": 0.9788371516286377,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "4deadac5-3035-4051-91fd-f5910c93cd75",
+          "max_per_unit_voltage": 0.9881632381033386,
+          "min_per_unit_voltage": 0.984233710263339,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "7bba9925-4f7c-4f0d-9b94-d0b8298962ea",
+          "max_per_unit_voltage": 0.9849962149043456,
+          "min_per_unit_voltage": 0.9791454620715934,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "df21bd3d-f2a5-40df-a41b-54c8d73829a5",
+          "max_per_unit_voltage": 0.9828190940361029,
+          "min_per_unit_voltage": 0.9756549440044645,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "2796b96e-5bc0-4890-9bb0-bcf7b5baf9c7",
+          "max_per_unit_voltage": 0.9810222098958911,
+          "min_per_unit_voltage": 0.9727488940678003,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "258aad84-ed22-48ee-995a-4c5869ae9274",
+          "max_per_unit_voltage": 0.9806726870441069,
+          "min_per_unit_voltage": 0.9721899274081653,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "3ad29eb4-60b2-4050-a87c-dcd858184622",
+          "max_per_unit_voltage": 0.982813778231114,
+          "min_per_unit_voltage": 0.9756468096925779,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "44963046-644a-4c03-b81c-f65d80475015",
+          "max_per_unit_voltage": 0.9825362994032166,
+          "min_per_unit_voltage": 0.9751921079361225,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b1003fd0-cd27-4de5-9851-f14382846fc4",
+          "max_per_unit_voltage": 0.9825719237098881,
+          "min_per_unit_voltage": 0.9754065460131002,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "53c917d8-b04d-4110-bdd9-cbf044e6a1fa",
+          "max_per_unit_voltage": 0.9379399481519403,
+          "min_per_unit_voltage": 0.930474919204042,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.01952508079595794
+        },
+        {
+          "name": "38a42375-ff02-497e-90ef-c5d9eb78850e",
+          "max_per_unit_voltage": 0.9880726805810942,
+          "min_per_unit_voltage": 0.9840852080620623,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "753b77b9-b88b-443f-9c3b-3cd977bb3558",
+          "max_per_unit_voltage": 0.9880747860505782,
+          "min_per_unit_voltage": 0.9840886611255781,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14080f48-4e0d-4ca6-9ed2-7db253f920f4",
+          "max_per_unit_voltage": 0.9847401045288255,
+          "min_per_unit_voltage": 0.9788730202508109,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "9d037967-7ac1-4296-8f87-2d4a842d7a87",
+          "max_per_unit_voltage": 0.932288870303034,
+          "min_per_unit_voltage": 0.9232396204261392,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.026760379573860793
+        },
+        {
+          "name": "e4bcf9d6-e0b7-421c-91d4-554d06c69364",
+          "max_per_unit_voltage": 0.9846628071792843,
+          "min_per_unit_voltage": 0.9785995180858424,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "40867501-5a41-4626-a9d4-be5444a5b575",
+          "max_per_unit_voltage": 0.9808652760008189,
+          "min_per_unit_voltage": 0.9724921018458693,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "18fe5a25-2547-4c32-a225-8bd455e93c9b",
+          "max_per_unit_voltage": 0.9809299057502165,
+          "min_per_unit_voltage": 0.9725978395572484,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "67b07fac-6666-4954-98b8-3e08b0896646",
+          "max_per_unit_voltage": 0.9805966848353688,
+          "min_per_unit_voltage": 0.9720655584017306,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "ed866262-f11e-4ea7-b5f9-eecfea8ecbaf",
+          "max_per_unit_voltage": 0.9804772870813305,
+          "min_per_unit_voltage": 0.97197116784606,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14072af7-3121-4e3d-b85f-c79868702ec9",
+          "max_per_unit_voltage": 0.9450827267686348,
+          "min_per_unit_voltage": 0.9364869580825078,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.013513041917492141
+        },
+        {
+          "name": "db52eea7-f395-4fb1-999d-47c82333a4a7",
+          "max_per_unit_voltage": 0.9782640907659529,
+          "min_per_unit_voltage": 0.9700726027244518,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "be6e5e58-e73e-4172-a939-250c6a7a3c2c",
+          "max_per_unit_voltage": 0.9503946860856425,
+          "min_per_unit_voltage": 0.9418328048216903,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.00816719517830966
+        },
+        {
+          "name": "3d1aa47d-69dd-4200-ab34-9b6244ad82d7",
+          "max_per_unit_voltage": 0.9785421924236535,
+          "min_per_unit_voltage": 0.9703110514525202,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "194f2b59-5877-4485-85b9-bd0ac6f75e25",
+          "max_per_unit_voltage": 0.9849580311806481,
+          "min_per_unit_voltage": 0.9790872929877065,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b9ac3056-629d-40cc-b520-cfe15eb7296c",
+          "max_per_unit_voltage": 0.9806254285260386,
+          "min_per_unit_voltage": 0.9721170589077814,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        }
+      ],
+      "capacitor_control": [],
+      "regulator_control": []
+    },
+    {
+      "stage": "initial",
+      "upgrade_type": "voltage",
+      "feeder_components": {
+        "source_bus": "source",
+        "feeder_head_name": "full_network",
+        "feeder_head_basekv": 12.5,
+        "source_num_nodes": 3,
+        "total_num_buses_in_circuit": 27,
+        "substation_xfmr": null,
+        "num_nodes": 81,
+        "num_loads": 13,
+        "num_lines": 26,
+        "num_transformers": 3,
+        "num_pv_systems": 0,
+        "num_capacitors": 0,
+        "num_regulators": 0
+      },
+      "transformer": [
+        {
+          "name": "b02e3fe9-77d0-47f9-86cb-e4db960afd62",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 49.48223244466739,
+          "max_per_unit_loading": 1.0688,
+          "status": "normal"
+        },
+        {
+          "name": "54cd0a5a-2ebe-4b39-936a-f238b503c221",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 300.0,
+          "amp_limit_per_phase": 13.889741840969346,
+          "max_amp_loading": 11.154701541532656,
+          "max_per_unit_loading": 0.8031,
+          "status": "normal"
+        },
+        {
+          "name": "502e96e3-853a-4b3d-b88d-fe59af4d7b65",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 35.33807124134534,
+          "max_per_unit_loading": 0.7633,
+          "status": "normal"
+        }
+      ],
+      "line": [
+        {
+          "name": "11abf04c-1002-4d48-9f1d-edb4872cf9c3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6477",
+          "units": "km",
+          "max_amp_loading": 489.69077543210125,
+          "max_per_unit_loading": 0.742,
+          "status": "normal"
+        },
+        {
+          "name": "17f547a3-aad9-4cc3-98be-327aefe6a1d6",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.4096512",
+          "units": "km",
+          "max_amp_loading": 571.831524139545,
+          "max_per_unit_loading": 0.8664,
+          "status": "normal"
+        },
+        {
+          "name": "36fd2f4e-8305-4f45-ae4a-5a7a3cc95013",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.118872",
+          "units": "km",
+          "max_amp_loading": 407.56862955755025,
+          "max_per_unit_loading": 0.6175,
+          "status": "normal"
+        },
+        {
+          "name": "16e5aef9-56d0-478e-a9b2-903c7e6f7222",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6071616",
+          "units": "km",
+          "max_amp_loading": 287.92197556547933,
+          "max_per_unit_loading": 0.4362,
+          "status": "normal"
+        },
+        {
+          "name": "1324f2a2-4fc9-4020-b144-b027f2633991",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1926336",
+          "units": "km",
+          "max_amp_loading": 571.8365457481184,
+          "max_per_unit_loading": 0.8664,
+          "status": "normal"
+        },
+        {
+          "name": "f912d33f-f017-4ba5-b2fd-2ed2eec38b71",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.3706368",
+          "units": "km",
+          "max_amp_loading": 271.76391514384994,
+          "max_per_unit_loading": 0.4118,
+          "status": "normal"
+        },
+        {
+          "name": "5b3d3f0c-0c14-4c3d-9080-0fb5bbea5470",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1972056",
+          "units": "km",
+          "max_amp_loading": 97.66951831904682,
+          "max_per_unit_loading": 0.148,
+          "status": "normal"
+        },
+        {
+          "name": "6cdda038-b853-4a8e-bf6d-304c49d93688",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.024384",
+          "units": "km",
+          "max_amp_loading": 11.154591170019321,
+          "max_per_unit_loading": 0.0169,
+          "status": "normal"
+        },
+        {
+          "name": "f2d0448f-aab3-4da0-8aca-17564c8e3a58",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0557784",
+          "units": "km",
+          "max_amp_loading": 288.9284717079488,
+          "max_per_unit_loading": 0.4378,
+          "status": "normal"
+        },
+        {
+          "name": "59f65367-c852-40ab-9d7f-dc30822570f7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.2154936",
+          "units": "km",
+          "max_amp_loading": 289.78975804620023,
+          "max_per_unit_loading": 0.4528,
+          "status": "normal"
+        },
+        {
+          "name": "10e9de09-902c-4373-8fa3-06a3e19e8b38",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0935736",
+          "units": "km",
+          "max_amp_loading": 54.990562351353724,
+          "max_per_unit_loading": 0.0833,
+          "status": "normal"
+        },
+        {
+          "name": "de88d8f3-d596-4088-8ee7-d96326ab083c",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.077724",
+          "units": "km",
+          "max_amp_loading": 64.66433189111555,
+          "max_per_unit_loading": 0.098,
+          "status": "normal"
+        },
+        {
+          "name": "44c05d80-7a90-4229-94f7-0ef2787b2cc7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 428.5022851542518,
+          "max_per_unit_loading": 0.6695,
+          "status": "normal"
+        },
+        {
+          "name": "40c59858-58c3-4b8c-8521-f7a251f06740",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0795528",
+          "units": "km",
+          "max_amp_loading": 238.47895321861856,
+          "max_per_unit_loading": 0.3613,
+          "status": "normal"
+        },
+        {
+          "name": "96ac00ff-1369-472b-b8cd-d8721355f4c5",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1328928",
+          "units": "km",
+          "max_amp_loading": 67.39959267492922,
+          "max_per_unit_loading": 0.1021,
+          "status": "normal"
+        },
+        {
+          "name": "e2dcff78-1f88-496b-9111-66ea2cc6c889",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0493776",
+          "units": "km",
+          "max_amp_loading": 106.70157633856807,
+          "max_per_unit_loading": 0.1617,
+          "status": "normal"
+        },
+        {
+          "name": "9e3fff1f-2625-4f3f-b510-f4e51683c941",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0694944",
+          "units": "km",
+          "max_amp_loading": 62.441743440504695,
+          "max_per_unit_loading": 0.0946,
+          "status": "normal"
+        },
+        {
+          "name": "a0ba7300-0264-4450-8a1b-6f8045ee7cfe",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.111252",
+          "units": "km",
+          "max_amp_loading": 446.48037602833426,
+          "max_per_unit_loading": 0.6976,
+          "status": "normal"
+        },
+        {
+          "name": "bf23c675-d787-4994-803b-18d8d4900699",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1588008",
+          "units": "km",
+          "max_amp_loading": 20.02490320084199,
+          "max_per_unit_loading": 0.0313,
+          "status": "normal"
+        },
+        {
+          "name": "bbb1f6a0-394e-4b38-bd51-1fa8f70d89dd",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.0969264",
+          "units": "km",
+          "max_amp_loading": 436.39655451748513,
+          "max_per_unit_loading": 0.6819,
+          "status": "normal"
+        },
+        {
+          "name": "68c17aed-1c16-4a75-b0a7-7cf2db5d605d",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.179832",
+          "units": "km",
+          "max_amp_loading": 15.463339767601099,
+          "max_per_unit_loading": 0.0242,
+          "status": "normal"
+        },
+        {
+          "name": "db1a87fb-d770-4939-b747-7cadf1f304f8",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0390144",
+          "units": "km",
+          "max_amp_loading": 49.481705175635895,
+          "max_per_unit_loading": 0.075,
+          "status": "normal"
+        },
+        {
+          "name": "bfdf4e28-5baf-4d54-9d0a-5a7dc3fbd4f3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0697992",
+          "units": "km",
+          "max_amp_loading": 35.33778449922348,
+          "max_per_unit_loading": 0.0535,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_11abf04c-1002-4d48-9f1d-edb4872cf9c31662563454_3067033",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6477",
+          "units": "km",
+          "max_amp_loading": 489.69077543210125,
+          "max_per_unit_loading": 0.742,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3297436",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 428.5022851542518,
+          "max_per_unit_loading": 0.6695,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3307438",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 428.5022851542518,
+          "max_per_unit_loading": 0.6695,
+          "status": "normal"
+        }
+      ],
+      "bus_voltage": [
+        {
+          "name": "source",
+          "max_per_unit_voltage": 0.9949607102254797,
+          "min_per_unit_voltage": 0.994919709830029,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "6398a8fa-be81-4773-a837-6cb0c35ad1a4",
+          "max_per_unit_voltage": 0.9890406801050547,
+          "min_per_unit_voltage": 0.9856444624737009,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "38c748dc-7e65-4798-9c57-7a5ad07a8830",
+          "max_per_unit_voltage": 0.9847871737756254,
+          "min_per_unit_voltage": 0.9788371516286377,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "4deadac5-3035-4051-91fd-f5910c93cd75",
+          "max_per_unit_voltage": 0.9881632381033386,
+          "min_per_unit_voltage": 0.984233710263339,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "7bba9925-4f7c-4f0d-9b94-d0b8298962ea",
+          "max_per_unit_voltage": 0.9849962149043456,
+          "min_per_unit_voltage": 0.9791454620715934,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "df21bd3d-f2a5-40df-a41b-54c8d73829a5",
+          "max_per_unit_voltage": 0.9828190940361029,
+          "min_per_unit_voltage": 0.9756549440044645,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "2796b96e-5bc0-4890-9bb0-bcf7b5baf9c7",
+          "max_per_unit_voltage": 0.9810222098958911,
+          "min_per_unit_voltage": 0.9727488940678003,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "258aad84-ed22-48ee-995a-4c5869ae9274",
+          "max_per_unit_voltage": 0.9806726870441069,
+          "min_per_unit_voltage": 0.9721899274081653,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "3ad29eb4-60b2-4050-a87c-dcd858184622",
+          "max_per_unit_voltage": 0.982813778231114,
+          "min_per_unit_voltage": 0.9756468096925779,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "44963046-644a-4c03-b81c-f65d80475015",
+          "max_per_unit_voltage": 0.9825362994032166,
+          "min_per_unit_voltage": 0.9751921079361225,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b1003fd0-cd27-4de5-9851-f14382846fc4",
+          "max_per_unit_voltage": 0.9825719237098881,
+          "min_per_unit_voltage": 0.9754065460131002,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "53c917d8-b04d-4110-bdd9-cbf044e6a1fa",
+          "max_per_unit_voltage": 0.9379399481519403,
+          "min_per_unit_voltage": 0.930474919204042,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.01952508079595794
+        },
+        {
+          "name": "38a42375-ff02-497e-90ef-c5d9eb78850e",
+          "max_per_unit_voltage": 0.9880726805810942,
+          "min_per_unit_voltage": 0.9840852080620623,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "753b77b9-b88b-443f-9c3b-3cd977bb3558",
+          "max_per_unit_voltage": 0.9880747860505782,
+          "min_per_unit_voltage": 0.9840886611255781,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14080f48-4e0d-4ca6-9ed2-7db253f920f4",
+          "max_per_unit_voltage": 0.9847401045288255,
+          "min_per_unit_voltage": 0.9788730202508109,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "9d037967-7ac1-4296-8f87-2d4a842d7a87",
+          "max_per_unit_voltage": 0.932288870303034,
+          "min_per_unit_voltage": 0.9232396204261392,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.026760379573860793
+        },
+        {
+          "name": "e4bcf9d6-e0b7-421c-91d4-554d06c69364",
+          "max_per_unit_voltage": 0.9846628071792843,
+          "min_per_unit_voltage": 0.9785995180858424,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "40867501-5a41-4626-a9d4-be5444a5b575",
+          "max_per_unit_voltage": 0.9808652760008189,
+          "min_per_unit_voltage": 0.9724921018458693,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "18fe5a25-2547-4c32-a225-8bd455e93c9b",
+          "max_per_unit_voltage": 0.9809299057502165,
+          "min_per_unit_voltage": 0.9725978395572484,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "67b07fac-6666-4954-98b8-3e08b0896646",
+          "max_per_unit_voltage": 0.9805966848353688,
+          "min_per_unit_voltage": 0.9720655584017306,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "ed866262-f11e-4ea7-b5f9-eecfea8ecbaf",
+          "max_per_unit_voltage": 0.9804772870813305,
+          "min_per_unit_voltage": 0.97197116784606,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14072af7-3121-4e3d-b85f-c79868702ec9",
+          "max_per_unit_voltage": 0.9450827267686348,
+          "min_per_unit_voltage": 0.9364869580825078,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.013513041917492141
+        },
+        {
+          "name": "db52eea7-f395-4fb1-999d-47c82333a4a7",
+          "max_per_unit_voltage": 0.9782640907659529,
+          "min_per_unit_voltage": 0.9700726027244518,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "be6e5e58-e73e-4172-a939-250c6a7a3c2c",
+          "max_per_unit_voltage": 0.9503946860856425,
+          "min_per_unit_voltage": 0.9418328048216903,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": true,
+          "min_voltage_deviation": 0.00816719517830966
+        },
+        {
+          "name": "3d1aa47d-69dd-4200-ab34-9b6244ad82d7",
+          "max_per_unit_voltage": 0.9785421924236535,
+          "min_per_unit_voltage": 0.9703110514525202,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "194f2b59-5877-4485-85b9-bd0ac6f75e25",
+          "max_per_unit_voltage": 0.9849580311806481,
+          "min_per_unit_voltage": 0.9790872929877065,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b9ac3056-629d-40cc-b520-cfe15eb7296c",
+          "max_per_unit_voltage": 0.9806254285260386,
+          "min_per_unit_voltage": 0.9721170589077814,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        }
+      ],
+      "capacitor_control": [],
+      "regulator_control": []
+    },
+    {
+      "stage": "final",
+      "upgrade_type": "voltage",
+      "feeder_components": {
+        "source_bus": "source",
+        "feeder_head_name": "full_network",
+        "feeder_head_basekv": 12.5,
+        "source_num_nodes": 3,
+        "total_num_buses_in_circuit": 29,
+        "substation_xfmr": {
+          "name": "new_xfmr_source1662563457_4787571",
+          "phases": 3,
+          "windings": 2,
+          "wdg": 2,
+          "bus": "newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4.1.2.3",
+          "conn": "wye",
+          "kV": 12.47,
+          "kVA": 9053.0,
+          "tap": 1.04375,
+          "%R": 0.001,
+          "Rneut": -1.0,
+          "Xneut": 0.0,
+          "buses": [
+            "source.1.2.3",
+            "newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4.1.2.3"
+          ],
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kVs": [
+            12.47,
+            12.47
+          ],
+          "kVAs": [
+            9053.0,
+            9053.0
+          ],
+          "taps": [
+            1.0,
+            1.04375
+          ],
+          "XHL": 0.001,
+          "XHT": 35.0,
+          "XLT": 30.0,
+          "Xscarray": [
+            0.001
+          ],
+          "thermal": "2",
+          "n": 0.8,
+          "m": 0.8,
+          "flrise": 65.0,
+          "hsrise": 15.0,
+          "%loadloss": 0.002,
+          "%noloadloss": 0.0,
+          "normhkVA": 9958.3,
+          "emerghkVA": 13579.5,
+          "sub": "No",
+          "MaxTap": 1.1,
+          "MinTap": 0.9,
+          "NumTaps": 32.0,
+          "subname": "",
+          "%imag": 0.0,
+          "ppm_antifloat": 1.0,
+          "%Rs": [
+            0.001,
+            0.001
+          ],
+          "bank": "",
+          "XfmrCode": "",
+          "XRConst": "No",
+          "X12": 0.001,
+          "X13": 35.0,
+          "X23": 30.0,
+          "LeadLag": "Lag",
+          "WdgCurrents": "1189.227, (-44.106), 1139.379, (135.89), 1278.739, (-166.56), 1225.139, (13.442), 1148.043, (66.713), 1099.921, (-113.29), ",
+          "Core": "shell",
+          "RdcOhms": 4.86673901837328e-05,
+          "Seasons": "1",
+          "Ratings": [
+            "1100"
+          ],
+          "normamps": 461.060720583083,
+          "emergamps": 628.719164431477,
+          "faultrate": 0.007,
+          "pctperm": 0.0,
+          "repair": 0.0,
+          "basefreq": 60.0,
+          "enabled": "Yes",
+          "like": "",
+          "equipment_type": "transformer",
+          "bus_names_only": [
+            "source",
+            "newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4"
+          ],
+          "amp_limit_per_phase": 419.146109620985,
+          "substation_xfmr_flag": 1,
+          "is_autotransformer_flag": true
+        },
+        "num_nodes": 87,
+        "num_loads": 13,
+        "num_lines": 26,
+        "num_transformers": 5,
+        "num_pv_systems": 0,
+        "num_capacitors": 0,
+        "num_regulators": 2
+      },
+      "transformer": [
+        {
+          "name": "b02e3fe9-77d0-47f9-86cb-e4db960afd62",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 50.23045615915206,
+          "max_per_unit_loading": 1.0849,
+          "status": "normal"
+        },
+        {
+          "name": "54cd0a5a-2ebe-4b39-936a-f238b503c221",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 300.0,
+          "amp_limit_per_phase": 13.889741840969346,
+          "max_amp_loading": 11.301666062674794,
+          "max_per_unit_loading": 0.8137,
+          "status": "normal"
+        },
+        {
+          "name": "502e96e3-853a-4b3d-b88d-fe59af4d7b65",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 0.48,
+          "kVA": 1000.0,
+          "amp_limit_per_phase": 46.29913946989782,
+          "max_amp_loading": 35.04357525748952,
+          "max_per_unit_loading": 0.7569,
+          "status": "normal"
+        },
+        {
+          "name": "new_xfmr_source1662563457_4787571",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 12.47,
+          "kVA": 9053.0,
+          "amp_limit_per_phase": 419.146109620985,
+          "max_amp_loading": 1278.7389166735663,
+          "max_per_unit_loading": 3.0508,
+          "status": "overloaded"
+        },
+        {
+          "name": "new_xfmr_7bba9925-4f7c-4f0d-9b94-d0b8298962ea1662563459_1866503",
+          "phases": 3,
+          "windings": 2,
+          "conns": [
+            "wye",
+            "wye"
+          ],
+          "kV": 12.47,
+          "kVA": 9053.0,
+          "amp_limit_per_phase": 419.146109620985,
+          "max_amp_loading": 284.0613238126931,
+          "max_per_unit_loading": 0.6777,
+          "status": "normal"
+        }
+      ],
+      "line": [
+        {
+          "name": "11abf04c-1002-4d48-9f1d-edb4872cf9c3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6477",
+          "units": "km",
+          "max_amp_loading": 1225.1387816247939,
+          "max_per_unit_loading": 1.8563,
+          "status": "overloaded"
+        },
+        {
+          "name": "17f547a3-aad9-4cc3-98be-327aefe6a1d6",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.4096512",
+          "units": "km",
+          "max_amp_loading": 560.0640244368195,
+          "max_per_unit_loading": 0.8486,
+          "status": "normal"
+        },
+        {
+          "name": "36fd2f4e-8305-4f45-ae4a-5a7a3cc95013",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.118872",
+          "units": "km",
+          "max_amp_loading": 401.103284438787,
+          "max_per_unit_loading": 0.6077,
+          "status": "normal"
+        },
+        {
+          "name": "16e5aef9-56d0-478e-a9b2-903c7e6f7222",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6071616",
+          "units": "km",
+          "max_amp_loading": 284.0523895586219,
+          "max_per_unit_loading": 0.4304,
+          "status": "normal"
+        },
+        {
+          "name": "1324f2a2-4fc9-4020-b144-b027f2633991",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1926336",
+          "units": "km",
+          "max_amp_loading": 560.0700755447799,
+          "max_per_unit_loading": 0.8486,
+          "status": "normal"
+        },
+        {
+          "name": "f912d33f-f017-4ba5-b2fd-2ed2eec38b71",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.3706368",
+          "units": "km",
+          "max_amp_loading": 266.27237797947424,
+          "max_per_unit_loading": 0.4034,
+          "status": "normal"
+        },
+        {
+          "name": "5b3d3f0c-0c14-4c3d-9080-0fb5bbea5470",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1972056",
+          "units": "km",
+          "max_amp_loading": 96.0769366812563,
+          "max_per_unit_loading": 0.1456,
+          "status": "normal"
+        },
+        {
+          "name": "6cdda038-b853-4a8e-bf6d-304c49d93688",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.024384",
+          "units": "km",
+          "max_amp_loading": 11.301291110940033,
+          "max_per_unit_loading": 0.0171,
+          "status": "normal"
+        },
+        {
+          "name": "f2d0448f-aab3-4da0-8aca-17564c8e3a58",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0557784",
+          "units": "km",
+          "max_amp_loading": 282.62700844152226,
+          "max_per_unit_loading": 0.4282,
+          "status": "normal"
+        },
+        {
+          "name": "59f65367-c852-40ab-9d7f-dc30822570f7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.2154936",
+          "units": "km",
+          "max_amp_loading": 293.60777588431336,
+          "max_per_unit_loading": 0.4588,
+          "status": "normal"
+        },
+        {
+          "name": "10e9de09-902c-4373-8fa3-06a3e19e8b38",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0935736",
+          "units": "km",
+          "max_amp_loading": 53.8123882733151,
+          "max_per_unit_loading": 0.0815,
+          "status": "normal"
+        },
+        {
+          "name": "de88d8f3-d596-4088-8ee7-d96326ab083c",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.077724",
+          "units": "km",
+          "max_amp_loading": 63.27892284564563,
+          "max_per_unit_loading": 0.0959,
+          "status": "normal"
+        },
+        {
+          "name": "44c05d80-7a90-4229-94f7-0ef2787b2cc7",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 434.9816929350008,
+          "max_per_unit_loading": 0.6797,
+          "status": "normal"
+        },
+        {
+          "name": "40c59858-58c3-4b8c-8521-f7a251f06740",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0795528",
+          "units": "km",
+          "max_amp_loading": 230.4382610103246,
+          "max_per_unit_loading": 0.3491,
+          "status": "normal"
+        },
+        {
+          "name": "96ac00ff-1369-472b-b8cd-d8721355f4c5",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.1328928",
+          "units": "km",
+          "max_amp_loading": 65.9215832561776,
+          "max_per_unit_loading": 0.0999,
+          "status": "normal"
+        },
+        {
+          "name": "e2dcff78-1f88-496b-9111-66ea2cc6c889",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0493776",
+          "units": "km",
+          "max_amp_loading": 104.36228032022552,
+          "max_per_unit_loading": 0.1581,
+          "status": "normal"
+        },
+        {
+          "name": "9e3fff1f-2625-4f3f-b510-f4e51683c941",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0694944",
+          "units": "km",
+          "max_amp_loading": 61.07126309042507,
+          "max_per_unit_loading": 0.0925,
+          "status": "normal"
+        },
+        {
+          "name": "a0ba7300-0264-4450-8a1b-6f8045ee7cfe",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.111252",
+          "units": "km",
+          "max_amp_loading": 445.34237129351715,
+          "max_per_unit_loading": 0.6958,
+          "status": "normal"
+        },
+        {
+          "name": "bf23c675-d787-4994-803b-18d8d4900699",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1588008",
+          "units": "km",
+          "max_amp_loading": 19.583639950395497,
+          "max_per_unit_loading": 0.0306,
+          "status": "normal"
+        },
+        {
+          "name": "bbb1f6a0-394e-4b38-bd51-1fa8f70d89dd",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.0969264",
+          "units": "km",
+          "max_amp_loading": 430.3647225898689,
+          "max_per_unit_loading": 0.6724,
+          "status": "normal"
+        },
+        {
+          "name": "68c17aed-1c16-4a75-b0a7-7cf2db5d605d",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.179832",
+          "units": "km",
+          "max_amp_loading": 15.122744871562942,
+          "max_per_unit_loading": 0.0236,
+          "status": "normal"
+        },
+        {
+          "name": "db1a87fb-d770-4939-b747-7cadf1f304f8",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0390144",
+          "units": "km",
+          "max_amp_loading": 50.229835956902775,
+          "max_per_unit_loading": 0.0761,
+          "status": "normal"
+        },
+        {
+          "name": "bfdf4e28-5baf-4d54-9d0a-5a7dc3fbd4f3",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.0697992",
+          "units": "km",
+          "max_amp_loading": 35.042529369879794,
+          "max_per_unit_loading": 0.0531,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_11abf04c-1002-4d48-9f1d-edb4872cf9c31662563454_3067033",
+          "phases": 3,
+          "normamps": 660.0,
+          "kV": 7.19956,
+          "line_placement": "overhead",
+          "length": "0.6477",
+          "units": "km",
+          "max_amp_loading": 686.0828509592106,
+          "max_per_unit_loading": 1.0395,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3297436",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 434.9816929350008,
+          "max_per_unit_loading": 0.6797,
+          "status": "normal"
+        },
+        {
+          "name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3307438",
+          "phases": 3,
+          "normamps": 640.0,
+          "kV": 0.27713,
+          "line_placement": "underground",
+          "length": "0.1801368",
+          "units": "km",
+          "max_amp_loading": 434.9816929350008,
+          "max_per_unit_loading": 0.6797,
+          "status": "normal"
+        }
+      ],
+      "bus_voltage": [
+        {
+          "name": "source",
+          "max_per_unit_voltage": 0.9945992470995478,
+          "min_per_unit_voltage": 0.9945402582919851,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4",
+          "max_per_unit_voltage": 1.0380496394200143,
+          "min_per_unit_voltage": 1.037984256555237,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "6398a8fa-be81-4773-a837-6cb0c35ad1a4",
+          "max_per_unit_voltage": 1.0105107953253352,
+          "min_per_unit_voltage": 1.007159306360361,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "38c748dc-7e65-4798-9c57-7a5ad07a8830",
+          "max_per_unit_voltage": 1.0063515048437996,
+          "min_per_unit_voltage": 1.0005011096975533,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "4deadac5-3035-4051-91fd-f5910c93cd75",
+          "max_per_unit_voltage": 1.0096455241530533,
+          "min_per_unit_voltage": 1.0057753355411863,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea",
+          "max_per_unit_voltage": 1.0065112948142207,
+          "min_per_unit_voltage": 1.0007784579119055,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "df21bd3d-f2a5-40df-a41b-54c8d73829a5",
+          "max_per_unit_voltage": 1.0044257231416236,
+          "min_per_unit_voltage": 0.9973878768051919,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "2796b96e-5bc0-4890-9bb0-bcf7b5baf9c7",
+          "max_per_unit_voltage": 1.0026684046847627,
+          "min_per_unit_voltage": 0.9945463206595414,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "258aad84-ed22-48ee-995a-4c5869ae9274",
+          "max_per_unit_voltage": 1.0023264716597848,
+          "min_per_unit_voltage": 0.9940004638483669,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "3ad29eb4-60b2-4050-a87c-dcd858184622",
+          "max_per_unit_voltage": 1.0044203423802007,
+          "min_per_unit_voltage": 0.9973798483461584,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "44963046-644a-4c03-b81c-f65d80475015",
+          "max_per_unit_voltage": 1.0041490848480834,
+          "min_per_unit_voltage": 0.9969349021359641,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b1003fd0-cd27-4de5-9851-f14382846fc4",
+          "max_per_unit_voltage": 1.0041776505555526,
+          "min_per_unit_voltage": 0.997138596691296,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "53c917d8-b04d-4110-bdd9-cbf044e6a1fa",
+          "max_per_unit_voltage": 0.9595672816775801,
+          "min_per_unit_voltage": 0.9510274545002131,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "38a42375-ff02-497e-90ef-c5d9eb78850e",
+          "max_per_unit_voltage": 1.0095569133600626,
+          "min_per_unit_voltage": 1.0056299697031208,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "753b77b9-b88b-443f-9c3b-3cd977bb3558",
+          "max_per_unit_voltage": 1.0095589734559733,
+          "min_per_unit_voltage": 1.00563334972423,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14080f48-4e0d-4ca6-9ed2-7db253f920f4",
+          "max_per_unit_voltage": 1.0188191578339092,
+          "min_per_unit_voltage": 1.0130013194064853,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "9d037967-7ac1-4296-8f87-2d4a842d7a87",
+          "max_per_unit_voltage": 0.9663078887009199,
+          "min_per_unit_voltage": 0.9555943440888611,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "7bba9925-4f7c-4f0d-9b94-d0b8298962ea",
+          "max_per_unit_voltage": 1.019077833996886,
+          "min_per_unit_voltage": 1.0132732770658703,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "e4bcf9d6-e0b7-421c-91d4-554d06c69364",
+          "max_per_unit_voltage": 1.018755663170972,
+          "min_per_unit_voltage": 1.0127455335704652,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "40867501-5a41-4626-a9d4-be5444a5b575",
+          "max_per_unit_voltage": 1.0025148974317106,
+          "min_per_unit_voltage": 0.9942950136990214,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "18fe5a25-2547-4c32-a225-8bd455e93c9b",
+          "max_per_unit_voltage": 1.0025781148161057,
+          "min_per_unit_voltage": 0.9943984917508096,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "67b07fac-6666-4954-98b8-3e08b0896646",
+          "max_per_unit_voltage": 1.0022521293229578,
+          "min_per_unit_voltage": 0.9938787522391109,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "ed866262-f11e-4ea7-b5f9-eecfea8ecbaf",
+          "max_per_unit_voltage": 1.0021351035233472,
+          "min_per_unit_voltage": 0.9937855226826031,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "14072af7-3121-4e3d-b85f-c79868702ec9",
+          "max_per_unit_voltage": 0.9673528721897822,
+          "min_per_unit_voltage": 0.9579230030350258,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "db52eea7-f395-4fb1-999d-47c82333a4a7",
+          "max_per_unit_voltage": 0.9999695932004906,
+          "min_per_unit_voltage": 0.9919288705885686,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "be6e5e58-e73e-4172-a939-250c6a7a3c2c",
+          "max_per_unit_voltage": 0.9728892473831015,
+          "min_per_unit_voltage": 0.9637153022378652,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "3d1aa47d-69dd-4200-ab34-9b6244ad82d7",
+          "max_per_unit_voltage": 1.0002416759610109,
+          "min_per_unit_voltage": 0.9921620364401414,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "194f2b59-5877-4485-85b9-bd0ac6f75e25",
+          "max_per_unit_voltage": 1.0190386161203215,
+          "min_per_unit_voltage": 1.0132159472561053,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        },
+        {
+          "name": "b9ac3056-629d-40cc-b520-cfe15eb7296c",
+          "max_per_unit_voltage": 1.0022802229783574,
+          "min_per_unit_voltage": 0.9939295618613778,
+          "overvoltage_violation": false,
+          "max_voltage_deviation": 0.0,
+          "undervoltage_violation": false,
+          "min_voltage_deviation": 0.0
+        }
+      ],
+      "capacitor_control": [],
+      "regulator_control": [
+        {
+          "name": "new_regcontrol_source_1662563457_525749",
+          "transformer": "new_xfmr_source1662563457_4787571",
+          "vreg": 125.5,
+          "band": 2.0,
+          "ptratio": 59.99631547328862,
+          "delay": 45.0,
+          "at_substation_xfmr_flag": true
+        },
+        {
+          "name": "new_regcontrol_newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea_1662563459_2766428",
+          "transformer": "new_xfmr_7bba9925-4f7c-4f0d-9b94-d0b8298962ea1662563459_1866503",
+          "vreg": 121.5,
+          "band": 1.0,
+          "ptratio": 59.99631547328862,
+          "delay": 15.0,
+          "at_substation_xfmr_flag": false
+        }
+      ]
+    }
+  ]
+}
