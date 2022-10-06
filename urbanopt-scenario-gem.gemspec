@@ -34,5 +34,6 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'sqlite3', '1.4.2'
   spec.add_runtime_dependency 'urbanopt-core', '~> 0.8.0'
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.6.2'
+  #TODO : Uncomment after releases
+  #spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.6.2'
 end
