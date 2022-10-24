@@ -48,6 +48,7 @@ module URBANopt
       def self.create_visualization(default_report_list, feature = true, feature_names = false)
         @all_results = []
         name = nil
+
         default_report_list.each do |folder|
           # create visualization for scenarios
           case feature
@@ -61,6 +62,9 @@ module URBANopt
             name = "#{folder.split('/')[-3]}-#{feature_names[index]}"
             csv_dir = folder
           end
+
+          # get JSON report
+          json_report = folder.gsub('.csv', '.json')
 
           if File.exist?(csv_dir)
             size = CSV.open(csv_dir).readlines.size
@@ -210,6 +214,7 @@ module URBANopt
             results['name'] = name
             results['monthly_values'] = {}
             results['annual_values'] = {}
+            results['qaqc_flags'] = {}
 
             if @jan_next_year_index.nil? || @feb_index.nil? || @mar_index.nil? || @apr_index.nil? || @may_index.nil? || @jun_index.nil? || @jul_index.nil? || @aug_index.nil? || @sep_index.nil? || @oct_index.nil? || @nov_index.nil? || @dec_index.nil?
               results['complete_simulation'] = false
@@ -230,6 +235,18 @@ module URBANopt
               end
             end
 
+            # QAQC flags by category (if present)
+            if File.exist?(json_report)
+              report_data = JSON.parse(File.read(json_report))
+              if feature == false
+                # adjust nesting for scenario report
+                report_data = report_data['scenario_report']
+              end
+
+              if report_data.key?('qaqc_flags')
+                results['qaqc_flags'] = report_data['qaqc_flags']
+              end
+            end
           end
 
           unless results.nil?
@@ -237,44 +254,7 @@ module URBANopt
           end
         end
 
-        # QAQC flags by category
-        flag_aggregation = { 'QAQC category': 'Total number of flags' } # Make a hash for count of flags of each category for this scenario
-        # This if-tree gets us to the run_dir from the default_report handed to the method
-        # FIXME: this is soooo brittle it makes me sad
-        if default_report_list[0].to_s.end_with?('scenario')
-          # Handles cases where the run dir is passed straight in - might not ever happen?
-          scenario_run_dir = Pathname.new(default_report_list[0])
-        elsif Pathname.new(default_report_list[0]).parent.to_s.end_with?('scenario')
-          # For scenario visualization
-          scenario_run_dir = Pathname.new(default_report_list[0])
-        elsif Pathname.new(default_report_list[0]).parent.parent.parent.to_s.end_with?('scenario')
-          # For feature visualization
-          scenario_run_dir = Pathname.new(default_report_list[0]).parent.parent
-        end
-        dirs_in_scenario = scenario_run_dir.parent.children.select(&:directory?)
-        # This will occasionally pick up the opendss folder or similar, but the 'next unless' line will skip that dir for us
-        dirs_in_scenario.each do |dir_in_scenario| # Go through the list of features in the scenario
-          next unless File.file?(File.join(dir_in_scenario, 'out.osw')) # skip if osw doesn't exist - needed because scenario-gem testing doesn't have osw's
-
-          osw = JSON.parse(File.read(File.join(dir_in_scenario, 'out.osw'))) # Get the qaqc measure data from out.osw
-          osw['steps'].each do |step| # Go through the list of steps in out.osw
-            next unless step['measure_dir_name'] == 'generic_qaqc'
-
-            step['result']['step_values'].each do |step_value| # Go through the list of step values in qaqc
-              if step_value['units'] == 'flags' && step_value['value'] > 0 # Find categories with flags
-                # If the category has already been made in the flag hash, add to it; otherwise create the category and populate it
-                if flag_aggregation[step_value['name']]
-                  flag_aggregation[step_value['name']] += step_value['value']
-                else flag_aggregation[step_value['name']] = step_value['value']
-                end
-              end
-            end
-          end
-        end
-
-        @all_results << flag_aggregation
-
-        # create json with required data stored in a variable
+        # create js file with required data stored in a variable
         if feature == false
           # In case of scenario visualization store result at top of the run folder
           results_path = File.expand_path('../../scenarioData.js', default_report_list[0])
