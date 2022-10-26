@@ -500,6 +500,8 @@ var scenarioData = [
       "Net Power": 27935873.479511403,
       "Net Apparent Power": 31039859.421645597
     },
+    "qaqc_flags": {
+    },
     "complete_simulation": true
   }
 ];
