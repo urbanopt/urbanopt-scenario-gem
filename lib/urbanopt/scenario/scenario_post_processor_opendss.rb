@@ -399,6 +399,8 @@ module URBANopt
         @scenario_report.scenario_power_distribution.capacitors = caps
       end
 
+
+      
       ##
       # run opendss post_processor
       ##

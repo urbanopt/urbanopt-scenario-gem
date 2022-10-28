@@ -1,0 +1,176 @@
+{
+  "line": [
+    {
+      "line_definition_type": "geometry",
+      "kV": 7.19956,
+      "h": 0.0,
+      "line_placement": "overhead",
+      "r1": "----",
+      "x1": "----",
+      "r0": "----",
+      "x0": "----",
+      "C1": "----",
+      "C0": "----",
+      "rmatrix": [
+        "0.180249942584035 |0.0597538527246716 0.176702773297506 |0.0573043139356207 0.0558065670485243 0.172469461576197"
+      ],
+      "xmatrix": [
+        "0.457269197317671 |0.207870701442 0.491888685737283 |0.179032476259426 0.247242850379687 0.535450360667721"
+      ],
+      "cmatrix": [
+        "12.8467298091825 |-3.93117936998818 13.4367006209794 |-1.84950635250467 -4.46327056549315 11.6048939456356"
+      ],
+      "Rg": 0.01805,
+      "Xg": 0.155081,
+      "rho": 100.0,
+      "B1": "----",
+      "B0": "----",
+      "normamps": 660.0,
+      "emergamps": 990.0,
+      "units": "km",
+      "faultrate": 0.1,
+      "pctperm": 20.0,
+      "repair": 3.0,
+      "Seasons": "1",
+      "Ratings": [
+        "0"
+      ],
+      "geometry": "geometry_1",
+      "linecode": "",
+      "phases": 3,
+      "EarthModel": "Deri",
+      "cncables": [],
+      "tscables": [],
+      "wires": [],
+      "like": "",
+      "basefreq": 60.0,
+      "Switch": "No",
+      "spacing": "",
+      "bus1": "source.1.2.3",
+      "bus2": "6398a8fa-be81-4773-a837-6cb0c35ad1a4.1.2.3",
+      "length": 0.6477,
+      "enabled": "Yes",
+      "equipment_type": "Line",
+      "upgrade_type": "new_parallel",
+      "parameter_type": "new_equipment",
+      "action": "add",
+      "final_equipment_name": "upgrade_11abf04c-1002-4d48-9f1d-edb4872cf9c31662563454_3067033",
+      "original_equipment_name": "11abf04c-1002-4d48-9f1d-edb4872cf9c3"
+    },
+    {
+      "line_definition_type": "geometry",
+      "kV": 0.27713,
+      "h": 0.0,
+      "line_placement": "underground",
+      "r1": "----",
+      "x1": "----",
+      "r0": "----",
+      "x0": "----",
+      "C1": "----",
+      "C0": "----",
+      "rmatrix": [
+        "0.211293448190227 |0.0623902411714654 0.192661596004413 |0.0386601618193203 0.0623902411714654 0.211293448190227"
+      ],
+      "xmatrix": [
+        "0.156596550724226 |-0.0243945217352278 0.146160910138672 |-0.0333467708367909 -0.0243945217352278 0.156596550724226"
+      ],
+      "cmatrix": [
+        "198.020462035148 |0 198.020462035148 |0 0 198.020462035148"
+      ],
+      "Rg": 0.01805,
+      "Xg": 0.155081,
+      "rho": 100.0,
+      "B1": "----",
+      "B0": "----",
+      "normamps": 640.0,
+      "emergamps": 0.0,
+      "units": "km",
+      "faultrate": 0.1,
+      "pctperm": 20.0,
+      "repair": 3.0,
+      "Seasons": "1",
+      "Ratings": [
+        "0"
+      ],
+      "geometry": "geometry_2",
+      "linecode": "",
+      "phases": 3,
+      "EarthModel": "Deri",
+      "cncables": [],
+      "tscables": [],
+      "wires": [],
+      "like": "",
+      "basefreq": 60.0,
+      "Switch": "No",
+      "spacing": "",
+      "bus1": "14080f48-4e0d-4ca6-9ed2-7db253f920f4.1.2.3",
+      "bus2": "9d037967-7ac1-4296-8f87-2d4a842d7a87.1.2.3",
+      "length": 0.1801368,
+      "enabled": "Yes",
+      "equipment_type": "Line",
+      "upgrade_type": "new_parallel",
+      "parameter_type": "new_equipment",
+      "action": "add",
+      "final_equipment_name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3297436",
+      "original_equipment_name": "44c05d80-7a90-4229-94f7-0ef2787b2cc7"
+    },
+    {
+      "line_definition_type": "geometry",
+      "kV": 0.27713,
+      "h": 0.0,
+      "line_placement": "underground",
+      "r1": "----",
+      "x1": "----",
+      "r0": "----",
+      "x0": "----",
+      "C1": "----",
+      "C0": "----",
+      "rmatrix": [
+        "0.211293448190227 |0.0623902411714654 0.192661596004413 |0.0386601618193203 0.0623902411714654 0.211293448190227"
+      ],
+      "xmatrix": [
+        "0.156596550724226 |-0.0243945217352278 0.146160910138672 |-0.0333467708367909 -0.0243945217352278 0.156596550724226"
+      ],
+      "cmatrix": [
+        "198.020462035148 |0 198.020462035148 |0 0 198.020462035148"
+      ],
+      "Rg": 0.01805,
+      "Xg": 0.155081,
+      "rho": 100.0,
+      "B1": "----",
+      "B0": "----",
+      "normamps": 640.0,
+      "emergamps": 0.0,
+      "units": "km",
+      "faultrate": 0.1,
+      "pctperm": 20.0,
+      "repair": 3.0,
+      "Seasons": "1",
+      "Ratings": [
+        "0"
+      ],
+      "geometry": "geometry_2",
+      "linecode": "",
+      "phases": 3,
+      "EarthModel": "Deri",
+      "cncables": [],
+      "tscables": [],
+      "wires": [],
+      "like": "",
+      "basefreq": 60.0,
+      "Switch": "No",
+      "spacing": "",
+      "bus1": "14080f48-4e0d-4ca6-9ed2-7db253f920f4.1.2.3",
+      "bus2": "9d037967-7ac1-4296-8f87-2d4a842d7a87.1.2.3",
+      "length": 0.1801368,
+      "enabled": "Yes",
+      "equipment_type": "Line",
+      "upgrade_type": "new_parallel",
+      "parameter_type": "new_equipment",
+      "action": "add",
+      "final_equipment_name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3307438",
+      "original_equipment_name": "44c05d80-7a90-4229-94f7-0ef2787b2cc7"
+    }
+  ],
+  "transformer": []
+}

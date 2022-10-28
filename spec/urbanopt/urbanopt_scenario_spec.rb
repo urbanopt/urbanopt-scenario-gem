@@ -256,4 +256,14 @@ RSpec.describe URBANopt::Scenario do
     opendss_post_processor = URBANopt::Scenario::OpenDSSPostProcessor.new($scenario_result, 'opendss')
     opendss_post_processor.run
   end
+
+  it 'can integrate disco results' do
+    # generate disco results for testing
+    disco_results_source = File.join(File.dirname(__FILE__), '../files/disco_outputs/')
+    disco_results_destination = File.join(File.dirname(__FILE__), '../test/example_scenario')
+    FileUtils.copy_entry disco_results_source, disco_results_destination
+    # post_process disco results
+    disco_post_processor = URBANopt::Scenario::DISCOPostProcessor.new($scenario_result, 'disco')
+    disco_post_processor.run
+  end
 end
