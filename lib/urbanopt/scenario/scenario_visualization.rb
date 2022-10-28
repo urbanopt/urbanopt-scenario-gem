@@ -45,10 +45,11 @@ require 'json'
 module URBANopt
   module Scenario
     class ResultVisualization
-      def self.create_visualization(run_dir, feature = true, feature_names = false)
+      def self.create_visualization(default_report_list, feature = true, feature_names = false)
         @all_results = []
         name = nil
-        run_dir.each do |folder|
+
+        default_report_list.each do |folder|
           # create visualization for scenarios
           case feature
           when false
@@ -57,10 +58,13 @@ module URBANopt
 
           # create visualization for features
           when true
-            index = run_dir.index(folder)
+            index = default_report_list.index(folder)
             name = "#{folder.split('/')[-3]}-#{feature_names[index]}"
             csv_dir = folder
           end
+
+          # get JSON report
+          json_report = folder.gsub('.csv', '.json')
 
           if File.exist?(csv_dir)
             size = CSV.open(csv_dir).readlines.size
@@ -210,6 +214,7 @@ module URBANopt
             results['name'] = name
             results['monthly_values'] = {}
             results['annual_values'] = {}
+            results['qaqc_flags'] = {}
 
             if @jan_next_year_index.nil? || @feb_index.nil? || @mar_index.nil? || @apr_index.nil? || @may_index.nil? || @jun_index.nil? || @jul_index.nil? || @aug_index.nil? || @sep_index.nil? || @oct_index.nil? || @nov_index.nil? || @dec_index.nil?
               results['complete_simulation'] = false
@@ -230,6 +235,18 @@ module URBANopt
               end
             end
 
+            # QAQC flags by category (if present)
+            if File.exist?(json_report)
+              report_data = JSON.parse(File.read(json_report))
+              if feature == false
+                # adjust nesting for scenario report
+                report_data = report_data['scenario_report']
+              end
+
+              if report_data.key?('qaqc_flags')
+                results['qaqc_flags'] = report_data['qaqc_flags']
+              end
+            end
           end
 
           unless results.nil?
@@ -237,13 +254,13 @@ module URBANopt
           end
         end
 
-        # create json with required data stored in a variable
+        # create js file with required data stored in a variable
         if feature == false
           # In case of scenario visualization store result at top of the run folder
-          results_path = File.expand_path('../../scenarioData.js', run_dir[0])
+          results_path = File.expand_path('../../scenarioData.js', default_report_list[0])
         else
           # In case of feature visualization store result at top of scenario folder folder
-          results_path = File.expand_path('../../../scenarioData.js', run_dir[0])
+          results_path = File.expand_path('../../../scenarioData.js', default_report_list[0])
         end
         File.open(results_path, 'w') do |file|
           file << "var scenarioData = #{JSON.pretty_generate(@all_results)};"

@@ -1670,6 +1670,8 @@ var scenarioData = [
       "Ice Thermal Storage End Fraction": 0.0,
       "Cooling Coil Ice Thermal Storage End Fraction": 0.0
     },
+    "qaqc_flags": {
+    },
     "complete_simulation": true
   },
   {
@@ -3942,6 +3944,8 @@ var scenarioData = [
       "ElectricityProduced:Facility Apparent Power": 0.0,
       "Net Power": 27935873.47948147,
       "Net Apparent Power": 31039859.421646073
+    },
+    "qaqc_flags": {
     },
     "complete_simulation": true
   }
