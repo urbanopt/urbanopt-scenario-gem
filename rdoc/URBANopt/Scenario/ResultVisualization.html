@@ -117,7 +117,7 @@
         
         <div class="method-heading">
           <span class="method-name">create_visualization</span><span
-            class="method-args">(run_dir, feature = true, feature_names = false)</span>
+            class="method-args">(default_report_list, feature = true, feature_names = false)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -133,10 +133,11 @@
           
           <div class="method-source-code" id="create_visualization-source">
             <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_visualization.rb, line 48</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">create_visualization</span>(<span class="ruby-identifier">run_dir</span>, <span class="ruby-identifier">feature</span> = <span class="ruby-keyword">true</span>, <span class="ruby-identifier">feature_names</span> = <span class="ruby-keyword">false</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">create_visualization</span>(<span class="ruby-identifier">default_report_list</span>, <span class="ruby-identifier">feature</span> = <span class="ruby-keyword">true</span>, <span class="ruby-identifier">feature_names</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-ivar">@all_results</span> = []
   <span class="ruby-identifier">name</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-identifier">run_dir</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">folder</span><span class="ruby-operator">|</span>
+
+  <span class="ruby-identifier">default_report_list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">folder</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># create visualization for scenarios</span>
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">feature</span>
     <span class="ruby-keyword">when</span> <span class="ruby-keyword">false</span>
@@ -145,10 +146,13 @@
 
     <span class="ruby-comment"># create visualization for features</span>
     <span class="ruby-keyword">when</span> <span class="ruby-keyword">true</span>
-      <span class="ruby-identifier">index</span> = <span class="ruby-identifier">run_dir</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">folder</span>)
+      <span class="ruby-identifier">index</span> = <span class="ruby-identifier">default_report_list</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">folder</span>)
       <span class="ruby-identifier">name</span> = <span class="ruby-node">&quot;#{folder.split(&#39;/&#39;)[-3]}-#{feature_names[index]}&quot;</span>
       <span class="ruby-identifier">csv_dir</span> = <span class="ruby-identifier">folder</span>
     <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># get JSON report</span>
+    <span class="ruby-identifier">json_report</span> = <span class="ruby-identifier">folder</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&#39;.csv&#39;</span>, <span class="ruby-string">&#39;.json&#39;</span>)
 
     <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">csv_dir</span>)
       <span class="ruby-identifier">size</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">csv_dir</span>).<span class="ruby-identifier">readlines</span>.<span class="ruby-identifier">size</span>
@@ -298,6 +302,7 @@
       <span class="ruby-identifier">results</span>[<span class="ruby-string">&#39;name&#39;</span>] = <span class="ruby-identifier">name</span>
       <span class="ruby-identifier">results</span>[<span class="ruby-string">&#39;monthly_values&#39;</span>] = {}
       <span class="ruby-identifier">results</span>[<span class="ruby-string">&#39;annual_values&#39;</span>] = {}
+      <span class="ruby-identifier">results</span>[<span class="ruby-string">&#39;qaqc_flags&#39;</span>] = {}
 
       <span class="ruby-keyword">if</span> <span class="ruby-ivar">@jan_next_year_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@feb_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@mar_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@apr_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@may_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@jun_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@jul_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@aug_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@sep_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@oct_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@nov_index</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@dec_index</span>.<span class="ruby-identifier">nil?</span>
         <span class="ruby-identifier">results</span>[<span class="ruby-string">&#39;complete_simulation&#39;</span>] = <span class="ruby-keyword">false</span>
@@ -318,6 +323,18 @@
         <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">end</span>
 
+      <span class="ruby-comment"># QAQC flags by category (if present)</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">json_report</span>)
+        <span class="ruby-identifier">report_data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">json_report</span>))
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">feature</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+          <span class="ruby-comment"># adjust nesting for scenario report</span>
+          <span class="ruby-identifier">report_data</span> = <span class="ruby-identifier">report_data</span>[<span class="ruby-string">&#39;scenario_report&#39;</span>]
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">report_data</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-string">&#39;qaqc_flags&#39;</span>)
+          <span class="ruby-identifier">results</span>[<span class="ruby-string">&#39;qaqc_flags&#39;</span>] = <span class="ruby-identifier">report_data</span>[<span class="ruby-string">&#39;qaqc_flags&#39;</span>]
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
 
     <span class="ruby-keyword">unless</span> <span class="ruby-identifier">results</span>.<span class="ruby-identifier">nil?</span>
@@ -325,13 +342,13 @@
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-comment"># create json with required data stored in a variable</span>
+  <span class="ruby-comment"># create js file with required data stored in a variable</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">feature</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
     <span class="ruby-comment"># In case of scenario visualization store result at top of the run folder</span>
-    <span class="ruby-identifier">results_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-string">&#39;../../scenarioData.js&#39;</span>, <span class="ruby-identifier">run_dir</span>[<span class="ruby-value">0</span>])
+    <span class="ruby-identifier">results_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-string">&#39;../../scenarioData.js&#39;</span>, <span class="ruby-identifier">default_report_list</span>[<span class="ruby-value">0</span>])
   <span class="ruby-keyword">else</span>
     <span class="ruby-comment"># In case of feature visualization store result at top of scenario folder folder</span>
-    <span class="ruby-identifier">results_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-string">&#39;../../../scenarioData.js&#39;</span>, <span class="ruby-identifier">run_dir</span>[<span class="ruby-value">0</span>])
+    <span class="ruby-identifier">results_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-string">&#39;../../../scenarioData.js&#39;</span>, <span class="ruby-identifier">default_report_list</span>[<span class="ruby-value">0</span>])
   <span class="ruby-keyword">end</span>
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">results_path</span>, <span class="ruby-string">&#39;w&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">file</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;var scenarioData = #{JSON.pretty_generate(@all_results)};&quot;</span>
