@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json-schema', '~> 2.8'
 
   spec.add_runtime_dependency 'sqlite3', '1.4.2'
-  # spec.add_runtime_dependency 'urbanopt-core', '~> 0.8.0'
+  # spec.add_runtime_dependency 'urbanopt-core', '~> 0.9.0'
   #TODO : Uncomment after releases
   #spec.add_runtime_dependency 'urbanopt-reporting', '~> 0.7.0'
 end
