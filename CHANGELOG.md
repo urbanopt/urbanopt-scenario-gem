@@ -1,5 +1,14 @@
 # URBANopt Scenario Gem
 
+## Version 0.9.0
+
+Date Range: 05/11/22 - 12/05/22
+
+- Update dependencies for OpenStudio 3.5.0
+- Fixed [#246]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/246 ), Code coverage reporting
+- Fixed [#250]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/250 ), Add reports for DISCO results
+- Fixed [#252]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/252 ), Process QAQC flags into visualization js files
+
 ## Version 0.8.0
 
 Date Range: 11/23/21 - 05/10/22
