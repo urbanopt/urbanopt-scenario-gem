@@ -1,0 +1,58 @@
+2022-09-07 09:10:50,753 - INFO [disco.cli.upgrade_cost_analysis upgrade_cost_analysis.py:212] : disco upgrade-cost-analysis run config.json -o disco --console-log-level=warn
+2022-09-07 09:10:50,753 - INFO [disco.cli.upgrade_cost_analysis upgrade_cost_analysis.py:217] : Run upgrades simulation for job baseline_scenario
+2022-09-07 09:10:50,758 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:41] : Simulation start time: 1662563450.758678
+2022-09-07 09:10:50,758 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:44] : Initial simulation parameters: {'enable_pydss_solve': False, 'pydss_volt_var_model': None, 'dc_ac_ratio': None}
+2022-09-07 09:10:50,759 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:55] : Reloading OpenDSS circuit
+2022-09-07 09:10:50,759 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'C:/DISCO/urbanopt-cli/disco_project_run/run/baseline_scenario/opendss/dss_files/Master.dss'.
+2022-09-07 09:10:53,592 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:121] : Thermal Upgrades Required
+2022-09-07 09:10:54,219 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:162] : Maximum allowable number of thermal upgrade iterations: 2
+2022-09-07 09:10:54,269 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:173] : Iteration_0: Determined line loadings.
+2022-09-07 09:10:54,270 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:174] : Iteration_0: Number of line violations: 2
+2022-09-07 09:10:54,351 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:184] : Iteration_0: Corrected line violations.
+2022-09-07 09:10:54,384 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:191] : Iteration_0: Determined xfmr loadings.
+2022-09-07 09:10:54,385 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:192] : Iteration_0: Number of xfmr violations: 0
+2022-09-07 09:10:54,500 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:225] : Iteration_0: Number of devices with violations after upgrades in this iteration: 0
+2022-09-07 09:10:54,507 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:55] : Reloading OpenDSS circuit
+2022-09-07 09:10:54,513 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'disco\job-outputs\baseline_scenario\upgraded_master.dss'.
+2022-09-07 09:10:56,082 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_thermal_upgrades automated_thermal_upgrades.py:276] : Simulation end time: 1662563456.082008
+2022-09-07 09:10:56,087 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_voltage_upgrades automated_voltage_upgrades.py:42] : Simulation Start time: 1662563456.0879598
+2022-09-07 09:10:56,087 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:55] : Reloading OpenDSS circuit
+2022-09-07 09:10:56,090 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'C:/DISCO/urbanopt-cli/disco_project_run/run/baseline_scenario/opendss/dss_files/Master.dss'.
+2022-09-07 09:10:56,566 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'disco\job-outputs\baseline_scenario\thermal_upgrades.dss'.
+2022-09-07 09:10:57,425 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_voltage_upgrades automated_voltage_upgrades.py:163] : Voltage Upgrades Required.
+2022-09-07 09:10:57,426 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_voltage_upgrades automated_voltage_upgrades.py:173] : No capacitor banks exist in the system
+2022-09-07 09:10:57,426 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_voltage_upgrades automated_voltage_upgrades.py:193] : Write upgrades to dss file, before adding new devices.
+2022-09-07 09:10:57,437 - INFO [disco.extensions.upgrade_simulation.upgrades.voltage_upgrade_functions voltage_upgrade_functions.py:739] : Enter Substation LTC module.
+2022-09-07 09:10:58,088 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:55] : Reloading OpenDSS circuit
+2022-09-07 09:10:58,090 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'C:/DISCO/urbanopt-cli/disco_project_run/run/baseline_scenario/opendss/dss_files/Master.dss'.
+2022-09-07 09:10:58,378 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'disco\job-outputs\baseline_scenario\thermal_upgrades.dss'.
+2022-09-07 09:10:58,380 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:66] : Running 5 dss commands
+2022-09-07 09:10:58,988 - INFO [disco.extensions.upgrade_simulation.upgrades.voltage_upgrade_functions voltage_upgrade_functions.py:877] : Place new regulators.
+2022-09-07 09:10:59,084 - INFO [disco.extensions.upgrade_simulation.upgrades.voltage_upgrade_functions voltage_upgrade_functions.py:1567] : Clustering option: num_of_clusters: 1
+2022-09-07 09:11:00,792 - INFO [disco.extensions.upgrade_simulation.upgrades.voltage_upgrade_functions voltage_upgrade_functions.py:1538] : All nodal violations have been removed successfully by new regulator placement.
+2022-09-07 09:11:01,978 - INFO [disco.extensions.upgrade_simulation.upgrades.voltage_upgrade_functions voltage_upgrade_functions.py:1587] : All nodal violations have been removed successfully.....quitting
+2022-09-07 09:11:01,980 - INFO [disco.extensions.upgrade_simulation.upgrades.voltage_upgrade_functions voltage_upgrade_functions.py:889] : Settings sweep for existing reg control devices (other than sub LTC).
+2022-09-07 09:11:02,485 - INFO [disco.extensions.upgrade_simulation.upgrades.voltage_upgrade_functions voltage_upgrade_functions.py:553] : Original Regulator control settings are the best.
+2022-09-07 09:11:02,486 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:55] : Reloading OpenDSS circuit
+2022-09-07 09:11:02,487 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'C:/DISCO/urbanopt-cli/disco_project_run/run/baseline_scenario/opendss/dss_files/Master.dss'.
+2022-09-07 09:11:02,795 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'disco\job-outputs\baseline_scenario\thermal_upgrades.dss'.
+2022-09-07 09:11:02,796 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:66] : Running 11 dss commands
+2022-09-07 09:11:02,818 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:55] : Reloading OpenDSS circuit
+2022-09-07 09:11:02,822 - INFO [disco.extensions.upgrade_simulation.upgrades.common_functions common_functions.py:60] : Redirecting 'disco\job-outputs\baseline_scenario\upgraded_master.dss'.
+2022-09-07 09:11:04,008 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_voltage_upgrades automated_voltage_upgrades.py:278] : Simulation end time: 1662563464.0089278
+2022-09-07 09:11:04,008 - INFO [disco.extensions.upgrade_simulation.upgrades.automated_voltage_upgrades automated_voltage_upgrades.py:280] : Simulation time: 7.920968055725098
+2022-09-07 09:11:04,939 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: determine_thermal_upgrades: total=5.329s avg=5328.981ms max=5328.981ms min=5328.981ms count=1
+2022-09-07 09:11:04,939 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: reload_dss_circuit: total=2.301s avg=383.463ms max=507.433ms min=293.815ms count=6
+2022-09-07 09:11:04,939 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: circuit_solve_and_check: total=0.156s avg=0.318ms max=2.595ms min=0.057ms count=491
+2022-09-07 09:11:04,939 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: get_thermal_equipment_info: total=2.780s avg=36.584ms max=84.639ms min=22.195ms count=76
+2022-09-07 09:11:04,939 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: get_bus_voltages: total=1.179s avg=3.743ms max=8.144ms min=2.807ms count=315
+2022-09-07 09:11:04,940 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: get_bus_voltages_instance: total=1.173s avg=3.724ms max=8.105ms min=2.795ms count=315
+2022-09-07 09:11:04,940 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: correct_line_violations: total=0.081s avg=80.667ms max=80.667ms min=80.667ms count=1
+2022-09-07 09:11:04,940 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: identify_parallel_lines: total=0.031s avg=15.542ms max=15.727ms min=15.356ms count=2
+2022-09-07 09:11:04,940 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: determine_voltage_upgrades: total=7.927s avg=7926.993ms max=7926.993ms min=7926.993ms count=1
+2022-09-07 09:11:04,940 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: sweep_regcontrol_settings: total=1.499s avg=499.754ms max=580.597ms min=438.966ms count=3
+2022-09-07 09:11:04,940 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: determine_new_regulator_location: total=2.992s avg=2991.764ms max=2991.764ms min=2991.764ms count=1
+2022-09-07 09:11:04,941 - INFO [jade.utils.timing_utils timing_utils.py:93] : TimerStats summary: compute_all_costs: total=0.923s avg=923.369ms max=923.369ms min=923.369ms count=1
+2022-09-07 09:11:04,941 - INFO [disco.cli.upgrade_cost_analysis upgrade_cost_analysis.py:229] : Completed upgrades simulation for job baseline_scenario return_code=0 duration=14.187113523483276 seconds
+2022-09-07 09:11:04,944 - INFO [disco.cli.upgrade_cost_analysis upgrade_cost_analysis.py:362] : Start result aggregation.
+2022-09-07 09:11:04,961 - INFO [disco.cli.upgrade_cost_analysis upgrade_cost_analysis.py:393] : Output summary data to disco\upgrade_summary.json

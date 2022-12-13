@@ -1,0 +1,3 @@
+Redirect ..\..\..\opendss\dss_files\Master.dss
+Redirect thermal_upgrades.dss
+Redirect voltage_upgrades.dss

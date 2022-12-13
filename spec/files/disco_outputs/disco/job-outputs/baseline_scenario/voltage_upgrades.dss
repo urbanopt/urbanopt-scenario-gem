@@ -1,0 +1,14 @@
+//This file has all the voltage upgrades
+
+Edit Line.11abf04c-1002-4d48-9f1d-edb4872cf9c3 bus1=newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4.1.2.3
+New Transformer.New_xfmr_source1662563457_4787571 phases=3 windings=2 buses=(source.1.2.3, newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4.1.2.3) conns=(wye,wye) kvs=(12.47,12.47) kvas=(9053,9053) xhl=0.001 wdg=1 %r=0.001 wdg=2 %r=0.001 Maxtap=1.1 Mintap=0.9 enabled=Yes
+// new node added newnode_6398a8fa-be81-4773-a837-6cb0c35ad1a4,-78.84050846099856,42.82051718821927
+New RegControl.new_regcontrol_source_1662563457_525749 transformer=new_xfmr_source1662563457_4787571 winding=2 ptratio=59.99631547328862 band=2 vreg=123.60000000000001 delay=45 enabled=Yes
+Edit RegControl.new_regcontrol_source_1662563457_525749 vreg=125.5 band=2.0
+Edit Line.16e5aef9-56d0-478e-a9b2-903c7e6f7222 bus2=newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea.1.2.3
+New Transformer.New_xfmr_7bba9925-4f7c-4f0d-9b94-d0b8298962ea1662563459_1866503 phases=3 windings=2 buses=(newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea.1.2.3,7bba9925-4f7c-4f0d-9b94-d0b8298962ea.1.2.3) conns=(wye,wye) kvs=(12.47,12.47) kvas=(9053,9053) xhl=0.001 wdg=1 %r=0.001 wdg=2 %r=0.001 Maxtap=1.1 Mintap=0.9 enabled=Yes
+// new node added newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea,-78.84529352188112,42.81456759283041
+New RegControl.new_regcontrol_newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea_1662563459_2766428 transformer=new_xfmr_7bba9925-4f7c-4f0d-9b94-d0b8298962ea1662563459_1866503 winding=2 ptratio=59.99631547328862 band=2 vreg=120.0 delay=15 enabled=Yes
+Edit RegControl.new_regcontrol_newnode_7bba9925-4f7c-4f0d-9b94-d0b8298962ea_1662563459_2766428 vreg=121.5 band=1.0
+CalcVoltageBases
+Solve

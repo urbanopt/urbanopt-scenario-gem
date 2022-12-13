@@ -1,0 +1,145 @@
+{
+  "voltage": [
+    {
+      "name": "baseline_scenario",
+      "type": "Substation LTC",
+      "count": 1,
+      "total_cost_usd": 15000.0,
+      "equipment_parameters": {},
+      "comment": ""
+    },
+    {
+      "name": "baseline_scenario",
+      "type": "In-line voltage regulator",
+      "count": 1,
+      "total_cost_usd": 15000.0,
+      "equipment_parameters": {},
+      "comment": ""
+    },
+    {
+      "name": "baseline_scenario",
+      "type": "Substation transformer",
+      "count": 1,
+      "total_cost_usd": 220000.0,
+      "equipment_parameters": {},
+      "comment": {
+        "text": "Transformer new_xfmr_source1662563457_4787571: Exact cost not available. Unit cost for transformer with these parameters used (based on closest rated_kVA",
+        "params": {
+          "phases": 3,
+          "primary_kV": 25.0,
+          "secondary_kV": 25.0,
+          "num_windings": 2,
+          "primary_connection_type": "wye",
+          "secondary_connection_type": "wye",
+          "rated_kVA": 10000,
+          "cost": 220000.0,
+          "cost_units": "USD/unit"
+        }
+      }
+    },
+    {
+      "name": "baseline_scenario",
+      "type": "Transformer for voltage regulator",
+      "count": 1,
+      "total_cost_usd": 220000.0,
+      "equipment_parameters": {},
+      "comment": {
+        "text": "Transformer new_xfmr_7bba9925-4f7c-4f0d-9b94-d0b8298962ea1662563459_1866503: Exact cost not available. Unit cost for transformer with these parameters used (based on closest rated_kVA",
+        "params": {
+          "phases": 3,
+          "primary_kV": 25.0,
+          "secondary_kV": 25.0,
+          "num_windings": 2,
+          "primary_connection_type": "wye",
+          "secondary_connection_type": "wye",
+          "rated_kVA": 10000,
+          "cost": 220000.0,
+          "cost_units": "USD/unit"
+        }
+      }
+    }
+  ],
+  "thermal": [
+    {
+      "name": "baseline_scenario",
+      "type": "Line",
+      "count": 1,
+      "total_cost_usd": 71945.74957659001,
+      "equipment_parameters": {
+        "final_equipment_name": "upgrade_11abf04c-1002-4d48-9f1d-edb4872cf9c31662563454_3067033",
+        "phases": 3,
+        "voltage_kV": 7.2,
+        "ampere_rating": 660.0,
+        "line_placement": "overhead",
+        "upgrade_type": "new_line"
+      },
+      "comment": {
+        "text": "Line upgrade_11abf04c-1002-4d48-9f1d-edb4872cf9c31662563454_3067033: Exact cost not available. Unit cost for line with these parameters used (based on closest ampere_rating.",
+        "params": {
+          "name": "1P_OH_AL_ACSR_477kcmil_Hawk_4_0",
+          "upgrade_type": "new_line",
+          "phases": 1,
+          "voltage_kV": 4.0,
+          "ampere_rating": 660.0,
+          "line_placement": "overhead",
+          "cost_per_m": 111.0788167,
+          "cost_units": "USD"
+        }
+      }
+    },
+    {
+      "name": "baseline_scenario",
+      "type": "Line",
+      "count": 1,
+      "total_cost_usd": 2502.30730932,
+      "equipment_parameters": {
+        "final_equipment_name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3297436",
+        "phases": 3,
+        "voltage_kV": 0.28,
+        "ampere_rating": 640.0,
+        "line_placement": "underground",
+        "upgrade_type": "new_line"
+      },
+      "comment": {
+        "text": "Line upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3297436: Exact cost not available. Unit cost for line with these parameters used (based on closest ampere_rating.",
+        "params": {
+          "name": "3P_UG_AL_750kcmil_15_0_480_0",
+          "upgrade_type": "new_line",
+          "phases": 3,
+          "voltage_kV": 0.48,
+          "ampere_rating": 640.0,
+          "line_placement": "underground",
+          "cost_per_m": 13.89115,
+          "cost_units": "USD"
+        }
+      }
+    },
+    {
+      "name": "baseline_scenario",
+      "type": "Line",
+      "count": 1,
+      "total_cost_usd": 2502.30730932,
+      "equipment_parameters": {
+        "final_equipment_name": "upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3307438",
+        "phases": 3,
+        "voltage_kV": 0.28,
+        "ampere_rating": 640.0,
+        "line_placement": "underground",
+        "upgrade_type": "new_line"
+      },
+      "comment": {
+        "text": "Line upgrade_44c05d80-7a90-4229-94f7-0ef2787b2cc71662563454_3307438: Exact cost not available. Unit cost for line with these parameters used (based on closest ampere_rating.",
+        "params": {
+          "name": "3P_UG_AL_750kcmil_15_0_480_0",
+          "upgrade_type": "new_line",
+          "phases": 3,
+          "voltage_kV": 0.48,
+          "ampere_rating": 640.0,
+          "line_placement": "underground",
+          "cost_per_m": 13.89115,
+          "cost_units": "USD"
+        }
+      }
+    }
+  ]
+}

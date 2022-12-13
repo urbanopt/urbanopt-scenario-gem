@@ -1,11 +1,18 @@
 # URBANopt Scenario Gem
 
+## Version 0.9.0
+
+Date Range: 05/11/22 - 12/05/22
+
+- Update dependencies for OpenStudio 3.5.0
+- Fixed [#246]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/246 ), Code coverage reporting
+- Fixed [#250]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/250 ), Add reports for DISCO results
+- Fixed [#252]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/252 ), Process QAQC flags into visualization js files
+
 ## Version 0.8.0
 
 Date Range: 11/23/21 - 05/10/22
 
-- Fixed [#223]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/223 ), updates for OpenStudio 3.3
-- Fixed [#224]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/224 ), Os 3.3
 - Fixed [#225]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/225 ), fix dependencies
 - Fixed [#226]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/226 ), Bump node-forge from 0.10.0 to 1.0.0 in /docs
 - Fixed [#228]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/228 ), expanding opendss reporting
