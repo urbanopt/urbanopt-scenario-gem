@@ -301,8 +301,10 @@ module URBANopt
         # also add additional keys for OpenDSS Loads
         loads = @opendss_json_results['model'].select { |d| d['class'] == 'Load' }
         if loads
-          bld_load = loads.select { |d| d['name']['value'] == id }
-          if bld_load
+          # RNM includes other strings around the Load ID, like: load_1_27, where the id is the 1 in the middle.
+          # Use the ID part of the string as the key.
+          bld_load = loads.select { |d| d['name']['value'] == id || d['name']['value'].split('_')[1] == id }
+          if !bld_load.empty?
             if bld_load.is_a?(Array)
               bld_load = bld_load[0]
             end
@@ -313,7 +315,6 @@ module URBANopt
             if nominal_voltage < 300
               nominal_voltage *= Math.sqrt(3)
             end
-            nominal_voltage = nominal_voltage
 
             # max_power_kw
             # max_reactive_power_kvar
@@ -399,8 +400,6 @@ module URBANopt
         @scenario_report.scenario_power_distribution.capacitors = caps
       end
 
-
-      
       ##
       # run opendss post_processor
       ##
