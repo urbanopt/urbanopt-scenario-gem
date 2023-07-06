@@ -1,4 +1,4 @@
 # *********************************************************************************
 # URBANopt (tm), Copyright (c) Alliance for Sustainable Energy, LLC.
-# See also https://github.com/urbanopt/urbanopt-reporting-gem/blob/develop/LICENSE.md
+# See also https://github.com/urbanopt/urbanopt-scenario-gem/blob/develop/LICENSE.md
 # *********************************************************************************
