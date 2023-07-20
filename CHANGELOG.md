@@ -1,5 +1,13 @@
 # URBANopt Scenario Gem
 
+## Version 0.10.0
+Date Range: 12/5/22 - 7/6/23
+
+- Update dependencies for OpenStudio 3.6.1
+- Update license and references to the license file
+- Bump sqlite3 dependency from 1.4.2 to 1.6.3
+- Add badge for GHA CI nightly build status
+
 ## Version 0.9.0
 
 Date Range: 05/11/22 - 12/05/22
