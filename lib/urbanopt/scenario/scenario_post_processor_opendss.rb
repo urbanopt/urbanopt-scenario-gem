@@ -121,13 +121,20 @@ module URBANopt
         # retrieve all transformers
         trsfmrs = @opendss_json_results['model'].select { |d| d['class'] == 'PowerTransformer' }
         trsfmrs.each do |item|
-          t = { 'nominal_capacity': nil, 'reactance_resistance_ratio': nil }
+          t = { 'nominal_capacity': nil, 'reactance_resistance_ratio': nil, 'incoming_voltage': nil, 'outgoing_voltage': nil }
           name = item['name']['value']
 
           # nominal capacity in kVA  (Model.json stores it in VA)
           # TODO: assuming that all windings would have the same rated power, so grabbing first one
           begin
             t['nominal_capacity'] = item['windings']['value'][0]['rated_power']['value'] / 1000
+          rescue StandardError
+          end
+
+          # Voltage on each side of the transformer
+          begin
+            t[:incoming_voltage] = item['windings']['value'][0]['nominal_voltage']['value']
+            t[:outgoing_voltage] = item['windings']['value'][1]['nominal_voltage']['value']
           rescue StandardError
           end
 
@@ -199,6 +206,8 @@ module URBANopt
             transformer_report.power_distribution.under_voltage_hours = under_voltage_hrs
             transformer_report.power_distribution.nominal_capacity = nominal_capacity
             transformer_report.power_distribution.reactance_resistance_ratio = r_r_ratio
+            transformer_report.power_distribution.reactance_resistance_ratio = t_res[t_key][:incoming_voltage]
+            transformer_report.power_distribution.reactance_resistance_ratio = t_res[t_key][:outgoing_voltage]
 
             ## save transformer JSON file
             # transformer_hash
