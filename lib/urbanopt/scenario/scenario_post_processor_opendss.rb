@@ -127,7 +127,7 @@ module URBANopt
           # nominal capacity in kVA  (Model.json stores it in VA)
           # TODO: assuming that all windings would have the same rated power, so grabbing first one
           begin
-            t['nominal_capacity'] = item['windings']['value'][0]['rated_power']['value'] / 1000
+            t[:nominal_capacity] = item['windings']['value'][0]['rated_power']['value'] / 1000
           rescue StandardError
           end
 
@@ -144,7 +144,7 @@ module URBANopt
             reactance = item['reactances']['value'][0]['value']
             resistance = item['windings']['value'][0]['resistance']['value']
 
-            t['reactance_resistance_ratio'] = reactance / resistance
+            t[:reactance_resistance_ratio] = reactance / resistance
           rescue StandardError
           end
 
@@ -172,8 +172,8 @@ module URBANopt
             nominal_capacity = nil
             r_r_ratio = nil
             begin
-              nominal_capacity = t_res[t_key]['nominal_capacity']
-              r_r_ratio = t_res[t_key]['reactance_resistance_ratio']
+              nominal_capacity = t_res[t_key][:nominal_capacity]
+              r_r_ratio = t_res[t_key][:reactance_resistance_ratio]
             rescue StandardError
             end
 
