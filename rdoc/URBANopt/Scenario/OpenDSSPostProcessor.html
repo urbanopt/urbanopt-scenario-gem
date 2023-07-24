@@ -159,7 +159,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">scenario_report</span>, <span class="ruby-identifier">opendss_results_dir_name</span> = <span class="ruby-string">&#39;opendss&#39;</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">scenario_report</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-ivar">@scenario_report</span> = <span class="ruby-identifier">scenario_report</span>
@@ -225,7 +225,7 @@
 
           
           <div class="method-source-code" id="add_summary_results-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 279</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 244</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_summary_results</span>(<span class="ruby-identifier">feature_report</span>)
   <span class="ruby-identifier">under_voltage_hrs</span> = <span class="ruby-value">0</span>
   <span class="ruby-identifier">over_voltage_hrs</span> = <span class="ruby-value">0</span>
@@ -251,8 +251,10 @@
   <span class="ruby-comment"># also add additional keys for OpenDSS Loads</span>
   <span class="ruby-identifier">loads</span> = <span class="ruby-ivar">@opendss_json_results</span>[<span class="ruby-string">&#39;model&#39;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;class&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Load&#39;</span> }
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">loads</span>
-    <span class="ruby-identifier">bld_load</span> = <span class="ruby-identifier">loads</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;name&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">id</span> }
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">bld_load</span>
+    <span class="ruby-comment"># RNM includes other strings around the Load ID, like: load_1_27, where the id is the 1 in the middle.</span>
+    <span class="ruby-comment"># Use the ID part of the string as the key.</span>
+    <span class="ruby-identifier">bld_load</span> = <span class="ruby-identifier">loads</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;name&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">id</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">d</span>[<span class="ruby-string">&#39;name&#39;</span>][<span class="ruby-string">&#39;value&#39;</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;_&#39;</span>)[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">id</span> }
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">bld_load</span>.<span class="ruby-identifier">empty?</span>
       <span class="ruby-keyword">if</span> <span class="ruby-identifier">bld_load</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
         <span class="ruby-identifier">bld_load</span> = <span class="ruby-identifier">bld_load</span>[<span class="ruby-value">0</span>]
       <span class="ruby-keyword">end</span>
@@ -263,7 +265,6 @@
       <span class="ruby-keyword">if</span> <span class="ruby-identifier">nominal_voltage</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">300</span>
         <span class="ruby-identifier">nominal_voltage</span> <span class="ruby-operator">*=</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>(<span class="ruby-value">3</span>)
       <span class="ruby-keyword">end</span>
-      <span class="ruby-identifier">nominal_voltage</span> = <span class="ruby-identifier">nominal_voltage</span>
 
       <span class="ruby-comment"># max_power_kw</span>
       <span class="ruby-comment"># max_reactive_power_kvar</span>
@@ -319,7 +320,7 @@
 
           
           <div class="method-source-code" id="compute_transformer_results-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 153</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 118</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">compute_transformer_results</span>
   <span class="ruby-comment"># using values from opendss Model.json</span>
   <span class="ruby-identifier">results</span> = {}
@@ -380,7 +381,7 @@
 
           
           <div class="method-source-code" id="load_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 131</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_data</span>
   <span class="ruby-comment"># load selected opendss data</span>
   <span class="ruby-identifier">load_opendss_data</span>
@@ -416,7 +417,7 @@
 
           
           <div class="method-source-code" id="load_feature_report_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 121</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_feature_report_data</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># read feature results</span>
@@ -454,7 +455,7 @@
 
           
           <div class="method-source-code" id="load_opendss_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 82</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_opendss_data</span>
   <span class="ruby-comment"># load building features data</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
@@ -521,7 +522,7 @@
 
           
           <div class="method-source-code" id="merge_data-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 139</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge_data</span>(<span class="ruby-identifier">feature_report_data</span>, <span class="ruby-identifier">opendss_data</span>)
   <span class="ruby-identifier">output</span> = <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">generate</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">csv</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">opendss_data</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
@@ -563,7 +564,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 407</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 371</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">run</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">feature_reports</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature_report</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># load data</span>
@@ -633,7 +634,7 @@
 
           
           <div class="method-source-code" id="save_csv-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 270</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 235</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_csv</span>(<span class="ruby-identifier">feature_report</span>, <span class="ruby-identifier">updated_feature_report_csv</span>, <span class="ruby-identifier">file_name</span> = <span class="ruby-string">&#39;default_feature_report&#39;</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">feature_report</span>.<span class="ruby-identifier">directory_name</span>, <span class="ruby-string">&#39;feature_reports&#39;</span>, <span class="ruby-node">&quot;#{file_name}.csv&quot;</span>), <span class="ruby-identifier">updated_feature_report_csv</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -666,7 +667,7 @@
 
           
           <div class="method-source-code" id="save_opendss_scenario-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 347</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 313</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_opendss_scenario</span>
   <span class="ruby-ivar">@scenario_report</span>.<span class="ruby-identifier">scenario_power_distribution</span> = <span class="ruby-constant">URBANopt</span><span class="ruby-operator">::</span><span class="ruby-constant">Reporting</span><span class="ruby-operator">::</span><span class="ruby-constant">DefaultReports</span><span class="ruby-operator">::</span><span class="ruby-constant">ScenarioPowerDistribution</span>.<span class="ruby-identifier">new</span>
 
@@ -750,7 +751,7 @@
 
           
           <div class="method-source-code" id="save_transformers_reports-source">
-            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 186</span>
+            <pre><span class="ruby-comment"># File lib/urbanopt/scenario/scenario_post_processor_opendss.rb, line 151</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">save_transformers_reports</span>
   <span class="ruby-identifier">t_res</span> = <span class="ruby-identifier">compute_transformer_results</span>
 
@@ -846,7 +847,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.1.
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
