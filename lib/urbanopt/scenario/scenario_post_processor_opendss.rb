@@ -206,8 +206,8 @@ module URBANopt
             transformer_report.power_distribution.under_voltage_hours = under_voltage_hrs
             transformer_report.power_distribution.nominal_capacity = nominal_capacity
             transformer_report.power_distribution.reactance_resistance_ratio = r_r_ratio
-            transformer_report.power_distribution.reactance_resistance_ratio = t_res[t_key][:incoming_voltage]
-            transformer_report.power_distribution.reactance_resistance_ratio = t_res[t_key][:outgoing_voltage]
+            transformer_report.power_distribution.tx_incoming_voltage = t_res[t_key][:incoming_voltage]
+            transformer_report.power_distribution.tx_outgoing_voltage = t_res[t_key][:outgoing_voltage]
 
             ## save transformer JSON file
             # transformer_hash
