@@ -162,8 +162,8 @@ module URBANopt
           if k.include? 'Transformer'
             t_key = k.sub('Transformer.', '')
             # create transformer directory
-            transformer_dir = File.join(@scenario_report.directory_name, k)
-            FileUtils.mkdir_p(File.join(transformer_dir, 'feature_reports'))
+            transformer_dir = Pathname(@scenario_report.directory_name) / k
+            FileUtils.mkdir_p(Pathname(transformer_dir) / 'feature_reports')
 
             # write data to csv
             # store under voltages and over voltages
@@ -194,7 +194,7 @@ module URBANopt
             end
 
             # save transformer CSV report
-            File.write(File.join(transformer_dir, 'feature_reports', 'default_feature_report_opendss.csv'), transformer_csv)
+            File.write(Pathname(transformer_dir) / 'feature_reports' / 'default_feature_report_opendss.csv', transformer_csv)
 
             # create transformer report
             transformer_report = URBANopt::Reporting::DefaultReports::FeatureReport.new(id: k, name: k, directory_name: transformer_dir, feature_type: 'Transformer',
@@ -214,7 +214,7 @@ module URBANopt
             transformer_hash = transformer_report.to_hash
             # transformer_hash.delete_if { |k, v| v.nil? }
 
-            json_name_path = File.join(transformer_dir, 'feature_reports', 'default_feature_report_opendss.json')
+            json_name_path = Pathname(transformer_dir) / 'feature_reports' / 'default_feature_report_opendss.json'
 
             # save the json file
             File.open(json_name_path, 'w') do |f|
