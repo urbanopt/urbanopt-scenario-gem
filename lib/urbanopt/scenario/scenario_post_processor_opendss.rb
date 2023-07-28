@@ -171,9 +171,13 @@ module URBANopt
             over_voltage_hrs = 0
             nominal_capacity = nil
             r_r_ratio = nil
+            tx_incoming_voltage = nil
+            tx_outgoing_voltage = nil
             begin
               nominal_capacity = t_res[t_key][:nominal_capacity]
               r_r_ratio = t_res[t_key][:reactance_resistance_ratio]
+              tx_incoming_voltage = t_res[t_key][:incoming_voltage]
+              tx_outgoing_voltage = t_res[t_key][:outgoing_voltage]
             rescue StandardError
             end
 
@@ -206,8 +210,8 @@ module URBANopt
             transformer_report.power_distribution.under_voltage_hours = under_voltage_hrs
             transformer_report.power_distribution.nominal_capacity = nominal_capacity
             transformer_report.power_distribution.reactance_resistance_ratio = r_r_ratio
-            transformer_report.power_distribution.tx_incoming_voltage = t_res[t_key][:incoming_voltage]
-            transformer_report.power_distribution.tx_outgoing_voltage = t_res[t_key][:outgoing_voltage]
+            transformer_report.power_distribution.tx_incoming_voltage = tx_incoming_voltage
+            transformer_report.power_distribution.tx_outgoing_voltage = tx_outgoing_voltage
 
             ## save transformer JSON file
             # transformer_hash
