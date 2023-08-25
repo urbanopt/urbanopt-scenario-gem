@@ -1,5 +1,5 @@
 
-name: nightly_build
+name: Scenario-gem CI
 
 on:
   # push:
