@@ -1,5 +1,16 @@
 # URBANopt Scenario Gem
 
+## Version 0.11.0
+Date Range: 07/06/23 - 01/10/24
+
+* Add transformer in- and out-going voltages to reporting by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/265
+* Remove jenkins by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/264
+* also run CI when a PR gets a review request by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/266
+* enforce using sqlite3 v1.6 because 1.7 requires ruby3 by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/269
+* Support os37 for testing by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/267
+
+**Full Changelog**: https://github.com/urbanopt/urbanopt-scenario-gem/compare/v0.10.0...v0.11.0
+
 ## Version 0.10.0
 Date Range: 12/5/22 - 7/6/23
 
