@@ -1,5 +1,5 @@
 
-name: nightly_build
+name: Scenario-gem CI
 
 on:
   # push:
@@ -7,6 +7,8 @@ on:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
     - cron: '21 5 * * 2-6'
+  pull_request:
+    types: [review_requested]
 
 env:
   # This env var should enforce develop branch of all dependencies
@@ -19,9 +21,9 @@ jobs:
     # https://github.com/rbenv/ruby-build/discussions/1940
     runs-on: ubuntu-latest
     container:
-      image: docker://nrel/openstudio:3.6.1
+      image: docker://nrel/openstudio:3.7.0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Update gems
         run: bundle update
       - name: Run Rspec
