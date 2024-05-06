@@ -1,5 +1,11 @@
 # URBANopt Scenario Gem
 
+## Version 0.12.0
+Date Range: 01/10/24 - 05/06/24
+* Use new version of reporting-gem by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/271
+
+**Full Changelog**: https://github.com/urbanopt/urbanopt-scenario-gem/compare/v0.11.0...v0.12.0
+
 ## Version 0.11.0
 Date Range: 07/06/23 - 01/10/24
 
