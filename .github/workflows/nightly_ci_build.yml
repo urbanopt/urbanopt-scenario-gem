@@ -2,6 +2,7 @@
 name: Scenario-gem CI
 
 on:
+  workflow_dispatch:
   # push:
   schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
