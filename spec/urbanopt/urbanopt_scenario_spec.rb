@@ -8,7 +8,7 @@ require_relative '../files/example_feature_file'
 require 'json'
 require 'json-schema'
 RSpec.describe URBANopt::Scenario do
-  @@logger ||= URBANopt::Reporting::DefaultReports.logger
+  @@logger
 
   it 'has a version number' do
     expect(URBANopt::Scenario::VERSION).not_to be nil
