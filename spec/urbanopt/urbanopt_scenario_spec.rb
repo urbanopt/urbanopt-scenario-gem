@@ -185,7 +185,7 @@ RSpec.describe URBANopt::Scenario do
     # Get scenario schema hash
     schema = validator.schema
 
-    # Read scenario json file and validated againt schema
+    # Read scenario json file and validated against schema
     scenario_json = JSON.parse(File.read(scenario_json_file))
 
     @@logger.info("Schema Validation Errors: #{JSON::Validator.fully_validate(schema, scenario_json)}")
@@ -205,7 +205,7 @@ RSpec.describe URBANopt::Scenario do
     scenario_csv_schema_headers = validator.csv_headers
     expect((scenario_csv_headers_with_no_units & scenario_csv_schema_headers)).to eq(scenario_csv_headers_with_no_units)
 
-    # Read feature_reprot json file and validate against schema
+    # Read feature_report json file and validate against schema
     Dir["#{File.dirname(__FILE__)}/../**/*default_feature_reports.json"].each do |json_file|
       feature_json = JSON.parse(File.read(json_file))
       expect(JSON::Validator.fully_validate(schema[:definitions][:FeatureReport][:properties], feature_json).empty?).to be true

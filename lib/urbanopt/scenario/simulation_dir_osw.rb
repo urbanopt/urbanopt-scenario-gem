@@ -110,7 +110,7 @@ module URBANopt
 
       ##
       # Return true if the simulation is out of date (input files newer than results), false otherwise.
-      # Non-existant simulation input files are out of date.
+      # Non-existent simulation input files are out of date.
       ##
       def out_of_date?
         if !File.exist?(run_dir)

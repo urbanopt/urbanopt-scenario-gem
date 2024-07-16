@@ -52,7 +52,7 @@ module URBANopt
         # check if runner.conf file exists
         if File.exist?(File.join(@root_dir, OpenStudio::Extension::RunnerConfig::FILENAME))
           runner_config = OpenStudio::Extension::RunnerConfig.new(@root_dir)
-          # use the default values overriden with runner.conf values
+          # use the default values overridden with runner.conf values
           options = options.merge(runner_config.options)
         end
 

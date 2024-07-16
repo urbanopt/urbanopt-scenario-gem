@@ -46,11 +46,11 @@ module URBANopt
 
       ##
       # Create and run all SimulationFileOSW for Scenario.
-      # A staged runner is implented to run buildings, then transformers then district systems.
+      # A staged runner is implemented to run buildings, then transformers then district systems.
       # - instantiate openstudio runner to run .osw files.
       # - create simulation files for this scenario.
       # - get feature_type value from in.osw files
-      # - cretae 3 groups to store .osw files (+building_osws+ , +transformer_osws+ , +district_system_osws+)
+      # - create 3 groups to store .osw files (+building_osws+ , +transformer_osws+ , +district_system_osws+)
       # - add each osw file to its corresponding group id +simulation_dir+ is out_of_date
       # - Run osw file groups in order and store simulation failure in a array.
       ##
@@ -78,7 +78,7 @@ module URBANopt
         #   end
         # end
 
-        # cretae 3 groups to store .osw files (+building_osws+ , +transformer_osws+ , +district_system_osws+)
+        # create 3 groups to store .osw files (+building_osws+ , +transformer_osws+ , +district_system_osws+)
         building_osws = []
         transformer_osws = []
         district_system_osws = []
