@@ -18,8 +18,6 @@ env:
 
 jobs:
   weeknight-tests:
-    # ubuntu-latest works since https://github.com/rbenv/ruby-build/releases/tag/v20220710 (July 10, 2022)
-    # https://github.com/rbenv/ruby-build/discussions/1940
     runs-on: ubuntu-latest
     container:
       image: docker://nrel/openstudio:3.8.0
