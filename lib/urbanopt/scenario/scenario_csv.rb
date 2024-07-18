@@ -48,16 +48,24 @@ module URBANopt
       # Require all simulation mappers in mapper_files_dir
       def load_mapper_files
         # loads default values from extension gem
-        options = OpenStudio::Extension::RunnerConfig.default_config
+        @options = OpenStudio::Extension::RunnerConfig.default_config(@root_dir)
         # check if runner.conf file exists
         if File.exist?(File.join(@root_dir, OpenStudio::Extension::RunnerConfig::FILENAME))
           runner_config = OpenStudio::Extension::RunnerConfig.new(@root_dir)
-          # use the default values overridden with runner.conf values
-          options = options.merge(runner_config.options)
+          # use the default values overridden with runner.conf values where not
+          # nil nor empty strings
+          @options = @options.merge(runner_config.options.reject{|k, v| v.nil? || (v.kind_of?(String) && v === '')})
         end
 
+        if @options.key?(:bundle_install_path)
+          puts "Bundle install path is set to: #{@options[:bundle_install_path]}"
+          @options[:bundle_install_path] = Pathname(@options[:bundle_install_path]).cleanpath
+          puts "Bundle adjusted path is set to: #{@options[:bundle_install_path]}"
+        end
         # bundle path is assigned from the runner.conf if it exists or is assigned in the root_dir
-        bundle_path = !options.key?(:bundle_install_path) || options[:bundle_install_path] === '' ? File.join(@root_dir, '.bundle/install/') : options[:bundle_install_path]
+        # if bundle install path is not provided or is empty, it will be placed in root_dir/.bundle/install, otherwise use the provided path
+        bundle_path = !@options.key?(:bundle_install_path) || @options[:bundle_install_path] === '' ? (Pathname(@root_dir) / '.bundle' / 'install').realpath : @options[:bundle_install_path]
+        puts "Bundle final path is set to: #{bundle_path}"
 
         # checks if bundle path doesn't exist or is empty
         if !Dir.exist?(bundle_path) || Dir.empty?(bundle_path)
