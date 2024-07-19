@@ -7,8 +7,11 @@ require_relative '../spec_helper'
 require_relative '../files/example_feature_file'
 require 'json'
 require 'json-schema'
+require 'logger'
+
 RSpec.describe URBANopt::Scenario do
-  @@logger
+
+  let(:logger) { Logger.new($stdout) }
 
   it 'has a version number' do
     expect(URBANopt::Scenario::VERSION).not_to be nil
@@ -26,7 +29,7 @@ RSpec.describe URBANopt::Scenario do
     name = 'example_scenario'
 
     # copy all files into test directory
-    root_dir = File.join(File.dirname(__FILE__), '../test')
+    root_dir = File.absolute_path(File.join(File.dirname(__FILE__), '../test'))
     Dir.mkdir(root_dir) unless File.exist?(root_dir)
     run_dir = File.join(File.dirname(__FILE__), '../test/example_scenario/')
     FileUtils.cp(File.join(File.dirname(__FILE__), '../files/example_feature_file.json'), File.join(File.dirname(__FILE__), '../test/example_feature_file.json'))
@@ -43,7 +46,7 @@ RSpec.describe URBANopt::Scenario do
     # write a runner.conf in project dir
     options = { gemfile_path: File.join(File.dirname(__FILE__), '../test/Gemfile'), bundle_install_path: File.join(File.dirname(__FILE__), '../test/.bundle/install') }
     File.open(File.join(root_dir, 'runner.conf'), 'w') do |f|
-      f.write(options.to_json)
+      f.write(JSON.pretty_generate(options))
     end
 
     feature_file = ExampleFeatureFile.new(feature_file_path)
@@ -188,7 +191,7 @@ RSpec.describe URBANopt::Scenario do
     # Read scenario json file and validated against schema
     scenario_json = JSON.parse(File.read(scenario_json_file))
 
-    @@logger.info("Schema Validation Errors: #{JSON::Validator.fully_validate(schema, scenario_json)}")
+    logger.info("Schema Validation Errors: #{JSON::Validator.fully_validate(schema, scenario_json)}")
     expect(JSON::Validator.fully_validate(schema, scenario_json).empty?).to be true
 
     # close json file
