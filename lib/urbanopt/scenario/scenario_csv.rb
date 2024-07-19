@@ -57,20 +57,22 @@ module URBANopt
           @options = @options.merge(runner_config.options.reject{|k, v| v.nil? || (v.kind_of?(String) && v === '')})
         end
 
-        if @options.key?(:bundle_install_path)
-          puts "Bundle install path is set to: #{@options[:bundle_install_path]}"
-          @options[:bundle_install_path] = Pathname(@options[:bundle_install_path]).cleanpath
-          puts "Bundle adjusted path is set to: #{@options[:bundle_install_path]}"
-        end
         # bundle path is assigned from the runner.conf if it exists or is assigned in the root_dir
         # if bundle install path is not provided or is empty, it will be placed in root_dir/.bundle/install, otherwise use the provided path
-        bundle_path = !@options.key?(:bundle_install_path) || @options[:bundle_install_path] === '' ? (Pathname(@root_dir) / '.bundle' / 'install').realpath : @options[:bundle_install_path]
+        if !@options.key?(:bundle_install_path) || @options[:bundle_install_path] === ''
+          @options[:bundle_install_path] = File.join(@root_dir, '.bundle/install/')
+        else
+          @options[:bundle_install_path]= Pathname.new(@options[:bundle_install_path]).cleanpath.to_s
+        end
+        bundle_path = @options[:bundle_install_path]
+
         puts "Bundle final path is set to: #{bundle_path}"
 
         # checks if bundle path doesn't exist or is empty
         if !Dir.exist?(bundle_path) || Dir.empty?(bundle_path)
-          # install bundle
-          OpenStudio::Extension::Runner.new(@root_dir)
+          Bundler.with_unbundled_env do
+            OpenStudio::Extension::Runner.new(@root_dir, [], @options)
+          end
         end
 
         # find all lib dirs in the bundle path and add them to the path
