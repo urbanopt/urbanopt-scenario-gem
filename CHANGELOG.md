@@ -1,5 +1,18 @@
 # URBANopt Scenario Gem
 
+## Version 1.0.0
+
+Date Range: 05/06/24 - 01/23/25
+
+* Upgrade to OpenStudio 3.9 and Ruby 3.2.2 by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/276
+* Fixup openstudio-extension-gem sub bundle errors by @jmarrec in https://github.com/urbanopt/urbanopt-scenario-gem/pull/275
+
+### New Contributors
+
+* @jmarrec made their first contribution in https://github.com/urbanopt/urbanopt-scenario-gem/pull/275
+
+**Full Changelog**: https://github.com/urbanopt/urbanopt-scenario-gem/compare/v0.12.0...v1.0.0
+
 ## Version 0.12.0
 Date Range: 01/10/24 - 05/06/24
 * Use new version of reporting-gem by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/271
@@ -194,7 +207,7 @@ Date Range: 01/15/20 - 03/30/20:
 - Fixed [#83]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/83 ), add multiple pV
 - Fixed [#88]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/88 ), add units to CSV reports
 - Fixed [#89]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/89 ), created Save feature report method
-- Fixed [#91]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/91 ), add total_costruction_cost to reports
+- Fixed [#91]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/91 ), add total_construction_cost to reports
 - Fixed [#95]( https://github.com/urbanopt/urbanopt-scenario-gem/issues/95 ), list datapoint failures
 - Fixed [#98]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/98 ), add power, net power, net energy and apparent power to timeseries results
 - Fixed [#101]( https://github.com/urbanopt/urbanopt-scenario-gem/pull/101 ), fix for unit conversion when timeseries doe not exist

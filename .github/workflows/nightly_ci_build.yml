@@ -3,30 +3,28 @@ name: Scenario-gem CI
 
 on:
   workflow_dispatch:
-  # push:
+  push:
   schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
     - cron: '21 5 * * 2-6'
-  pull_request:
-    types: [review_requested]
 
 env:
-  # This env var should enforce develop branch of all dependencies
+  # This env var will enforce develop branch of all dependencies
   FAVOR_LOCAL_GEMS: true
   GEM_DEVELOPER_KEY: ${{ secrets.GEM_DEVELOPER_KEY }}
 
 jobs:
   weeknight-tests:
-    # ubuntu-latest works since https://github.com/rbenv/ruby-build/releases/tag/v20220710 (July 10, 2022)
-    # https://github.com/rbenv/ruby-build/discussions/1940
     runs-on: ubuntu-latest
     container:
-      image: docker://nrel/openstudio:3.7.0
+      image: docker://nrel/openstudio:3.9.0
     steps:
       - uses: actions/checkout@v4
       - name: Update gems
-        run: bundle update
+        run: |
+          bundle install
+          bundle update
       - name: Run Rspec
         run: bundle exec rspec
       - name: Coveralls

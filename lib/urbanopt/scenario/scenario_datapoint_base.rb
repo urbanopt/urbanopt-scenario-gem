@@ -89,7 +89,7 @@ module URBANopt
       # rubocop: enable Style/EvalWithLocation #:nodoc:
 
       ##
-      # Return true if the datapoint is out of date, false otherwise.  Non-existant files are out of date.
+      # Return true if the datapoint is out of date, false otherwise.  Non-existent files are out of date.
       ##
       # [return:] _Boolean_ - True if the datapoint is out of date, false otherwise.
       def out_of_date?
