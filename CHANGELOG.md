@@ -1,5 +1,18 @@
 # URBANopt Scenario Gem
 
+## Version 1.0.0
+
+Date Range: 05/06/24 - 01/23/25
+
+* Upgrade to OpenStudio 3.9 and Ruby 3.2.2 by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/276
+* Fixup openstudio-extension-gem sub bundle errors by @jmarrec in https://github.com/urbanopt/urbanopt-scenario-gem/pull/275
+
+### New Contributors
+
+* @jmarrec made their first contribution in https://github.com/urbanopt/urbanopt-scenario-gem/pull/275
+
+**Full Changelog**: https://github.com/urbanopt/urbanopt-scenario-gem/compare/v0.12.0...v1.0.0
+
 ## Version 0.12.0
 Date Range: 01/10/24 - 05/06/24
 * Use new version of reporting-gem by @vtnate in https://github.com/urbanopt/urbanopt-scenario-gem/pull/271
