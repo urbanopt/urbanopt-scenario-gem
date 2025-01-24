@@ -7,8 +7,13 @@ require_relative '../spec_helper'
 require_relative '../files/example_feature_file'
 require 'json'
 require 'json-schema'
+require 'logger'
+
 RSpec.describe URBANopt::Scenario do
-  @@logger ||= URBANopt::Reporting::DefaultReports.logger
+
+  let(:logger) { Logger.new($stdout) }
+
+  root_dir = (Pathname(__FILE__).dirname.parent / 'test').cleanpath
 
   it 'has a version number' do
     expect(URBANopt::Scenario::VERSION).not_to be nil
@@ -17,8 +22,8 @@ RSpec.describe URBANopt::Scenario do
   it 'has a logger' do
     expect(URBANopt::Scenario.logger).not_to be nil
     current_level = URBANopt::Scenario.logger.level
-    URBANopt::Scenario.logger.level = Logger::DEBUG
-    expect(URBANopt::Scenario.logger.level).to eq Logger::DEBUG
+    URBANopt::Scenario.logger.level = Logger::ERROR
+    expect(URBANopt::Scenario.logger.level).to eq Logger::ERROR
     URBANopt::Scenario.logger.level = current_level
   end
 
@@ -26,24 +31,23 @@ RSpec.describe URBANopt::Scenario do
     name = 'example_scenario'
 
     # copy all files into test directory
-    root_dir = File.join(File.dirname(__FILE__), '../test')
     Dir.mkdir(root_dir) unless File.exist?(root_dir)
-    run_dir = File.join(File.dirname(__FILE__), '../test/example_scenario/')
-    FileUtils.cp(File.join(File.dirname(__FILE__), '../files/example_feature_file.json'), File.join(File.dirname(__FILE__), '../test/example_feature_file.json'))
-    feature_file_path = File.join(File.dirname(__FILE__), '../test/example_feature_file.json')
-    FileUtils.cp_r(File.join(File.dirname(__FILE__), '../files/mappers'), File.join(File.dirname(__FILE__), '../test/mappers'), remove_destination: true)
-    FileUtils.cp_r(File.join(File.dirname(__FILE__), '../files/weather'), File.join(File.dirname(__FILE__), '../test/weather'), remove_destination: true)
-    mapper_files_dir = File.join(File.dirname(__FILE__), '../test/mappers/')
-    FileUtils.cp(File.join(File.dirname(__FILE__), '../files/example_scenario.csv'), File.join(File.dirname(__FILE__), '../test/example_scenario.csv'))
-    csv_file = File.join(File.dirname(__FILE__), '../test/example_scenario.csv')
+    run_dir = root_dir / 'example_scenario/'
+    FileUtils.cp(root_dir.parent / 'files' / 'example_feature_file.json', root_dir / 'example_feature_file.json')
+    feature_file_path = root_dir / 'example_feature_file.json'
+    FileUtils.cp_r(root_dir.parent / 'files' / 'mappers', root_dir.parent / 'test' / 'mappers', remove_destination: true)
+    FileUtils.cp_r(root_dir.parent / 'files' / 'weather', root_dir.parent / 'test' / 'weather', remove_destination: true)
+    mapper_files_dir = root_dir / 'mappers/'
+    FileUtils.cp(root_dir.parent / 'files' / 'example_scenario.csv', root_dir / 'example_scenario.csv')
+    csv_file = root_dir / 'example_scenario.csv'
     num_header_rows = 1
 
-    FileUtils.cp(File.join(File.dirname(__FILE__), '../files/Gemfile'), File.join(File.dirname(__FILE__), '../test/Gemfile'))
+    FileUtils.cp(root_dir.parent / 'files' / 'Gemfile', root_dir / 'Gemfile')
 
     # write a runner.conf in project dir
-    options = { gemfile_path: File.join(File.dirname(__FILE__), '../test/Gemfile'), bundle_install_path: File.join(File.dirname(__FILE__), '../test/.bundle/install') }
+    options = { gemfile_path: root_dir / 'Gemfile', bundle_install_path: root_dir / '.bundle' / 'install' }
     File.open(File.join(root_dir, 'runner.conf'), 'w') do |f|
-      f.write(options.to_json)
+      f.write(JSON.pretty_generate(options))
     end
 
     feature_file = ExampleFeatureFile.new(feature_file_path)
@@ -92,7 +96,7 @@ RSpec.describe URBANopt::Scenario do
     expect(File.exist?(simulation_dirs[2].run_dir)).to be true
 
     # pass Gemfile and bundle paths to extension gem runner, otherwise it will use this gem's and that doesn't work b/c of native gems
-    options = { gemfile_path: File.join(File.dirname(__FILE__), '../test/Gemfile'), bundle_install_path: File.join(File.dirname(__FILE__), '../test/.bundle/install'), skip_config: false }
+    options = { gemfile_path: root_dir / 'Gemfile', bundle_install_path: root_dir / '.bundle' / 'install', skip_config: false }
     simulation_dirs = scenario_runner.run(scenario, false, options)
     if clear_results
       expect(simulation_dirs.size).to eq(3)
@@ -185,10 +189,10 @@ RSpec.describe URBANopt::Scenario do
     # Get scenario schema hash
     schema = validator.schema
 
-    # Read scenario json file and validated againt schema
+    # Read scenario json file and validated against schema
     scenario_json = JSON.parse(File.read(scenario_json_file))
 
-    @@logger.info("Schema Validation Errors: #{JSON::Validator.fully_validate(schema, scenario_json)}")
+    logger.info("Schema Validation Errors: #{JSON::Validator.fully_validate(schema, scenario_json)}")
     expect(JSON::Validator.fully_validate(schema, scenario_json).empty?).to be true
 
     # close json file
@@ -205,7 +209,7 @@ RSpec.describe URBANopt::Scenario do
     scenario_csv_schema_headers = validator.csv_headers
     expect((scenario_csv_headers_with_no_units & scenario_csv_schema_headers)).to eq(scenario_csv_headers_with_no_units)
 
-    # Read feature_reprot json file and validate against schema
+    # Read feature_report json file and validate against schema
     Dir["#{File.dirname(__FILE__)}/../**/*default_feature_reports.json"].each do |json_file|
       feature_json = JSON.parse(File.read(json_file))
       expect(JSON::Validator.fully_validate(schema[:definitions][:FeatureReport][:properties], feature_json).empty?).to be true
@@ -214,8 +218,8 @@ RSpec.describe URBANopt::Scenario do
 
   it 'can integrate opendss results' do
     # generate opendss results for testing
-    opendss_results_source = File.join(File.dirname(__FILE__), '../files/opendss_outputs/')
-    opendss_results_destination = File.join(File.dirname(__FILE__), '../test/example_scenario')
+    opendss_results_source = root_dir.parent / 'files' / 'opendss_outputs/'
+    opendss_results_destination = root_dir / 'example_scenario'
     FileUtils.copy_entry opendss_results_source, opendss_results_destination
     # post_process opendss results
     opendss_post_processor = URBANopt::Scenario::OpenDSSPostProcessor.new($scenario_result, 'opendss')
@@ -224,8 +228,8 @@ RSpec.describe URBANopt::Scenario do
 
   it 'can integrate disco results' do
     # generate disco results for testing
-    disco_results_source = File.join(File.dirname(__FILE__), '../files/disco_outputs/')
-    disco_results_destination = File.join(File.dirname(__FILE__), '../test/example_scenario')
+    disco_results_source = root_dir.parent / 'files' / 'disco_outputs/'
+    disco_results_destination = root_dir / 'example_scenario'
     FileUtils.copy_entry disco_results_source, disco_results_destination
     # post_process disco results
     disco_post_processor = URBANopt::Scenario::DISCOPostProcessor.new($scenario_result, 'disco')
