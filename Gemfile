@@ -13,6 +13,9 @@ allow_local = ENV['FAVOR_LOCAL_GEMS']
 
 # Uncomment the extension gem if you need to test local development versions. Otherwise
 # is is included in the model articulation gem.
+
+# Delete this once testing is complete!
+gem 'bcl', github: 'NREL/bcl-gem', branch: 'faraday'
 #
 # if allow_local && File.exist?('../OpenStudio-extension-gem')
 #   gem 'openstudio-extension', path: '../OpenStudio-extension-gem'
