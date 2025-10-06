@@ -1,5 +1,9 @@
 # URBANopt Scenario Gem
 
+## Version 1.1.0
+
+* Upgrade to OpenStudio 3.10 by @vtnate in <https://github.com/urbanopt/urbanopt-scenario-gem/pull/278>
+
 ## Version 1.0.0
 
 Date Range: 05/06/24 - 01/23/25

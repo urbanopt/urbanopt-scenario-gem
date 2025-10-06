@@ -25,10 +25,13 @@ Gem::Specification.new do |spec|
   # It would be nice to be able to use newer patches of Ruby 3.2, which would require os-extension to relax its dependency on bundler.
   spec.required_ruby_version = '3.2.2'
 
-  spec.add_development_dependency 'rspec', '~> 3.13'
-  spec.add_development_dependency 'simplecov', '0.22.0'
-  spec.add_development_dependency 'simplecov-lcov', '0.8.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'rubocop', '~> 1.50'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.20'
+  spec.add_development_dependency 'simplecov', '~> 0.22.0'
+  spec.add_development_dependency 'simplecov-lcov', '~> 0.8.0'
   spec.add_runtime_dependency 'sqlite3', '~> 2.0.0'
-  spec.add_runtime_dependency 'urbanopt-core', '~> 1.0.0'
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 1.0.0'
+  spec.add_runtime_dependency 'urbanopt-core', '~> 1.1.0'
+  spec.add_runtime_dependency 'urbanopt-reporting', '~> 1.1.0'
 end

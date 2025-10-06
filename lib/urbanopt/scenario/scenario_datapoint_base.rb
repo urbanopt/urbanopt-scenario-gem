@@ -6,7 +6,7 @@
 module URBANopt
   module Scenario
     class ScenarioDatapoint
-      attr_reader :scenario, :feature_id, :feature_name, :mapper_class, :feature #:nodoc:#
+      attr_reader :scenario, :feature_id, :feature_name, :mapper_class, :feature # :nodoc:#
 
       ##
       # ScenarioDatapoint is an agnostic description of the simulation of a Feature in a Scenario
@@ -23,7 +23,7 @@ module URBANopt
         @feature_name = feature_name
         @feature = scenario.feature_file.get_feature_by_id(feature_id)
         @mapper_class = mapper_class
-      end #:nodoc:
+      end # :nodoc:
 
       ##
       # Gets the type of a feature
