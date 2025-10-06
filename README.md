@@ -17,8 +17,10 @@ gem 'urbanopt-scenario'
 
 And then execute:
 
+```bash
     $ bundle install
     $ bundle update
+```
 
 Or install it yourself as:
 
