@@ -18,13 +18,13 @@ allow_local = ENV['FAVOR_LOCAL_GEMS']
 #   gem 'openstudio-extension', path: '../OpenStudio-extension-gem'
 # elsif allow_local
   # gem 'openstudio-extension', github: 'NREL/OpenStudio-extension-gem', branch: 'faraday'
-gem 'openstudio-extension', '~> 0.9.3'
+# gem 'openstudio-extension', '~> 0.9.3'
 # end
 
 # if allow_local && File.exist?('../urbanopt-core-gem')
 #  gem 'urbanopt-core', path: '../urbanopt-core-gem'
 # elsif allow_local
-gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'faraday'
+# gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'faraday'
 # end
 
 # if allow_local && File.exist?('../openstudio-common-measures-gem')
@@ -32,7 +32,7 @@ gem 'urbanopt-core', github: 'URBANopt/urbanopt-core-gem', branch: 'faraday'
 # elsif allow_local
   #  gem 'openstudio-common-measures', github: 'NREL/openstudio-common-measures-gem', branch: 'faraday'
 # else
-gem 'openstudio-common-measures', '~> 0.12.3'
+# gem 'openstudio-common-measures', '~> 0.12.3'
 # end
 
 # if allow_local && File.exist?('../urbanopt-geojson-gem')
@@ -46,7 +46,7 @@ gem 'openstudio-common-measures', '~> 0.12.3'
 # elsif allow_local
   # gem 'openstudio-standards', github: 'NREL/openstudio-standards-gem', branch: 'faraday'
 # else
-gem 'openstudio-standards', '~> 0.8.2'
+# gem 'openstudio-standards', '~> 0.8.2'
   # end
 
 # if allow_local && File.exist?('../openstudio-model-articulation-gem')
@@ -54,13 +54,13 @@ gem 'openstudio-standards', '~> 0.8.2'
 # elsif allow_local
   # gem 'openstudio-model-articulation', github: 'NREL/openstudio-model-articulation-gem', branch: 'faraday'
 # else
-gem 'openstudio-model-articulation', '~> 0.12.2'
+# gem 'openstudio-model-articulation', '~> 0.12.2'
 # end
 
 # if allow_local && File.exist?('../urbanopt-reporting-gem')
 # gem 'urbanopt-reporting', path: '../urbanopt-reporting-gem'
 # elsif allow_local
-gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'faraday'
+# gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'faraday'
 # end
 
 # if allow_local && File.exist?('../openstudio-load-flexibility-measures-gem')
@@ -68,5 +68,5 @@ gem 'urbanopt-reporting', github: 'URBANopt/urbanopt-reporting-gem', branch: 'fa
 # elseif allow_local
   # gem 'openstudio-load-flexibility-measures', github: 'NREL/openstudio-load-flexibility-measures-gem', branch: 'faraday'
 # else
-gem 'openstudio-load-flexibility-measures', '~> 0.11.1'
+# gem 'openstudio-load-flexibility-measures', '~> 0.11.1'
 # end
