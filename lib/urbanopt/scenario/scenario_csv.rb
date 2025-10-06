@@ -37,13 +37,13 @@ module URBANopt
       end
 
       # Path to CSV file
-      attr_reader :csv_file #:nodoc:
+      attr_reader :csv_file # :nodoc:
 
       # Number of header rows to skip in CSV file
-      attr_reader :num_header_rows #:nodoc:
+      attr_reader :num_header_rows # :nodoc:
 
       # Directory containing all mapper class files
-      attr_reader :mapper_files_dir #:nodoc:
+      attr_reader :mapper_files_dir # :nodoc:
 
       # Require all simulation mappers in mapper_files_dir
       def load_mapper_files
@@ -54,7 +54,7 @@ module URBANopt
           runner_config = OpenStudio::Extension::RunnerConfig.new(@root_dir)
           # use the default values overridden with runner.conf values where not
           # nil nor empty strings
-          @options = @options.merge(runner_config.options.reject{|k, v| v.nil? || (v.kind_of?(String) && v === '')})
+          @options = @options.merge(runner_config.options.reject { |k, v| v.nil? || (v.is_a?(String) && v === '') })
         end
 
         # bundle path is assigned from the runner.conf if it exists or is assigned in the root_dir
@@ -62,7 +62,7 @@ module URBANopt
         if !@options.key?(:bundle_install_path) || @options[:bundle_install_path] === ''
           @options[:bundle_install_path] = File.join(@root_dir, '.bundle/install/')
         else
-          @options[:bundle_install_path]= Pathname.new(@options[:bundle_install_path]).cleanpath.to_s
+          @options[:bundle_install_path] = Pathname.new(@options[:bundle_install_path]).cleanpath.to_s
         end
         bundle_path = @options[:bundle_install_path]
 

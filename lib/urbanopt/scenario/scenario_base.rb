@@ -24,19 +24,19 @@ module URBANopt
 
       ##
       # Name of the Scenario.
-      attr_reader :name #:nodoc:
+      attr_reader :name # :nodoc:
 
       ##
       # Root directory containing Gemfile.
-      attr_reader :root_dir #:nodoc:
+      attr_reader :root_dir # :nodoc:
 
       ##
       # Directory to run this Scenario.
-      attr_reader :run_dir #:nodoc:
+      attr_reader :run_dir # :nodoc:
 
       ##
       # An instance of +URBANopt::Core::FeatureFile+ associated with this Scenario.
-      attr_reader :feature_file #:nodoc:
+      attr_reader :feature_file # :nodoc:
 
       # An array of SimulationDirBase objects.
       def simulation_dirs

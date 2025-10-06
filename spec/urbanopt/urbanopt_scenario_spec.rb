@@ -10,7 +10,6 @@ require 'json-schema'
 require 'logger'
 
 RSpec.describe URBANopt::Scenario do
-
   let(:logger) { Logger.new($stdout) }
 
   root_dir = (Pathname(__FILE__).dirname.parent / 'test').cleanpath

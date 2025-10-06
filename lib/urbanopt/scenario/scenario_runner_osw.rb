@@ -120,15 +120,12 @@ module URBANopt
         # run building_osws
         # building_failures = runner.run_osws(building_osws, num_parallel = Extension::NUM_PARALLEL, max_to_run = Extension::MAX_DATAPOINTS)
         building_failures = runner.run_osws(building_osws)
-        failures + building_failures
         # run district_system_osws
         # district_system_failures = runner.run_osws(district_system_osws, num_parallel = Extension::NUM_PARALLEL, max_to_run = Extension::MAX_DATAPOINTS)
         district_system_failures = runner.run_osws(district_system_osws)
-        failures + district_system_failures
         # run transformer_osws
         # transformer_failures = runner.run_osws(transformer_osws, num_parallel = Extension::NUM_PARALLEL, max_to_run = Extension::MAX_DATAPOINTS)
         transformer_failures = runner.run_osws(transformer_osws)
-        failures + transformer_failures
 
         puts 'Done Running Scenario'
 
