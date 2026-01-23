@@ -1,5 +1,11 @@
 # URBANopt Scenario Gem
 
+## Version 1.2.0
+
+* Name changes and update license dates
+* Update from github.com/NREL to github.com/NatLabRockies
+* Update URBANopt dependencies
+
 ## Version 1.1.0
 
 * Upgrade to OpenStudio 3.10 by @vtnate in <https://github.com/urbanopt/urbanopt-scenario-gem/pull/278>
