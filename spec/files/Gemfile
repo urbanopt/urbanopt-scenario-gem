@@ -29,7 +29,7 @@ allow_local = ENV['FAVOR_LOCAL_GEMS']
 if allow_local && File.exist?('../openstudio-common-measures-gem')
   gem 'openstudio-common-measures', path: '../openstudio-common-measures-gem'
 elsif allow_local
-  gem 'openstudio-common-measures', github: 'NatLabRockiesL/openstudio-common-measures-gem', branch: 'develop'
+  gem 'openstudio-common-measures', github: 'NatLabRockies/openstudio-common-measures-gem', branch: 'develop'
 else
   gem 'openstudio-common-measures', '~> 0.11.0'
 end
@@ -61,7 +61,7 @@ end
 if allow_local && File.exist?('../openstudio-calibration-gem')
   gem 'openstudio-calibration', path: '../openstudio-calibration-gem'
 elsif allow_local
-  gem 'openstudio-calibration', github: 'NatLabRockiesL/openstudio-calibration-gem', branch: 'develop'
+  gem 'openstudio-calibration', github: 'NatLabRockies/openstudio-calibration-gem', branch: 'develop'
 else
   gem 'openstudio-calibration', '~> 0.11.0'
 end
