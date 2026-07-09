@@ -6,10 +6,10 @@ on:
   push:
     branches:
       - "develop"
-  # schedule:
+  schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
-    # 5 am UTC (11pm MDT the day before) every weekday night in MDT
-    # - cron: '21 5 * * 2-6'
+    # 5:21 am UTC (11:21pm MDT the day before) every Monday night in MDT
+    - cron: '21 5 * * 2'
 
 env:
   # This env var will enforce develop branch of all dependencies
