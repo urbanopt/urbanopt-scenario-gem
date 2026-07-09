@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'urbanopt-scenario'
   spec.version       = URBANopt::Scenario::VERSION
   spec.authors       = ['Rawad El Kontar', 'Katherine Fleming', 'Dan Macumber']
-  spec.email         = ['rawad.elkontar@nrel.gov', 'katherine.fleming@nrel.gov']
+  spec.email         = ['rawad.elkontar@nlr.gov', 'katherine.fleming@nlr.gov']
 
   spec.summary       = 'Library to export data point OSW files from URBANopt Scenario CSV'
   spec.description   = 'Library to export data point OSW files from URBANopt Scenario CSV'
@@ -32,6 +32,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.22.0'
   spec.add_development_dependency 'simplecov-lcov', '~> 0.8.0'
   spec.add_runtime_dependency 'sqlite3', '~> 2.0.0'
-  spec.add_runtime_dependency 'urbanopt-core', '~> 1.2.0'
-  spec.add_runtime_dependency 'urbanopt-reporting', '~> 1.2.0'
+  spec.add_runtime_dependency 'urbanopt-core', '~> 1.3.0'
+  spec.add_runtime_dependency 'urbanopt-reporting', '~> 1.3.0'
 end

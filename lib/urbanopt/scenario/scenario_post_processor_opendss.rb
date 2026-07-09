@@ -382,14 +382,13 @@ module URBANopt
       # run opendss post_processor
       ##
       def run
+        # Load all OpenDSS and feature report data once before processing each feature.
+        load_data
+
         @scenario_report.feature_reports.each do |feature_report|
-          # load data
-          load_data
-
-          # puts " @opendss data = #{@opendss_data}"
-
           # get summary results
           add_summary_results(feature_report)
+          # puts "summary results added for feature id #{feature_report.id}."
 
           # merge csv data
           id = feature_report.id
@@ -397,9 +396,10 @@ module URBANopt
 
           # save feature reports
           feature_report.save_json_report('default_feature_report_opendss')
-
+          # puts "json report saved for feature id #{feature_report.id}."
           # resave updated csv report
           save_csv(feature_report, updated_feature_csv, 'default_feature_report_opendss')
+          # puts "csv report saved for feature id #{feature_report.id}."
         end
 
         # add transformer reports
