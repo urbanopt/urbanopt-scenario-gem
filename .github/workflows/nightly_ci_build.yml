@@ -2,15 +2,14 @@
 name: Scenario-gem CI
 
 on:
-  workflow_dispatch:
   pull_request:
   push:
     branches:
       - "develop"
-  schedule:
+  # schedule:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
     # 5 am UTC (11pm MDT the day before) every weekday night in MDT
-    - cron: '21 5 * * 2-6'
+    # - cron: '21 5 * * 2-6'
 
 env:
   # This env var will enforce develop branch of all dependencies
