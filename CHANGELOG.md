@@ -1,5 +1,9 @@
 # URBANopt Scenario Gem
 
+## Version 1.3.0
+
+* Upgrade to OpenStudio 3.11
+
 ## Version 1.2.1
 
 * Bugfix - Update how data is loaded for individual features in OpenDSS processor
